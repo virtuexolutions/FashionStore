@@ -11,14 +11,14 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import TextInputWithTitle from '../Components/TextInputWithTitle';
 import { Icon } from 'native-base';
+import CustomStatusBar from '../Components/CustomStatusBar';
 
-const ResetPassword = () => {
+const ResetInstruction = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
 
-  return (
-    <>
+  return (<>
     <CustomStatusBar
         backgroundColor={Color.white}
         barStyle={'dark-content'}
@@ -35,8 +35,9 @@ const ResetPassword = () => {
       <View
         style={{
           width: windowWidth * 0.7,
-          height: windowHeight * 0.2,
+          height: windowHeight * 0.4,
           alignItems: 'center',
+          justifyContent:'space-between',
         }}>
         <CustomImage
           source={require('../Assets/Images/logo.png')}
@@ -50,81 +51,23 @@ const ResetPassword = () => {
 
       <CustomText
         style={{
-          fontSize: moderateScale(15, 0.6),
+          fontSize: moderateScale(12, 0.6),
           marginTop: moderateScale(0, 0.3),
+          color:Color.veryLightGray,
+          height:windowHeight*0.1,
+          width:windowWidth * 0.8
         }}
-        isBold>
-        Forgot Password
+        >
+      Please check your email for password reset instruction
       </CustomText>
-      <TextInputWithTitle
-        iconName="envelope-o"
-        iconType={FontAwesome}
-        rightIcon
-        titleText={'Your email address'}
-        placeholder={'Your email Address here'}
-        setText={setEmail}
-        value={email}
-        viewHeight={0.05}
-        viewWidth={0.8}
-        inputWidth={0.7}
-        border={1}
-        borderColor={'#D3D3D3'}
-        backgroundColor={'white'}
-        marginTop={moderateScale(12, 0.3)}
-        color={'#D3D3D3'}
-        placeholderColor={'#D3D3D3'}
-        borderRadius={moderateScale(20, 0.6)}
-       
-      />
-      <TextInputWithTitle
-        iconName="lock"
-        iconType={AntDesign}
-        rightIcon
-        secureText={true}
-        titleText={'Your new Password'}
-        placeholder={'Your new Password'}
-        setText={setPassword}
-        // marginTop={moderateScale(10,0.3)}
-        value={password}
-        viewHeight={0.05}
-        viewWidth={0.8}
-        inputWidth={0.7}
-        border={1}
-        borderColor={'#D3D3D3'}
-        backgroundColor={'white'}
-        marginTop={moderateScale(25, 0.3)}
-        color={'#D3D3D3'}
-        placeholderColor={'#D3D3D3'}
-        borderRadius={moderateScale(20, 0.6)}
-       
-      />
-       <TextInputWithTitle
-        iconName="lock"
-        iconType={AntDesign}
-        rightIcon
-        secureText={true}
-        titleText={'Confirm Password'}
-        placeholder={'Confirm Password'}
-        setText={setConfirmPassword}
-        // marginTop={moderateScale(10,0.3)}
-        value={confirmPassword}
-        viewHeight={0.05}
-        viewWidth={0.8}
-        inputWidth={0.7}
-        border={1}
-        borderColor={'#D3D3D3'}
-        backgroundColor={'white'}
-        marginTop={moderateScale(25, 0.3)}
-        color={'#D3D3D3'}
-        placeholderColor={'#D3D3D3'}
-        borderRadius={moderateScale(20, 0.6)}
-       
-      />
+     
+     
+      
      
    
 
       <CustomButton
-        text={'Reset Password'}
+        text={'Login Again'}
         textColor={Color.white}
         width={windowWidth * 0.8}
         height={windowHeight * 0.06}
@@ -146,7 +89,7 @@ const ResetPassword = () => {
   );
 };
 
-export default ResetPassword;
+export default ResetInstruction;
 
 const styles = StyleSheet.create({
   bottomImage: {

@@ -2,17 +2,19 @@ import { View, TouchableOpacity } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { moderateScale, ScaledSheet } from "react-native-size-matters";
 import CustomText from "./CustomText";
-import Constants from "../Assets/Utilities/Constants";
+// import Constants from "../Assets/Utilities/Constants";
 import Color from "../Assets/Utilities/Color";
 import TextInputWithTitle from "./TextInputWithTitle";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import { Icon } from "native-base";
-import { TextInput } from "react-native-gesture-handler";
+import { GestureHandlerRootView, TextInput } from "react-native-gesture-handler";
 import { windowHeight, windowWidth } from "../Utillity/utils";
 // import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 
-const SearchContainer = ({ width, text, input, onPress, data, setData , style , places , inputStyle , placeHolder }) => {
+const SearchContainer = ({ width, text, input, onPress, data, setData , style , places , inputStyle , placeHolder, rightIcon }) => {
   return (
+    <GestureHandlerRootView>
     <TouchableOpacity onPress={onPress} activeOpacity={0.9}>
       <View
         style={[
@@ -25,13 +27,12 @@ const SearchContainer = ({ width, text, input, onPress, data, setData , style , 
         {text && (
           <>
             <CustomText
-              style={[
-                Constants.h4,
-                { color: Color.black, lineHeight: moderateScale(20, 0.3) },
-              ]}
+              style={
+                { fontSize: moderateScale(12,0.6),color: Color.black, lineHeight: moderateScale(20, 0.3) }
+            }
             >
               {"Where to? \n"}
-              <CustomText style={[Constants.h5]}>Anytime anyWhere</CustomText>
+              <CustomText style={{fontSize:moderateScale(10,0.6)}}>Anytime anyWhere</CustomText>
             </CustomText>
             <Icon
               name="search"
@@ -80,7 +81,8 @@ const SearchContainer = ({ width, text, input, onPress, data, setData , style , 
               }}
               style={[{
                 marginLeft : moderateScale(10,0.3),
-                width: windowWidth * 0.6,
+                width: windowWidth * 0.75,
+                // backgroundColor:'black',
                 // height : windowHeight * 0.05,
                 // fontSize: moderateScale(15, 0.3),
                 color: Color.black,
@@ -90,10 +92,20 @@ const SearchContainer = ({ width, text, input, onPress, data, setData , style , 
               
             ]}
             />
+            <Icon
+              name={'filter'}
+              as={Ionicons}
+              size={moderateScale(20,0.3)}
+              color={'#FF6E2E'}
+              // style={{backgroundColor : 'red'}}
+              />
+
             </>
         )}
+     
       </View>
     </TouchableOpacity>
+    </GestureHandlerRootView>
   );
 };
 
@@ -103,21 +115,15 @@ const styles = ScaledSheet.create({
     flexDirection: "row",
     // justifyContent: "space-between",
     marginTop: moderateScale(10, 0.3),
-    borderWidth: 0.5,
-    borderColor: Color.lightGrey,
+    borderWidth: 1,
+    borderColor: '#D3D3D3',
     backgroundColor: Color.white,
     borderRadius: moderateScale(5, 0.3),
     paddingVertical: moderateScale(8, 0.3),
     paddingHorizontal: moderateScale(10, 0.3),
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    
 
-    elevation: 5,
+    //  elevation: 5,
     alignItems : 'center'
   },
 });

@@ -6,6 +6,7 @@ import CustomImage from '../Components/CustomImage';
 import CustomButton from '../Components/CustomButton';
 import CustomText from '../Components/CustomText';
 import Color from '../Assets/Utilities/Color';
+import navigationService from '../navigationService';
 
 const GetStarted = () => {
   return (
@@ -35,16 +36,22 @@ const GetStarted = () => {
         borderRadius={moderateScale(30, 0.3)}
         borderWidth={1}
         borderColor={Color.veryLightGray}
+        onPress={()=>{
+          navigationService.navigate('LoginScreen')
+        }}
       />
 
       <CustomButton
-      text={'Sign in'}
+      text={'Sign Up'}
       textColor={Color.white}
         width={windowWidth * 0.8}
         height={windowHeight * 0.06}
         marginTop={moderateScale(10, 0.3)}
         bgColor={'#FF6E2E'}
         borderRadius={moderateScale(30, 0.3)}
+        onPress={()=>{
+          navigationService.navigate('Signup')
+        }}
       />
 
       <CustomText >

@@ -19,6 +19,7 @@ import {
 } from './SRC/Utillity/utils';
 import SplashScreen from './SRC/Screens/SplashScreen';
 import GetStarted from './SRC/Screens/GetStarted';
+import AppNavigator from './SRC/appNavigation';
 // import AppNavigator, {DrawerRoot} from './SRC/appNavigation';
 
 
@@ -68,7 +69,7 @@ const MainContainer = () => {
   if (isloading == true) {
     return <SplashScreen />;
   }
-  return <GetStarted />;
+  return <AppNavigator />;
 };
 
 const useloader = value => {

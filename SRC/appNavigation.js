@@ -5,17 +5,18 @@ import navigationService from './navigationService';
 import {useSelector} from 'react-redux';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import LoginScreen from './Screens/LoginScreen';
-import EnterPhone from './Screens/EnterPhone';
-import VerifyNumber from './Screens/VerifyNumber';
+// import EnterPhone from './Screens/EnterPhone';
+// import VerifyNumber from './Screens/VerifyNumber';
 import ResetPassword from './Screens/ResetPassword';
 import Signup from './Screens/Signup';
+import ResetInstruction from './Screens/ResetInstructions';
 import HomeScreen from './Screens/HomeScreen';
-import MyAccounts from './Screens/MyAccounts';
-import ChangePassword from './Screens/ChangePassword';
-import Support from './Screens/Support';
-import FriendRequest from './Screens/FriendRequest';
-import SeeAllScreen from './Screens/SeeAllScreen';
-import SelectedChat from './Screens/SelectedChat';
+// import MyAccounts from './Screens/MyAccounts';
+// import ChangePassword from './Screens/ChangePassword';
+// import Support from './Screens/Support';
+// import FriendRequest from './Screens/FriendRequest';
+// import SeeAllScreen from './Screens/SeeAllScreen';
+// import SelectedChat from './Screens/SelectedChat';
 
 
 const AppNavigator = () => {
@@ -40,20 +41,21 @@ const AppNavigator = () => {
     return (
       <NavigationContainer ref={navigationService.navigationRef}>
         <RootNav.Navigator
-          initialRouteName={firstScreen}
+          initialRouteName={'HomeScreen'}
           screenOptions={{headerShown: false}}>
           <RootNav.Screen name="LoginScreen" component={LoginScreen} />
-          <RootNav.Screen name="EnterPhone" component={EnterPhone} />
-          <RootNav.Screen name="VerifyNumber" component={VerifyNumber} />
+          <RootNav.Screen name="ResetInstruction" component={ResetInstruction} />
+          {/* <RootNav.Screen name="EnterPhone" component={EnterPhone} /> */}
+          {/* <RootNav.Screen name="VerifyNumber" component={VerifyNumber} /> */}
           <RootNav.Screen name="ResetPassword" component={ResetPassword} />
           <RootNav.Screen name="Signup" component={Signup} />
           <RootNav.Screen name="HomeScreen" component={HomeScreen} />
-          <RootNav.Screen name="MyAccounts" component={MyAccounts} />
-          <RootNav.Screen name="ChangePassword" component={ChangePassword} />
-          <RootNav.Screen name="FriendRequest" component={FriendRequest} />
-          <RootNav.Screen name="SeeAllScreen" component={SeeAllScreen} />
-          <RootNav.Screen name="Support" component={Support} />
-          <RootNav.Screen name="SelectedChat" component={SelectedChat} />
+          {/* <RootNav.Screen name="MyAccounts" component={MyAccounts} /> */}
+          {/* <RootNav.Screen name="ChangePassword" component={ChangePassword} /> */}
+          {/* <RootNav.Screen name="FriendRequest" component={FriendRequest} /> */}
+          {/* <RootNav.Screen name="SeeAllScreen" component={SeeAllScreen} /> */}
+          {/* <RootNav.Screen name="Support" component={Support} /> */}
+          {/* <RootNav.Screen name="SelectedChat" component={SelectedChat} /> */}
 
 
          {/* 
