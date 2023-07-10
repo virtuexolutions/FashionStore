@@ -4,18 +4,19 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import navigationService from './navigationService';
 import {useSelector} from 'react-redux';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import LoginScreen from './Screens/LoginScreen';
-import EnterPhone from './Screens/EnterPhone';
-import VerifyNumber from './Screens/VerifyNumber';
-import ResetPassword from './Screens/ResetPassword';
-import Signup from './Screens/Signup';
-import HomeScreen from './Screens/HomeScreen';
-import MyAccounts from './Screens/MyAccounts';
-import ChangePassword from './Screens/ChangePassword';
-import Support from './Screens/Support';
-import FriendRequest from './Screens/FriendRequest';
-import SeeAllScreen from './Screens/SeeAllScreen';
-import SelectedChat from './Screens/SelectedChat';
+// import LoginScreen from './Screens/LoginScreen';
+// import EnterPhone from './Screens/EnterPhone';
+// import VerifyNumber from './Screens/VerifyNumber';
+// import ResetPassword from './Screens/ResetPassword';
+// import Signup from './Screens/Signup';
+// import HomeScreen from './Screens/HomeScreen';
+// import MyAccounts from './Screens/MyAccounts';
+// import ChangePassword from './Screens/ChangePassword';
+// import Support from './Screens/Support';
+// import FriendRequest from './Screens/FriendRequest';
+// import SeeAllScreen from './Screens/SeeAllScreen';
+// import SelectedChat from './Screens/SelectedChat';
+import Dresses from './Screens/Dresses';
 
 
 const AppNavigator = () => {
@@ -40,9 +41,10 @@ const AppNavigator = () => {
     return (
       <NavigationContainer ref={navigationService.navigationRef}>
         <RootNav.Navigator
-          initialRouteName={firstScreen}
+          initialRouteName={"Dresses"}
           screenOptions={{headerShown: false}}>
-          <RootNav.Screen name="LoginScreen" component={LoginScreen} />
+          <RootNav.Screen name="Dresses" component={Dresses} />
+          {/* <RootNav.Screen name="LoginScreen" component={LoginScreen} />
           <RootNav.Screen name="EnterPhone" component={EnterPhone} />
           <RootNav.Screen name="VerifyNumber" component={VerifyNumber} />
           <RootNav.Screen name="ResetPassword" component={ResetPassword} />
@@ -53,7 +55,7 @@ const AppNavigator = () => {
           <RootNav.Screen name="FriendRequest" component={FriendRequest} />
           <RootNav.Screen name="SeeAllScreen" component={SeeAllScreen} />
           <RootNav.Screen name="Support" component={Support} />
-          <RootNav.Screen name="SelectedChat" component={SelectedChat} />
+          <RootNav.Screen name="SelectedChat" component={SelectedChat} /> */}
 
 
          {/* 
