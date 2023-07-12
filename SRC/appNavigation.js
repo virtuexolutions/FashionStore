@@ -17,6 +17,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 // import SeeAllScreen from './Screens/SeeAllScreen';
 // import SelectedChat from './Screens/SelectedChat';
 import Dresses from './Screens/Dresses';
+import DressesDetail from './Screens/DressesDetail';
 
 
 const AppNavigator = () => {
@@ -44,6 +45,7 @@ const AppNavigator = () => {
           initialRouteName={"Dresses"}
           screenOptions={{headerShown: false}}>
           <RootNav.Screen name="Dresses" component={Dresses} />
+          <RootNav.Screen name="DressesDetail" component={DressesDetail} />
           {/* <RootNav.Screen name="LoginScreen" component={LoginScreen} />
           <RootNav.Screen name="EnterPhone" component={EnterPhone} />
           <RootNav.Screen name="VerifyNumber" component={VerifyNumber} />
