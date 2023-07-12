@@ -120,9 +120,9 @@ const DressesDetail = props => {
 
           <View style={styles.conterContainer}>
             <TouchableOpacity
-              // onPress={() => {
-              //   dispatch(increamentQuantity(item));
-              // }}
+              onPress={() => {
+                dispatch(increamentQuantity(item));
+              }}
               style={{
                 width: windowWidth * 0.06,
                 height: windowHeight * 0.03,
@@ -147,13 +147,13 @@ const DressesDetail = props => {
                 color: '#1B1721',
                 fontSize: 14,
               }}>
-              {item.qty}
+              {addData.qty}
             </CustomText>
 
             <TouchableOpacity
-              // onPress={() => {
-              //   dispatch(decrementQuantity(item));
-              // }}
+              onPress={() => {
+                dispatch(decrementQuantity(item));
+              }}
               style={{
                 width: windowWidth * 0.06,
                 height: windowHeight * 0.03,

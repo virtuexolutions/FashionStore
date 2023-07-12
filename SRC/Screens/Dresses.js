@@ -19,14 +19,14 @@ const Dresses = () => {
   const cartData = useSelector(state => state.commonReducer.cart);
 
   const addedItem = item => {
-    console.log('add DATA', cartData);
+    console.log('add DATA===>', cartData);
 
     dispatch(AddToCart(item));
   };
 
   const removeItem = item => {
     console.log('REMOVE DATA', cartData);
-    dispatch(AddToCart(item));
+    dispatch(RemoveToCart(item));
   };
   const makeUp = [
     {
@@ -114,6 +114,8 @@ const Dresses = () => {
           marginTop: moderateScale(5, 0.3),
         }}
         renderItem={({item, index}) => {
+          const tempitem = cartData.find((x,index)=> x?.id == item?.id)
+          console.log("QTY+++",tempitem)
           return (
             <View>
               <TouchableOpacity
@@ -219,21 +221,21 @@ const Dresses = () => {
                 </CustomText>
               </TouchableOpacity>
 
-              {/* {cartData?.length >= 1  && (
-                  <CustomButton
-                    isBold
-                    onPress={() => removeItem(item)}
-                    text={'Remove Cart'}
-                    textColor={Color.white}
-                    width={windowWidth * 0.28}
-                    marginTop={10}
-                    marginBottom={10}
-                    height={windowHeight * 0.04}
-                    bgColor={'#FF6E2E'}
-                    fontSize={14}
-                    borderRadius={moderateScale(5, 0.3)}
-                  />,
-                ) } */}
+              {tempitem != undefined && tempitem?.qty >= 0 && (
+                <CustomButton 
+                  isBold
+                  onPress={() => removeItem(item)}
+                  text={'Remove Cart'}
+                  textColor={Color.white}
+                  width={windowWidth * 0.28}
+                  marginTop={10}
+                  marginBottom={10}
+                  height={windowHeight * 0.04}
+                  bgColor={'#FF6E2E'}
+                  fontSize={14}
+                  borderRadius={moderateScale(5, 0.3)}
+                />
+              )}
             </View>
           );
         }}
