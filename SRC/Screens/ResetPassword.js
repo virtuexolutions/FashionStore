@@ -11,6 +11,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import TextInputWithTitle from '../Components/TextInputWithTitle';
 import { Icon } from 'native-base';
+import CustomStatusBar from '../Components/CustomStatusBar';
 
 const ResetPassword = () => {
   const [email, setEmail] = useState('');
@@ -20,7 +21,7 @@ const ResetPassword = () => {
   return (
     <>
     <CustomStatusBar
-        backgroundColor={Color.white}
+        backgroundColor={'#FEFDFC'}
         barStyle={'dark-content'}
       />
     <View
@@ -29,9 +30,9 @@ const ResetPassword = () => {
         width: windowWidth,
         alignItems: 'center',
         paddingTop: windowHeight * 0.1,
+        backgroundColor:'#FEFDFC',
 
       }}>
-      <CustomText />
       <View
         style={{
           width: windowWidth * 0.7,
@@ -50,21 +51,20 @@ const ResetPassword = () => {
 
       <CustomText
         style={{
-          fontSize: moderateScale(15, 0.6),
-          marginTop: moderateScale(0, 0.3),
+          fontSize: moderateScale(18, 0.6),
         }}
         isBold>
-        Forgot Password
+        Reset Password
       </CustomText>
-      <TextInputWithTitle
+      {/* <TextInputWithTitle
         iconName="envelope-o"
         iconType={FontAwesome}
         rightIcon
-        titleText={'Your email address'}
-        placeholder={'Your email Address here'}
-        setText={setEmail}
-        value={email}
-        viewHeight={0.05}
+        titleText={'New password'}
+        placeholder={'Confirm password'}
+        setText={password}
+        value={setPassword}
+        viewHeight={0.06}
         viewWidth={0.8}
         inputWidth={0.7}
         border={1}
@@ -75,7 +75,7 @@ const ResetPassword = () => {
         placeholderColor={'#D3D3D3'}
         borderRadius={moderateScale(20, 0.6)}
        
-      />
+      /> */}
       <TextInputWithTitle
         iconName="lock"
         iconType={AntDesign}
@@ -86,15 +86,15 @@ const ResetPassword = () => {
         setText={setPassword}
         // marginTop={moderateScale(10,0.3)}
         value={password}
-        viewHeight={0.05}
+        viewHeight={0.06}
         viewWidth={0.8}
         inputWidth={0.7}
         border={1}
-        borderColor={'#D3D3D3'}
+        borderColor={'#0F02022E'}
         backgroundColor={'white'}
-        marginTop={moderateScale(25, 0.3)}
-        color={'#D3D3D3'}
-        placeholderColor={'#D3D3D3'}
+        marginTop={moderateScale(30, 0.3)}
+        color={'#ABB1C0'}
+        placeholderColor={'#ABB1C0'}
         borderRadius={moderateScale(20, 0.6)}
        
       />
@@ -108,15 +108,15 @@ const ResetPassword = () => {
         setText={setConfirmPassword}
         // marginTop={moderateScale(10,0.3)}
         value={confirmPassword}
-        viewHeight={0.05}
+        viewHeight={0.06}
         viewWidth={0.8}
         inputWidth={0.7}
         border={1}
-        borderColor={'#D3D3D3'}
+        borderColor={'#0F02022E'}
         backgroundColor={'white'}
-        marginTop={moderateScale(25, 0.3)}
-        color={'#D3D3D3'}
-        placeholderColor={'#D3D3D3'}
+        marginTop={moderateScale(30, 0.3)}
+        color={'#ABB1C0'}
+        placeholderColor={'#ABB1C0'}
         borderRadius={moderateScale(20, 0.6)}
        
       />
@@ -127,12 +127,13 @@ const ResetPassword = () => {
         text={'Reset Password'}
         textColor={Color.white}
         width={windowWidth * 0.8}
-        height={windowHeight * 0.06}
-        marginTop={moderateScale(20, 0.3)}
-        bgColor={['#FF6E2E','#FF7F50','#FAC898']}
+        height={windowHeight * 0.07}
+        marginTop={moderateScale(30, 0.3)}
+        fontSize={moderateScale(16,.6)}
+        bgColor={['#F89D52', '#FF6E2E']}
         borderRadius={moderateScale(30, 0.3)}
         onPress={() => {
-          navigationService.navigate('Signup');
+          navigationService.navigate('ResetInstruction');
         }}
         isGradient
       />

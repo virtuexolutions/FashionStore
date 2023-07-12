@@ -6,6 +6,9 @@ import {ScaledSheet, moderateScale} from 'react-native-size-matters';
 import CustomImage from '../Components/CustomImage';
 import {Icon} from 'native-base';
 import Entypo from 'react-native-vector-icons/Entypo';
+import Feather from 'react-native-vector-icons/Feather';
+import CustomStatusBar from '../Components/CustomStatusBar';
+import Header from '../Components/Header';
 
 const Dresses = () => {
   const [like, SetLike] = useState(false);
@@ -65,17 +68,26 @@ const Dresses = () => {
   ];
 
   return (
-    <View
-      style={{
-        height: windowHeight,
-        width: windowWidth,
-      }}>
+    <>
+    <CustomStatusBar
+        backgroundColor={'white'}
+      barStyle={'dark-content'}
+    />
+    <Header
+      showLeft={true}
+      leftName={'arrow-left'}
+      leftType={Feather}
+      title={'dresses'}
+      showRight={true}
+      rightName={'shopping-bag'}
+      rightType={Feather}
+    />
       <View
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
           padding: moderateScale(10, 0.6),
-          marginTop: moderateScale(90, 0.3),
+          // marginTop: moderateScale(90, 0.3),
         }}>
         <CustomText isBold> All Dresses</CustomText>
 
@@ -175,7 +187,8 @@ const Dresses = () => {
           );
         }}
       />
-    </View>
+   
+    </>
   );
 };
 

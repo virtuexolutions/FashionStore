@@ -89,7 +89,7 @@ const Header = props => {
           size={moderateScale(25, 0.3)}
           color={Color.black}
           onPress={
-            leftName == 'menufold'
+            leftName == 'menu'
               ? () => {
                   setDrawerModal(true);
                 }
@@ -154,11 +154,11 @@ const Header = props => {
 const styles = ScaledSheet.create({
   header2: {
     width: windowWidth,
-    height: windowHeight * 0.06,
+    height: windowHeight * 0.09,
     // paddingTop: moderateScale(20, 0.3),
     alignItems: 'center',
     justifyContent: 'center',
-    // backgroundColor: 'white',
+    backgroundColor: '#FDFDFD',
   },
   text: {
     fontSize: moderateScale(15, 0.6),

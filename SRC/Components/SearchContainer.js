@@ -67,13 +67,13 @@ const SearchContainer = ({ width, text, input, onPress, data, setData , style , 
               name={'search'}
               as={FontAwesome}
               size={moderateScale(17,0.3)}
-              color={Color.themeLightGray}
+              color={'#E7DFDC'}
               // style={{backgroundColor : 'red'}}
               />
 
              <TextInput
              placeholder={placeHolder ? placeHolder : "Search here"}
-             placeholderTextColor={Color.themeLightGray}
+             placeholderTextColor={'#E7DFDC'}
              numberOfLines={1}
              value={data}
              onChangeText={(text) => {
@@ -116,7 +116,7 @@ const styles = ScaledSheet.create({
     // justifyContent: "space-between",
     marginTop: moderateScale(10, 0.3),
     borderWidth: 1,
-    borderColor: '#D3D3D3',
+    borderColor: '#EAEBEC',
     backgroundColor: Color.white,
     borderRadius: moderateScale(5, 0.3),
     paddingVertical: moderateScale(8, 0.3),

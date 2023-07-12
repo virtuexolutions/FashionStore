@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import {windowHeight, windowWidth} from '../Utillity/utils';
 import {moderateScale, ScaledSheet} from 'react-native-size-matters';
@@ -7,13 +7,15 @@ import CustomButton from '../Components/CustomButton';
 import CustomText from '../Components/CustomText';
 import Color from '../Assets/Utilities/Color';
 import Feather from 'react-native-vector-icons/Feather';
-import {Icon, ScrollView} from 'native-base';
+import Entypo from 'react-native-vector-icons/Entypo';
+import {FlatList, Icon, ScrollView} from 'native-base';
 import CustomStatusBar from '../Components/CustomStatusBar';
 import Header from '../Components/Header';
 import SearchContainer from '../Components/SearchContainer';
 import LinearGradient from 'react-native-linear-gradient';
+import ProductCard from '../Components/ProductCard';
 
-const ResetInstruction = () => {
+const HomeScreen = () => {
   const [searchData, setSearchData] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -58,12 +60,61 @@ const ResetInstruction = () => {
       detail: '*for selection item',
     },
   ];
+  const newArrivals = [
+    {
+      id: 1,
+      Title: 'Oversize Dress',
+      subTitle: 'Oversize',
+      price: 14.0,
+      img: require('../Assets/Images/Image.png'),
+      like: true,
+      sale: '30% off',
+    },
+    {
+      id: 2,
+      Title: 'Blue Dress',
+      subTitle: 'Slim Fit',
+      price: 15.0,
+      img: require('../Assets/Images/Image.png'),
+      like: false,
+    },
+    {
+      id: 3,
+      Title: 'Elegant Dress',
+      subTitle: 'Slim Fit',
+      price: 4.5,
+      img: require('../Assets/Images/image3.png'),
+      like: true,
+    },
+    {
+      id: 4,
+      Title: 'White Dress',
+      subTitle: 'Oversize',
+      price: 6.9,
+      img: require('../Assets/Images/Image.png'),
+      like: true,
+      sale: '30% off',
+    },
+    {
+      id: 5,
+      Title: 'Red Dress',
+      subTitle: 'Oversize',
+      price: 8.94,
+      img: require('../Assets/Images/Image.png'),
+      like: false,
+    },
+    {
+      id: 6,
+      Title: 'Black Dress',
+      subTitle: 'Oversize',
+      price: 18.5,
+      img: require('../Assets/Images/Image.png'),
+      like: true,
+    },
+  ];
   return (
     <>
-      <CustomStatusBar
-        //   backgroundColor={'white'}
-        barStyle={'dark-content'}
-      />
+      <CustomStatusBar backgroundColor={'#FDFDFD'} barStyle={'dark-content'} />
       <Header
         showLeft={true}
         leftName={'menu'}
@@ -72,50 +123,31 @@ const ResetInstruction = () => {
         showRight={true}
         rightName={'shopping-bag'}
         rightType={Feather}
+        textStyle={{fontSize:moderateScale(18,.6)}}
       />
-      <View
+      <ScrollView
+      showsVerticalScrollIndicator={false}
         style={{
           height: windowHeight,
           width: windowWidth * 0.95,
           //   alignItems: 'center',
           alignSelf: 'center',
           //   paddingTop: windowHeight * 0.1,
-          //   backgroundColor: 'white',
+            backgroundColor: '#FDFDFD',
         }}>
         <CustomText
           style={{
-            fontSize: moderateScale(20, 0.6),
+            fontSize: moderateScale(24, 0.6),
             color: '#FF6E2E',
             textAlign: 'left',
-            // width:windowWidth,
+            width: windowWidth,
+            height: windowHeight * 0.04,
             // backgroundColor:'black'
           }}
           isBold>
           Fashion Store
         </CustomText>
 
-        {/* <TextInputWithTitle
-        iconName="lock"
-        iconType={AntDesign}
-        rightIcon
-        secureText={true}
-        titleText={'Confirm Password'}
-        placeholder={'Confirm Password'}
-        setText={setConfirmPassword}
-        // marginTop={moderateScale(10,0.3)}
-        value={confirmPassword}
-        viewHeight={0.05}
-        viewWidth={0.8}
-        inputWidth={0.7}
-        border={1}
-        borderColor={'#D3D3D3'}
-        backgroundColor={'white'}
-        marginTop={moderateScale(25, 0.3)}
-        color={'#D3D3D3'}
-        placeholderColor={'#D3D3D3'}
-        borderRadius={moderateScale(20, 0.6)}
-       
-      /> */}
         <SearchContainer
           width={windowWidth * 0.95}
           input
@@ -124,7 +156,7 @@ const ResetInstruction = () => {
           }}
           style={{
             height: windowHeight * 0.06,
-            marginTop: moderateScale(20, 0.3),
+            marginTop: moderateScale(13, 0.3),
             borderRadius: moderateScale(20, 0.3),
             alignSelf: 'center',
           }}
@@ -140,27 +172,25 @@ const ResetInstruction = () => {
             alignItems: 'center',
             justifyContent: 'space-between',
             width: windowWidth * 0.95,
-            marginTop: moderateScale(10, 0.3),
+            marginTop: moderateScale(23, 0.3),
           }}>
           <CustomText
             style={{
               //   backgroundColor: 'red',
-              width: windowWidth * 0.25,
-              fontSize: moderateScale(18, 0.6),
+              fontSize: moderateScale(16, 0.6),
               color: 'black',
-            }}>
+            }} isBold>
             Categories
           </CustomText>
           <CustomText
             style={{
               //   backgroundColor: 'red',
-              width: windowWidth * 0.17,
               color: '#FF6E2E',
               borderRadius: moderateScale(20, 0.6),
               backgroundColor: '#FBCEB1',
               fontSize: moderateScale(12, 0.6),
               //height:windowHeight*0.03,
-              paddingVertical: moderateScale(5, 0.6),
+              padding: moderateScale(5, 0.6),
             }}
             isBold>
             See all
@@ -177,25 +207,29 @@ const ResetInstruction = () => {
             justifyContent: 'space-between',
           }}>
           {categories.map((item, index) => {
-            console.log(
-              '🚀 ~ file: HomeScreen.js:146 ~ {categories.map ~ item:',
-              item,
-            );
+            // console.log(
+            //   '🚀 ~ file: HomeScreen.js:146 ~ {categories.map ~ item:',
+            //   item,
+            // );
             return (
               <>
                 <View style={{alignItems: 'center', width: windowWidth * 0.16}}>
                   <LinearGradient
                     style={{
-                      height: windowHeight * 0.07,
-                      width: windowHeight * 0.07,
-                      backgroundColor:
-                        selectedCategory == item?.name ? 'orange' : '#E5E4E2',
-                      color: selectedCategory == item?.name ? 'white' : '#DDD2',
+                      height: moderateScale(52,.6),
+                      width:  moderateScale(52,.6),
+                      // backgroundColor:
+                      //   selectedCategory == item?.name ? 'orange' : '#E5E4E2',
+                      // color: selectedCategory == item?.name ? 'white' : '#DDD2',
                       borderRadius: moderateScale(10, 0.6),
                       alignItems: 'center',
                       justifyContent: 'center',
                     }}
-                    colors={selectedCategory == item?.name ? ['#FF6E2E','#F28C28'] : ['#D3D3D3','#E5E4E2']}>
+                    colors={
+                      selectedCategory == item?.name
+                        ? ['#F89D52', '#FF6E2E']
+                        : ['#F4F4F4', '#F4F4F4']
+                    }>
                     <CustomImage
                       source={
                         selectedCategory == item?.name
@@ -227,90 +261,91 @@ const ResetInstruction = () => {
           <ScrollView
             style={{
               flexDirection: 'row',
-              // alignItems: 'center',
               // justifyContent: 'space-between',
               width: windowWidth * 0.95,
               marginTop: moderateScale(20, 0.3),
               height: windowHeight * 0.1,
-            //   backgroundColor: 'black',
+              //   backgroundColor: 'black',
             }}
             horizontal={true}
             showsHorizontalScrollIndicator={false}>
             {specialOffers.map((item, index) => {
               return (
-                <LinearGradient style={{
+                <LinearGradient
+                  style={{
                     width: windowWidth * 0.5,
                     height: windowHeight * 0.12,
                     borderRadius: moderateScale(20, 0.6),
                     // backgroundColor: 'orange',
-                    marginLeft: moderateScale(10, 0.3),
+                    marginRight: moderateScale(10, 0.3),
                     alignItems: 'center',
                     justifyContent: 'center',
-                  }} colors={['#FF6E2E','#F28C28']}
-                  start={{ x: 1, y: 1 }}
-                  end={{ x: 1, y: 0 }}>
-                <View
-                //   style={{
-                //     width: windowWidth * 0.5,
-                //     height: windowHeight * 0.12,
-                //     borderRadius: moderateScale(20, 0.6),
-                //     // backgroundColor: 'orange',
-                //     marginLeft: moderateScale(10, 0.3),
-                //     alignItems: 'center',
-                //     justifyContent: 'center',
-                //   }}
-                  >
-                  <CustomText
-                    style={{
-                      color: 'white',
-                      // backgroundColor: 'red',
-                      textAlign: 'left',
-                      width: windowWidth * 0.45,
-                      fontSize: moderateScale(14, 0.6),
-                    }}>
-                    {item?.title}
-                  </CustomText>
+                  }}
+                  colors={['#F89D52', '#FF6E2E']}
+                  start={{x: 0, y: 0}}
+                  end={{x: 0, y: 1}}>
                   <View
-                    style={{
-                      flexDirection: 'row',
-                      // backgroundColor: 'purple',
-                      width: windowWidth * 0.45,
-                      alignItems: 'center',
-                    }}>
+                  //   style={{
+                  //     width: windowWidth * 0.5,
+                  //     height: windowHeight * 0.12,
+                  //     borderRadius: moderateScale(20, 0.6),
+                  //     // backgroundColor: 'orange',
+                  //     marginLeft: moderateScale(10, 0.3),
+                  //     alignItems: 'center',
+                  //     justifyContent: 'center',
+                  //   }}
+                  >
                     <CustomText
                       style={{
                         color: 'white',
                         // backgroundColor: 'red',
                         textAlign: 'left',
-                        // width: windowWidth * 0.2,
-                        fontSize: moderateScale(25, 0.6),
+                        width: windowWidth * 0.45,
+                        fontSize: moderateScale(14, 0.6),
                       }}>
-                      {item?.off}
+                      {item?.title}
                     </CustomText>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        // backgroundColor: 'purple',
+                        width: windowWidth * 0.45,
+                        alignItems: 'center',
+                      }}>
+                      <CustomText
+                        style={{
+                          color: 'white',
+                          // backgroundColor: 'red',
+                          textAlign: 'left',
+                          // width: windowWidth * 0.2,
+                          fontSize: moderateScale(25, 0.6),
+                        }}>
+                        {item?.off}
+                      </CustomText>
+                      <CustomText
+                        style={{
+                          color: 'white',
+                          // backgroundColor: 'red',
+                          textAlign: 'left',
+                          // width: windowWidth * 0.2,
+                          fontSize: moderateScale(12, 0.6),
+                        }}>
+                        {'  '}
+                        off
+                      </CustomText>
+                    </View>
+
                     <CustomText
                       style={{
                         color: 'white',
                         // backgroundColor: 'red',
                         textAlign: 'left',
-                        // width: windowWidth * 0.2,
-                        fontSize: moderateScale(12, 0.6),
+                        width: windowWidth * 0.45,
+                        fontSize: moderateScale(10, 0.6),
                       }}>
-                      {'  '}
-                      off
+                      {item?.detail}
                     </CustomText>
                   </View>
-
-                  <CustomText
-                    style={{
-                      color: 'white',
-                      // backgroundColor: 'red',
-                      textAlign: 'left',
-                      width: windowWidth * 0.45,
-                      fontSize: moderateScale(10, 0.6),
-                    }}>
-                    {item?.detail}
-                  </CustomText>
-                </View>
                 </LinearGradient>
               );
             })}
@@ -322,13 +357,11 @@ const ResetInstruction = () => {
             alignItems: 'center',
             justifyContent: 'space-between',
             width: windowWidth * 0.95,
-            // marginTop: moderateScale(1   0, 0.3),
+            // backgroundColor:'purple'
           }}>
           <CustomText
             style={{
-              //   backgroundColor: 'red',
-              width: windowWidth * 0.4,
-              fontSize: moderateScale(18, 0.6),
+              fontSize: moderateScale(16, 0.6),
               color: 'black',
             }}
             isBold>
@@ -336,76 +369,55 @@ const ResetInstruction = () => {
           </CustomText>
           <CustomText
             style={{
-              //   backgroundColor: 'red',
-              width: windowWidth * 0.3,
+              
               color: 'black',
               borderRadius: moderateScale(20, 0.6),
-            //   backgroundColor: '#FBCEB1',
               fontSize: moderateScale(12, 0.6),
-              //height:windowHeight*0.03,
               paddingVertical: moderateScale(5, 0.6),
             }}>
             See all collection
           </CustomText>
         </View>
 
-        {/*       
-      <View
-        style={{
-          width: windowWidth * 0.7,
-          height: windowHeight * 0.4,
-          alignItems: 'center',
-          justifyContent:'space-between',
-        }}>
-        <CustomImage
-          source={require('../Assets/Images/logo.png')}
-          resizeMode={'contain'}
-          style={{
-            
-            height: '100%',
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          numColumns={2}
+          data={newArrivals}
+          contentContainerStyle={{
+            alignSelf: 'center',
+            marginTop: moderateScale(5, 0.3),
+          }}
+          renderItem={({item, index}) => {
+            return (
+            <ProductCard item={item}/>
+            );
           }}
         />
-      </View>
-
-      <CustomText
-        style={{
-          fontSize: moderateScale(12, 0.6),
-          marginTop: moderateScale(0, 0.3),
-          color:Color.veryLightGray,
-          height:windowHeight*0.1,
-          width:windowWidth * 0.8
-        }}
-        >
-      Please check your email for password reset instruction
-      </CustomText>
-     
-
-
-      <CustomButton
-        text={'Login Again'}
-        textColor={Color.white}
-        width={windowWidth * 0.8}
-        height={windowHeight * 0.06}
-        marginTop={moderateScale(20, 0.3)}
-        bgColor={['#FF6E2E','#FF7F50','#FAC898']}
-        borderRadius={moderateScale(30, 0.3)}
-        onPress={() => {
-          navigationService.navigate('Signup');
-        }}
-        isGradient
-      />
-
-       */}
-      </View>
+      </ScrollView>
     </>
   );
 };
 
-export default ResetInstruction;
+export default HomeScreen;
 
 const styles = StyleSheet.create({
   bottomImage: {
     width: '100%',
     height: '100%',
+  },
+  heartIcon: {
+    position: 'absolute',
+    top: moderateScale(10, 0.3),
+    left: moderateScale(5, 0.3),
+    zIndex: 1,
+  },
+
+  sale: {
+    position: 'absolute',
+    bottom: moderateScale(10, 0.3),
+    right: moderateScale(5, 0.3),
+    zIndex: 1,
+    width: windowWidth * 0.2,
+    height: windowHeight * 0.03,
   },
 });

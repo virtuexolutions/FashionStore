@@ -20,7 +20,7 @@ const ResetInstruction = () => {
 
   return (<>
     <CustomStatusBar
-        backgroundColor={Color.white}
+        backgroundColor={'#FEFDFC'}
         barStyle={'dark-content'}
       />
     <View
@@ -29,6 +29,7 @@ const ResetInstruction = () => {
         width: windowWidth,
         alignItems: 'center',
         paddingTop: windowHeight * 0.1,
+        backgroundColor:'#FEFDFC',
 
       }}>
       <CustomText />
@@ -53,7 +54,7 @@ const ResetInstruction = () => {
         style={{
           fontSize: moderateScale(12, 0.6),
           marginTop: moderateScale(0, 0.3),
-          color:Color.veryLightGray,
+          color:'#ABB1C0',
           height:windowHeight*0.1,
           width:windowWidth * 0.8
         }}
@@ -70,12 +71,14 @@ const ResetInstruction = () => {
         text={'Login Again'}
         textColor={Color.white}
         width={windowWidth * 0.8}
-        height={windowHeight * 0.06}
+            height={windowHeight * 0.07}
+            fontSize={moderateScale(16,.6)}
+
         marginTop={moderateScale(20, 0.3)}
-        bgColor={['#FF6E2E','#FF7F50','#FAC898']}
+        bgColor={['#F89D52', '#FF6E2E']}
         borderRadius={moderateScale(30, 0.3)}
         onPress={() => {
-          navigationService.navigate('Signup');
+          navigationService.navigate('LoginScreen');
         }}
         isGradient
       />

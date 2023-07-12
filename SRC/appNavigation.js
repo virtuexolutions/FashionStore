@@ -18,6 +18,10 @@ import HomeScreen from './Screens/HomeScreen';
 // import SeeAllScreen from './Screens/SeeAllScreen';
 // import SelectedChat from './Screens/SelectedChat';
 import Dresses from './Screens/Dresses';
+import EnterPhone from './Screens/EnterPhone';
+import VerifyNumber from './Screens/VerifyNumber';
+import GetStarted from './Screens/GetStarted';
+import WelcomeScreen from './Screens/WelcomeScreen';
 
 
 const AppNavigator = () => {
@@ -37,21 +41,24 @@ const AppNavigator = () => {
     const firstScreen =
         token != null
         ? 'HomeScreen'
-        : 'LoginScreen';
+        : 'WelcomeScreen';
 
     return (
       <NavigationContainer ref={navigationService.navigationRef}>
         <RootNav.Navigator
-          initialRouteName={"Dresses"}
+          initialRouteName={firstScreen}
           screenOptions={{headerShown: false}}>
+          <RootNav.Screen name="WelcomeScreen" component={WelcomeScreen} />
+          <RootNav.Screen name="GetStarted" component={GetStarted} />
           <RootNav.Screen name="Dresses" component={Dresses} />
-          {/* <RootNav.Screen name="LoginScreen" component={LoginScreen} />
+          <RootNav.Screen name="ResetInstruction" component={ResetInstruction} />
+          <RootNav.Screen name="HomeScreen" component={HomeScreen} />
+          <RootNav.Screen name="LoginScreen" component={LoginScreen} />
           <RootNav.Screen name="EnterPhone" component={EnterPhone} />
           <RootNav.Screen name="VerifyNumber" component={VerifyNumber} />
           <RootNav.Screen name="ResetPassword" component={ResetPassword} />
           <RootNav.Screen name="Signup" component={Signup} />
-          <RootNav.Screen name="HomeScreen" component={HomeScreen} />
-          <RootNav.Screen name="MyAccounts" component={MyAccounts} />
+          {/* <RootNav.Screen name="MyAccounts" component={MyAccounts} />
           <RootNav.Screen name="ChangePassword" component={ChangePassword} />
           <RootNav.Screen name="FriendRequest" component={FriendRequest} />
           <RootNav.Screen name="SeeAllScreen" component={SeeAllScreen} />
