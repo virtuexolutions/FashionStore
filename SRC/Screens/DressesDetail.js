@@ -23,22 +23,26 @@ const DressesDetail = props => {
 
   const addData = useSelector(state => state.commonReducer.cart);
 
-const [count, setCount] = useState(0)
-const [count1, setCount1] = useState(0)
-
-   console.log('QTYNEW',count)
-
+  const [count, setCount] = useState(0);
+  const [count1, setCount1] = useState(0);
+  // const newItem = {
+  //   id: item?.id,
+  //   Title: Title,
+  //   subTitle,
+  //   like: like,
+  //   price: price,
+  //   qty: count,
+  //   qty:
+  //   colors: Selectedcolor,
+  //   size: Selectedsize,
+  //   sale: sale,
+  // };
 
   const addedItem = item => {
-    dispatch(AddToCart(item));
-  };  
-
-  
-
-
-
-
-
+    if (newItem) {
+      dispatch(AddToCart(item));
+    }
+  };
 
   return (
     <View
@@ -120,7 +124,7 @@ const [count1, setCount1] = useState(0)
             <TouchableOpacity
               onPress={() => {
                 // dispatch(increamentQuantity(item));
-                setCount(count+1)
+                setCount(count + 1);
               }}
               style={{
                 width: windowWidth * 0.06,
@@ -152,7 +156,7 @@ const [count1, setCount1] = useState(0)
             <TouchableOpacity
               onPress={() => {
                 // dispatch(increamentQuantity(item));
-                setCount(count-1)
+                setCount(count - 1);
               }}
               style={{
                 width: windowWidth * 0.06,
@@ -234,11 +238,11 @@ const [count1, setCount1] = useState(0)
                   width: windowWidth * 0.08,
                   borderRadius: (windowWidth * 0.8) / 2,
                   justifyContent: 'center',
-                  backgroundColor: Selectedsize == item ? '#E56A36' : "#F4F5F6",
+                  backgroundColor: Selectedsize == item ? '#E56A36' : '#F4F5F6',
                 }}>
                 <CustomText
                   style={{
-                    color:Selectedsize == item ? '#fff' : "#8E9194",
+                    color: Selectedsize == item ? '#fff' : '#8E9194',
                   }}>
                   {item}
                 </CustomText>
@@ -275,7 +279,9 @@ const [count1, setCount1] = useState(0)
 
           <View style={styles.conterContainer}>
             <TouchableOpacity
-              onPress={()=>{setCount1(count1+1)}}
+              onPress={() => {
+                setCount1(count1 + 1);
+              }}
               style={{
                 width: windowWidth * 0.06,
                 height: windowHeight * 0.03,
@@ -304,7 +310,9 @@ const [count1, setCount1] = useState(0)
             </CustomText>
 
             <TouchableOpacity
-            onPress={()=>{setCount1(count1-1)}}
+              onPress={() => {
+                setCount1(count1 - 1);
+              }}
               style={{
                 width: windowWidth * 0.06,
                 height: windowHeight * 0.03,
