@@ -42,133 +42,170 @@ const WelcomeScreen = () => {
 
   return (
     <>
-      <CustomStatusBar
-        backgroundColor={'#FEFDFC'}
-        barStyle={'dark-content'}
-      />
-    
-    <View
-      style={{
-        height: windowHeight,
-        width: windowWidth,
-        alignItems: 'center',
-        paddingTop: windowHeight * 0.1,
-        backgroundColor : '#FEFDFC'
+      <CustomStatusBar backgroundColor={'#FEFDFC'} barStyle={'dark-content'} />
 
-        // marginTop: moderateScale(30, 0.3),
-      }}>
-      {starterData.map((data, index) => {
-        console.log(
-          '🚀 ~ file: StartingScreen.js:54 ~ {starterData.map ~ index:',
-          index,
-        );
-        return (
-          step == index && (
-            <>
-              <View
-                style={{
-                  // backgroundColor:'black',
-                  height: windowHeight * 0.45,
-                  width: windowWidth * 0.8,
-                  overflow: 'hidden',
-                  borderRadius: moderateScale(20, 0.6),
-                }}>
-                <CustomImage
-                  source={data?.image}
-                  style={{width: '100%', height: '100%'}}
-                />
-              </View>
-            
-              <CustomText
-                style={{
-                  color: 'black',
-                  fontSize: moderateScale(20, 0.6),
-                  textAlign: 'center',
-                  // backgroundColor:'green',
-                  marginTop: moderateScale(25, 0.3),
-                }}
-                isBold>
-                {data?.title}
-              </CustomText>
-              <CustomText
-                style={{
-                  color: 'black',
-                  fontSize: moderateScale(12, 0.6),
-                  textAlign: 'center',
-                  marginTop: moderateScale(10, 0.3),
-                  width: windowWidth * 0.85,
-                  // backgroundColor:'green',
-                  lineHeight:moderateScale(20,.6),
-                }}>
-                {data?.description}
-              </CustomText>
-              <CustomButton
-                text={index == starterData.length - 1 ? 'Get Started' : 'Next'}
-                textColor={Color.white}
-                width={windowWidth * 0.75}
-                height={windowHeight * 0.07}
-                marginTop={moderateScale(30, 0.3)}
-                bgColor={['#F89D52', '#FF6E2E']}
-                borderRadius={moderateScale(30, 0.3)}
-                fontSize={moderateScale(16,.6)}
-                onPress={() => {
-                  if (step < 2) {
-                    setstep(step + 1);
-                  } else {
-                    navigationService.navigate('GetStarted');
+      <View
+        style={{
+          height: windowHeight,
+          width: windowWidth,
+          alignItems: 'center',
+          paddingTop: windowHeight * 0.1,
+          backgroundColor: '#FEFDFC',
+
+          // marginTop: moderateScale(30, 0.3),
+        }}>
+        {starterData.map((data, index) => {
+          console.log(
+            '🚀 ~ file: StartingScreen.js:54 ~ {starterData.map ~ index:',
+            index,
+          );
+          return (
+            step == index && (
+              <>
+                <View
+                  style={{
+                    height: windowHeight * 0.45,
+                    width: windowWidth * 0.8,
+                    justifyContent:'center',
+                    flexDirection:'row',
+                    overflow:'hidden'
+
+                  }}>
+                  <View
+                    style={{
+                      // backgroundColor:'black',
+                      height: windowHeight * 0.45,
+                      width: windowWidth * 0.7,
+                      overflow: 'hidden',
+                      borderRadius: moderateScale(20, 0.6),
+                    }}>
+                    <CustomImage
+                      source={data?.image}
+                      style={{width: '100%', height: '100%'}}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      // backgroundColor:'black',
+                      height: windowHeight * 0.45,
+                      width: windowWidth * 0.7,
+                      overflow: 'hidden',
+                      borderRadius: moderateScale(20, 0.6),
+                    }}>
+                    <CustomImage
+                      source={data?.image}
+                      style={{width: '100%', height: '100%'}}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      // backgroundColor:'black',
+                      height: windowHeight * 0.45,
+                      width: windowWidth * 0.7,
+                      overflow: 'hidden',
+                      borderRadius: moderateScale(20, 0.6),
+                    }}>
+                    <CustomImage
+                      source={data?.image}
+                      style={{width: '100%', height: '100%'}}
+                    />
+                  </View>
+                </View>
+
+                <CustomText
+                  style={{
+                    color: 'black',
+                    fontSize: moderateScale(20, 0.6),
+                    textAlign: 'center',
+                    // backgroundColor:'green',
+                    marginTop: moderateScale(25, 0.3),
+                  }}
+                  isBold>
+                  {data?.title}
+                </CustomText>
+                <CustomText
+                  style={{
+                    color: 'black',
+                    fontSize: moderateScale(12, 0.6),
+                    textAlign: 'center',
+                    marginTop: moderateScale(10, 0.3),
+                    width: windowWidth * 0.85,
+                    // backgroundColor:'green',
+                    lineHeight: moderateScale(20, 0.6),
+                  }}>
+                  {data?.description}
+                </CustomText>
+                <CustomButton
+                  text={
+                    index == starterData.length - 1 ? 'Get Started' : 'Next'
                   }
-                }}
-                isGradient
-              />
-             
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  bottom:25,
-                  position:'absolute',
+                  textColor={Color.white}
+                  width={windowWidth * 0.75}
+                  height={windowHeight * 0.07}
+                  marginTop={moderateScale(30, 0.3)}
+                  bgColor={['#F89D52', '#FF6E2E']}
+                  borderRadius={moderateScale(30, 0.3)}
+                  fontSize={moderateScale(16, 0.6)}
+                  onPress={() => {
+                    if (step < 2) {
+                      setstep(step + 1);
+                    } else {
+                      navigationService.navigate('GetStarted');
+                    }
+                  }}
+                  isGradient
+                />
 
-                  // marginTop: moderateScale(100, 0.3),
-                  width:windowWidth*0.2,
-                //   backgroundColor:'black'
-                }}>
-                <TouchableOpacity
-                onPress={()=>{
-                    setstep(0)
-                  }}
+                <View
                   style={{
-                    
-                    width: moderateScale(15, 0.6),
-                    height: moderateScale(7, 0.6),
-                    backgroundColor: step==0 ?'#FF6E2E' : '#FBCEB1',
-                    borderRadius: moderateScale(10, 0.6),
-                  }} />
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    bottom: 25,
+                    position: 'absolute',
+
+                    // marginTop: moderateScale(100, 0.3),
+                    width: windowWidth * 0.2,
+                    //   backgroundColor:'black'
+                  }}>
                   <TouchableOpacity
-                  onPress={()=>{
-                    setstep(1)
-                  }}
-                  style={{
-                    width: moderateScale(15, 0.6),
-                    height: moderateScale(7, 0.6),
-                    backgroundColor: step==1 ?'#FF6E2E' : '#FBCEB1',
-                    borderRadius: moderateScale(10, 0.6),
-                  }} />
+                    onPress={() => {
+                      setstep(0);
+                    }}
+                    style={{
+                      width: moderateScale(15, 0.6),
+                      height: moderateScale(7, 0.6),
+                      backgroundColor: step == 0 ? '#FF6E2E' : '#FBCEB1',
+                      borderRadius: moderateScale(10, 0.6),
+                    }}
+                  />
                   <TouchableOpacity
-                  onPress={()=>{
-                    setstep(2)
-                  }}
-                  style={{
-                    width: moderateScale(15, 0.6),
-                    height: moderateScale(7, 0.6),
-                    backgroundColor: step==2 ?'#FF6E2E' : '#FBCEB1',
-                    borderRadius: moderateScale(10, 0.6),
-                  }} />
-              </View>
-            </>
-          )
-        );
-      })}
-    </View>
+                    onPress={() => {
+                      setstep(1);
+                    }}
+                    style={{
+                      width: moderateScale(15, 0.6),
+                      height: moderateScale(7, 0.6),
+                      backgroundColor: step == 1 ? '#FF6E2E' : '#FBCEB1',
+                      borderRadius: moderateScale(10, 0.6),
+                    }}
+                  />
+                  <TouchableOpacity
+                    onPress={() => {
+                      setstep(2);
+                    }}
+                    style={{
+                      width: moderateScale(15, 0.6),
+                      height: moderateScale(7, 0.6),
+                      backgroundColor: step == 2 ? '#FF6E2E' : '#FBCEB1',
+                      borderRadius: moderateScale(10, 0.6),
+                    }}
+                  />
+                </View>
+              </>
+            )
+          );
+        })}
+      </View>
     </>
   );
 };

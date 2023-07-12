@@ -14,6 +14,7 @@ import Header from '../Components/Header';
 import SearchContainer from '../Components/SearchContainer';
 import LinearGradient from 'react-native-linear-gradient';
 import ProductCard from '../Components/ProductCard';
+import navigationService from '../navigationService';
 
 const HomeScreen = () => {
   const [searchData, setSearchData] = useState('');
@@ -31,6 +32,9 @@ const HomeScreen = () => {
       name: 'Dress',
       image: require('../Assets/Images/dress.png'),
       image2: require('../Assets/Images/dress1.png'),
+      onPress:()=>{ 
+        console.log('here')
+        navigationService.navigate('Dresses')}
     },
     {
       name: 'T-shirt',
@@ -69,6 +73,7 @@ const HomeScreen = () => {
       img: require('../Assets/Images/Image.png'),
       like: true,
       sale: '30% off',
+      qty: 0,
     },
     {
       id: 2,
@@ -77,6 +82,7 @@ const HomeScreen = () => {
       price: 15.0,
       img: require('../Assets/Images/Image.png'),
       like: false,
+      qty: 0,
     },
     {
       id: 3,
@@ -85,6 +91,7 @@ const HomeScreen = () => {
       price: 4.5,
       img: require('../Assets/Images/image3.png'),
       like: true,
+      qty: 0,
     },
     {
       id: 4,
@@ -94,6 +101,7 @@ const HomeScreen = () => {
       img: require('../Assets/Images/Image.png'),
       like: true,
       sale: '30% off',
+      qty: 0,
     },
     {
       id: 5,
@@ -102,6 +110,7 @@ const HomeScreen = () => {
       price: 8.94,
       img: require('../Assets/Images/Image.png'),
       like: false,
+      qty: 0,
     },
     {
       id: 6,
@@ -110,8 +119,10 @@ const HomeScreen = () => {
       price: 18.5,
       img: require('../Assets/Images/Image.png'),
       like: true,
+      qty: 0,
     },
   ];
+ 
   return (
     <>
       <CustomStatusBar backgroundColor={'#FDFDFD'} barStyle={'dark-content'} />
@@ -213,7 +224,7 @@ const HomeScreen = () => {
             // );
             return (
               <>
-                <View style={{alignItems: 'center', width: windowWidth * 0.16}}>
+                <TouchableOpacity style={{alignItems: 'center', width: windowWidth * 0.16}} onPress={item?.onPress}>
                   <LinearGradient
                     style={{
                       height: moderateScale(52,.6),
@@ -247,7 +258,7 @@ const HomeScreen = () => {
                     style={{width: windowWidth * 0.14, color: 'black'}}>
                     {item?.name}
                   </CustomText>
-                </View>
+                </TouchableOpacity>
               </>
             );
           })}
@@ -389,7 +400,7 @@ const HomeScreen = () => {
           }}
           renderItem={({item, index}) => {
             return (
-            <ProductCard item={item}/>
+            <ProductCard item={item} />
             );
           }}
         />

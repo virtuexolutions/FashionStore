@@ -6,10 +6,15 @@ import CustomImage from './CustomImage'
 import CustomText from './CustomText'
 import Entypo from 'react-native-vector-icons/Entypo'
 import { Icon } from 'native-base'
+import navigationService from '../navigationService'
 
 const ProductCard = ({item}) => {
   return (
-    <View
+    <TouchableOpacity
+    onPress={()=>{
+        // console.log('Hello')
+        navigationService.navigate('DressesDetail',{item:item})
+    }}
     style={{
       width: windowWidth * 0.45,
       height: windowHeight * 0.35,
@@ -44,6 +49,10 @@ const ProductCard = ({item}) => {
         style={{
           height: '100%',
           height: '100%',
+        }}
+        onPress={()=>{
+            // console.log('Hello')
+            navigationService.navigate('DressesDetail',{item:item})
         }}
       />
 
@@ -103,7 +112,7 @@ const ProductCard = ({item}) => {
       }} isBold>
       ${item?.price}
     </CustomText>
-  </View>
+  </TouchableOpacity>
   )
 }
 
