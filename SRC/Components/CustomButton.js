@@ -98,8 +98,9 @@ elevation: 9,},
             justifyContent: "center",
             borderRadius: moderateScale(30, 0.3),
           }}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
+       
+          start={{x: 0, y: 0}}
+          end={{x: 0, y: 1}}
           colors={bgColor}
         >
           {loader && (

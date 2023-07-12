@@ -69,7 +69,7 @@ const MainContainer = () => {
   if (isloading == true) {
     return <SplashScreen />;
   }
-  return <AppNavigator/>;
+  return <AppNavigator />;
 };
 
 const useloader = value => {

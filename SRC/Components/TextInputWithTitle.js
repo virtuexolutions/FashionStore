@@ -152,12 +152,12 @@ elevation: 9,
               // backgroundColor: "red",
             }}
           >
-            <Icon
+            {/* <Icon
               name={showPassword ? 'eye' : 'eye-slash'}
               as={FontAwesome}
               color={Color.themeLightGray}
               size={moderateScale(18,0.3)}
-            />
+            /> */}
           </TouchableOpacity>
         </>
       ) : (

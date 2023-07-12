@@ -4,12 +4,13 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import navigationService from './navigationService';
 import {useSelector} from 'react-redux';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-// import LoginScreen from './Screens/LoginScreen';
+import LoginScreen from './Screens/LoginScreen';
 // import EnterPhone from './Screens/EnterPhone';
 // import VerifyNumber from './Screens/VerifyNumber';
-// import ResetPassword from './Screens/ResetPassword';
-// import Signup from './Screens/Signup';
-// import HomeScreen from './Screens/HomeScreen';
+import ResetPassword from './Screens/ResetPassword';
+import Signup from './Screens/Signup';
+import ResetInstruction from './Screens/ResetInstructions';
+import HomeScreen from './Screens/HomeScreen';
 // import MyAccounts from './Screens/MyAccounts';
 // import ChangePassword from './Screens/ChangePassword';
 // import Support from './Screens/Support';
@@ -17,6 +18,10 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 // import SeeAllScreen from './Screens/SeeAllScreen';
 // import SelectedChat from './Screens/SelectedChat';
 import Dresses from './Screens/Dresses';
+import EnterPhone from './Screens/EnterPhone';
+import VerifyNumber from './Screens/VerifyNumber';
+import GetStarted from './Screens/GetStarted';
+import WelcomeScreen from './Screens/WelcomeScreen';
 import DressesDetail from './Screens/DressesDetail';
 
 
@@ -37,22 +42,25 @@ const AppNavigator = () => {
     const firstScreen =
         token != null
         ? 'HomeScreen'
-        : 'LoginScreen';
+        : 'WelcomeScreen';
 
     return (
       <NavigationContainer ref={navigationService.navigationRef}>
         <RootNav.Navigator
-          initialRouteName={"Dresses"}
+          initialRouteName={firstScreen}
           screenOptions={{headerShown: false}}>
-          <RootNav.Screen name="Dresses" component={Dresses} />
+          <RootNav.Screen name="WelcomeScreen" component={WelcomeScreen} />
           <RootNav.Screen name="DressesDetail" component={DressesDetail} />
-          {/* <RootNav.Screen name="LoginScreen" component={LoginScreen} />
+          <RootNav.Screen name="GetStarted" component={GetStarted} />
+          <RootNav.Screen name="Dresses" component={Dresses} />
+          <RootNav.Screen name="ResetInstruction" component={ResetInstruction} />
+          <RootNav.Screen name="HomeScreen" component={HomeScreen} />
+          <RootNav.Screen name="LoginScreen" component={LoginScreen} />
           <RootNav.Screen name="EnterPhone" component={EnterPhone} />
           <RootNav.Screen name="VerifyNumber" component={VerifyNumber} />
           <RootNav.Screen name="ResetPassword" component={ResetPassword} />
           <RootNav.Screen name="Signup" component={Signup} />
-          <RootNav.Screen name="HomeScreen" component={HomeScreen} />
-          <RootNav.Screen name="MyAccounts" component={MyAccounts} />
+          {/* <RootNav.Screen name="MyAccounts" component={MyAccounts} />
           <RootNav.Screen name="ChangePassword" component={ChangePassword} />
           <RootNav.Screen name="FriendRequest" component={FriendRequest} />
           <RootNav.Screen name="SeeAllScreen" component={SeeAllScreen} />
