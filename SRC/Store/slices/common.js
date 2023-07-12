@@ -57,25 +57,11 @@ const CommonSlice = createSlice({
       state.cart = state.cart.filter((item, index) => item.id !== itemId);
     },
 
-    increamentQuantity: (state, action) => {
+    increamentQuantity(state, action) {
       const itemId = action.payload.id;
       const itemAddCart = state.cart.find(item => item.id === itemId);
-      console.log('INC', itemAddCart);
       if (itemAddCart) {
         itemAddCart.qty++;
-      }
-    },
-
-
-    decrementQuantity: (state, action) => {
-      const itemId = action.payload.id;
-      const itemAddCart = state.cart.find(item => item.id === itemId);
-      if (itemAddCart) {
-        if (itemAddCart.qty === 1) {
-          state.user = state.cart.filter(item => item.id !== itemId);
-        } else {
-          itemAddCart.qty--;
-        }
       }
     },
 

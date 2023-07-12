@@ -23,24 +23,22 @@ const DressesDetail = props => {
 
   const addData = useSelector(state => state.commonReducer.cart);
 
+const [count, setCount] = useState(0)
+const [count1, setCount1] = useState(0)
+
+   console.log('QTYNEW',count)
+
+
   const addedItem = item => {
     dispatch(AddToCart(item));
-  };
+  };  
 
   
 
-  const colors = [
-    '#4e86c2',
-    '#2c4973',
-    '#1ABFBC',
-    '#C8CDD2',
-    '#ECECEC',
-    '#313436',
-  ];
 
-  const size = ['XS', 'S', 'M', 'L', 'XL'];
 
-  console.log('COLORS', Selectedcolor);
+
+
 
   return (
     <View
@@ -121,7 +119,8 @@ const DressesDetail = props => {
           <View style={styles.conterContainer}>
             <TouchableOpacity
               onPress={() => {
-                dispatch(increamentQuantity(item));
+                // dispatch(increamentQuantity(item));
+                setCount(count+1)
               }}
               style={{
                 width: windowWidth * 0.06,
@@ -144,15 +143,16 @@ const DressesDetail = props => {
             <CustomText
               isBold
               style={{
-                color: '#1B1721',
+                color: '#000',
                 fontSize: 14,
               }}>
-              {addData.qty}
+              {count}
             </CustomText>
 
             <TouchableOpacity
               onPress={() => {
-                dispatch(decrementQuantity(item));
+                // dispatch(increamentQuantity(item));
+                setCount(count-1)
               }}
               style={{
                 width: windowWidth * 0.06,
@@ -185,7 +185,7 @@ const DressesDetail = props => {
         </CustomText>
 
         <View style={styles.ColorLine}>
-          {colors.map(item => {
+          {item?.colors?.map(item => {
             return (
               <TouchableOpacity
                 onPress={() => {
@@ -223,22 +223,22 @@ const DressesDetail = props => {
         </CustomText>
 
         <View style={styles.ColorLine1}>
-          {size.map(item => {
+          {item?.size?.map(item => {
             return (
               <TouchableOpacity
                 onPress={() => {
                   SetSelectedSize(item);
                 }}
                 style={{
-                  height: windowHeight * 0.04,
+                  height: windowWidth * 0.08,
                   width: windowWidth * 0.08,
-                  borderRadius: (windowWidth * 0.1) / 2,
+                  borderRadius: (windowWidth * 0.8) / 2,
                   justifyContent: 'center',
-                  backgroundColor: '#f4f5f6',
+                  backgroundColor: Selectedsize == item ? '#E56A36' : "#F4F5F6",
                 }}>
                 <CustomText
                   style={{
-                    color: '#8e9194',
+                    color:Selectedsize == item ? '#fff' : "#8E9194",
                   }}>
                   {item}
                 </CustomText>
@@ -275,6 +275,7 @@ const DressesDetail = props => {
 
           <View style={styles.conterContainer}>
             <TouchableOpacity
+              onPress={()=>{setCount1(count1+1)}}
               style={{
                 width: windowWidth * 0.06,
                 height: windowHeight * 0.03,
@@ -299,10 +300,11 @@ const DressesDetail = props => {
                 color: '#2F2B29',
                 fontSize: 18,
               }}>
-              1
+              {count1}
             </CustomText>
 
             <TouchableOpacity
+            onPress={()=>{setCount1(count1-1)}}
               style={{
                 width: windowWidth * 0.06,
                 height: windowHeight * 0.03,

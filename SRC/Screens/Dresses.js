@@ -28,6 +28,7 @@ const Dresses = () => {
     console.log('REMOVE DATA', cartData);
     dispatch(RemoveToCart(item));
   };
+  
   const makeUp = [
     {
       id: 1,
@@ -38,6 +39,8 @@ const Dresses = () => {
       like: true,
       sale: '30% off',
       qty: 0,
+      colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
+      size:['XS', 'S', 'M', 'L', 'XL']
     },
     {
       id: 2,
@@ -47,6 +50,8 @@ const Dresses = () => {
       img: require('../Assets/Images/Image.png'),
       like: false,
       qty: 0,
+      colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
+      size:['XS', 'S', 'M', 'L', 'XL']
     },
     {
       id: 3,
@@ -56,6 +61,8 @@ const Dresses = () => {
       img: require('../Assets/Images/image3.png'),
       like: true,
       qty: 0,
+      colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
+      size:['XS', 'S', 'M', 'L', 'XL']
     },
     {
       id: 4,
@@ -66,6 +73,8 @@ const Dresses = () => {
       like: true,
       sale: '30% off',
       qty: 0,
+      colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
+      size:['XS', 'S', 'M', 'L', 'XL']
     },
     {
       id: 5,
@@ -75,6 +84,8 @@ const Dresses = () => {
       img: require('../Assets/Images/Image.png'),
       like: false,
       qty: 0,
+      colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
+      size:['XS', 'S', 'M', 'L', 'XL']
     },
     {
       id: 6,
@@ -84,6 +95,8 @@ const Dresses = () => {
       img: require('../Assets/Images/Image.png'),
       like: true,
       qty: 0,
+      colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
+      size:['XS', 'S', 'M', 'L', 'XL']
     },
   ];
 
