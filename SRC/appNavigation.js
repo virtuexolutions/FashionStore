@@ -22,6 +22,7 @@ import EnterPhone from './Screens/EnterPhone';
 import VerifyNumber from './Screens/VerifyNumber';
 import GetStarted from './Screens/GetStarted';
 import WelcomeScreen from './Screens/WelcomeScreen';
+import DressesDetail from './Screens/DressesDetail';
 
 
 const AppNavigator = () => {
@@ -49,6 +50,7 @@ const AppNavigator = () => {
           initialRouteName={firstScreen}
           screenOptions={{headerShown: false}}>
           <RootNav.Screen name="WelcomeScreen" component={WelcomeScreen} />
+          <RootNav.Screen name="DressesDetail" component={DressesDetail} />
           <RootNav.Screen name="GetStarted" component={GetStarted} />
           <RootNav.Screen name="Dresses" component={Dresses} />
           <RootNav.Screen name="ResetInstruction" component={ResetInstruction} />

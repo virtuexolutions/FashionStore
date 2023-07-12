@@ -9,11 +9,28 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Feather from 'react-native-vector-icons/Feather';
 import CustomStatusBar from '../Components/CustomStatusBar';
 import Header from '../Components/Header';
+import navigationService from '../navigationService';
+import {useSelector, useDispatch} from 'react-redux';
+import {AddToCart, RemoveToCart} from '../Store/slices/common';
+import CustomButton from '../Components/CustomButton';
 
 const Dresses = () => {
   const [like, SetLike] = useState(false);
 
+  const dispatch = useDispatch();
 
+  const cartData = useSelector(state => state.commonReducer.cart);
+
+  const addedItem = item => {
+    console.log('add DATA===>', cartData);
+
+    dispatch(AddToCart(item));
+  };
+
+  const removeItem = item => {
+    console.log('REMOVE DATA', cartData);
+    dispatch(RemoveToCart(item));
+  };
   const makeUp = [
     {
       id: 1,
@@ -23,6 +40,7 @@ const Dresses = () => {
       img: require('../Assets/Images/Image.png'),
       like: true,
       sale: '30% off',
+      qty: 0,
     },
     {
       id: 2,
@@ -31,6 +49,7 @@ const Dresses = () => {
       price: 15.0,
       img: require('../Assets/Images/Image.png'),
       like: false,
+      qty: 0,
     },
     {
       id: 3,
@@ -39,6 +58,7 @@ const Dresses = () => {
       price: 4.5,
       img: require('../Assets/Images/image3.png'),
       like: true,
+      qty: 0,
     },
     {
       id: 4,
@@ -48,6 +68,7 @@ const Dresses = () => {
       img: require('../Assets/Images/Image.png'),
       like: true,
       sale: '30% off',
+      qty: 0,
     },
     {
       id: 5,
@@ -56,6 +77,7 @@ const Dresses = () => {
       price: 8.94,
       img: require('../Assets/Images/Image.png'),
       like: false,
+      qty: 0,
     },
     {
       id: 6,
@@ -64,6 +86,7 @@ const Dresses = () => {
       price: 18.5,
       img: require('../Assets/Images/Image.png'),
       like: true,
+      qty: 0,
     },
   ];
 
@@ -103,86 +126,128 @@ const Dresses = () => {
           marginTop: moderateScale(5, 0.3),
         }}
         renderItem={({item, index}) => {
+          const tempitem = cartData.find((x,index)=> x?.id == item?.id)
+          console.log("QTY+++",tempitem)
           return (
-            <View
-              style={{
-                width: windowWidth * 0.45,
-                height: windowHeight * 0.35,
-                backgroundColor: '#fff',
-                margin: moderateScale(5, 0.3),
-                borderRadius: 5,
-                alignItems: 'center',
-              }}>
-              <View
+            <View>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => addedItem(item)}
                 style={{
-                  width: windowWidth * 0.35,
-                  height: windowHeight * 0.22,
-                  overflow: 'hidden',
+                  width: windowWidth * 0.45,
+                  height: windowHeight * 0.35,
+                  backgroundColor: '#fff',
+                  margin: moderateScale(5, 0.3),
                   borderRadius: 5,
-                  marginTop: moderateScale(15, 0.3),
+                  alignItems: 'center',
                 }}>
-                {item?.like && (
-                  <TouchableOpacity
-                    activeOpacity={0.6}
-                    style={styles.heartIcon}>
-                    <Icon
-                      name={'heart'}
-                      as={Entypo}
-                      size={moderateScale(25, 0.3)}
-                      color={'#F03710'}
-                    />
-                  </TouchableOpacity>
-                )}
-                <CustomImage
-                  source={item.img}
-                  resizeMode={'cover'}
+                <TouchableOpacity
+                  activeOpacity={0.8}
                   style={{
-                    height: '100%',
-                    height: '100%',
-                  }}
-                />
- 
-                { item?.sale && (<View style={styles.sale}>
-                  <CustomText
-                    isBold
+                    width: windowWidth * 0.35,
+                    height: windowHeight * 0.22,
+                    overflow: 'hidden',
+                    borderRadius: 5,
+                    marginTop: moderateScale(15, 0.3),
+                  }}>
+                  {item?.like && (
+                    <TouchableOpacity
+                      activeOpacity={0.8}
+                      style={styles.heartIcon}>
+                      <Icon
+                        name={'heart'}
+                        as={Entypo}
+                        size={moderateScale(25, 0.3)}
+                        color={'#ff0000'}
+                      />
+                    </TouchableOpacity>
+                  )}
+                  <CustomImage
+                    source={item.img}
+                    resizeMode={'cover'}
                     style={{
-                      color: '#fff',
-                    }}>
-                    {item.sale}
-                  </CustomText>
-                </View>)}
+                      height: '100%',
+                      height: '100%',
+                    }}
+                  />
 
-              </View>
+                  {item?.sale && (
+                    <View style={styles.sale}>
+                      <CustomText
+                        isBold
+                        style={{
+                          color: '#fff',
+                          fontSize: 12,
+                        }}>
+                        {item.sale}
+                      </CustomText>
+                    </View>
+                  )}
+                </TouchableOpacity>
 
-              <CustomText
-                isBold
-                style={{
-                  textAlign: 'left',
-                  width: windowWidth * 0.35,
-                  height: windowHeight * 0.03,
-                  color: '#464342',
-                  marginTop: moderateScale(10, 0.3),
-                }}>
-                {item.Title}
-              </CustomText>
+                <CustomText
+                  isBold
+                  style={{
+                    textAlign: 'left',
+                    width: windowWidth * 0.35,
+                    height: windowHeight * 0.03,
+                    color: '#464342',
+                    marginTop: moderateScale(10, 0.3),
+                  }}>
+                  {item.Title}
+                </CustomText>
 
-              <CustomText
-                style={{
-                  textAlign: 'left',
-                  width: windowWidth * 0.35,
-                  height: windowHeight * 0.03,
-                  color: '#a2a2a2',
-                }}>
-                {item.subTitle}
-              </CustomText>
-              <CustomText
-                style={{
-                  textAlign: 'left',
-                  width: windowWidth * 0.35,
-                  color: '#fe6e2e',
-                }}>
-                $ {item.price}
-              </CustomText>
+                <CustomText
+                  style={{
+                    textAlign: 'left',
+                    width: windowWidth * 0.35,
+                    height: windowHeight * 0.03,
+                    color: '#a2a2a2',
+                  }}>
+                  {item.subTitle}
+                </CustomText>
+
+                <CustomText
+                  style={{
+                    textAlign: 'left',
+                    width: windowWidth * 0.35,
+                    color: '#E56A36',
+                  }}>
+                  $ {item.price}
+                </CustomText>
+
+                <CustomText
+                  onPress={() => {
+                    navigationService.navigate('DressesDetail', {item});
+                  }}
+                  style={{
+                    textAlign: 'right',
+                    width: windowWidth * 0.35,
+                    color: '#2C2928',
+                    position: 'absolute',
+                    bottom: moderateScale(10, 0.3),
+                    right: moderateScale(15, 0.3),
+                    fontSize: 13,
+                  }}>
+                  View all
+                </CustomText>
+              </TouchableOpacity>
+
+              {tempitem != undefined && tempitem?.qty >= 0 && (
+                <CustomButton 
+                  isBold
+                  onPress={() => removeItem(item)}
+                  text={'Remove Cart'}
+                  textColor={Color.white}
+                  width={windowWidth * 0.28}
+                  marginTop={10}
+                  marginBottom={10}
+                  height={windowHeight * 0.04}
+                  bgColor={'#FF6E2E'}
+                  fontSize={14}
+                  borderRadius={moderateScale(5, 0.3)}
+                />
+              )}
             </View>
           );
         }}
@@ -202,14 +267,16 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
 
-  sale:{
+  sale: {
     position: 'absolute',
     bottom: moderateScale(10, 0.3),
     right: moderateScale(5, 0.3),
     zIndex: 1,
-    width:windowWidth*0.20,
-    height:windowHeight*0.03,
+    width: windowWidth * 0.17,
+    height: windowHeight * 0.04,
+    backgroundColor: '#ff6e2e',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: (windowWidth * 0.17) / 2,
   },
-
-
 });
