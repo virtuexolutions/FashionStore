@@ -115,9 +115,9 @@ const Header = props => {
               size={moderateScale(22, 0.3)}
               color={Color.black}
               onPress={
-                rightName == 'bell'
+                rightName == 'shopping-bag'
                   ? () => {
-                      setIsVisible(true);
+                      navigationService.navigate('CheckOutScreen')
                     }
                   : rightPress
               }
