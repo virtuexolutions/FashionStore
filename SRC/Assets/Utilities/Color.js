@@ -2,8 +2,6 @@ import { useSelector } from "react-redux";
 
 
 
-
-
 export default Color = {
   
   // Basic Colors
@@ -23,7 +21,7 @@ export default Color = {
   purple: '#0D668E',
 
   // theme colors
-  themeColor: '#AF69EF',
+  themeColor: '#FF6E2E',
   themePink : '#F84569',
   themeColor1: '#52C4BF',
 

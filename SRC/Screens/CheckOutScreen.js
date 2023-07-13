@@ -19,7 +19,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import {Icon} from 'native-base';
 import CustomButton from '../Components/CustomButton';
 import {ActivityIndicator} from 'react-native';
-import {setWholeCart} from '../Store/slices/common';
+import {EmptyCart, setWholeCart} from '../Store/slices/common';
 import navigationService from '../navigationService';
 import {useEffect} from 'react';
 import { Get, Post } from '../Axios/AxiosInterceptorFunction';
@@ -75,8 +75,8 @@ const CheckOutScreen = ({route}) => {
           return <CartItem item={item} fromCheckout={true} />;
         }}
         ListFooterComponent={() => {
-          return (<View></View>
-            // <>
+          return (<View>
+            {/*  <>
             //   <CustomText isBold style={styles.heading}>
             //     Cart Total
             //   </CustomText>
@@ -92,7 +92,7 @@ const CheckOutScreen = ({route}) => {
             //     <CustomText isBold style={styles.subHeading}>
             //       Shipping
             //     </CustomText>
-            //     <View
+            //     <View 
             //       style={{
             //         width: windowWidth * 0.6,
             //         // backgroundColor : 'red'
@@ -242,10 +242,30 @@ const CheckOutScreen = ({route}) => {
             //     borderWidth={2}
             //     borderRadius={moderateScale(30, 0.3)}
             //   />
-            // </>
+          // </>*/}
+            <CustomButton
+          isBold
+          onPress={() => {
+            dispatch(EmptyCart())
+            navigationService.navigate('HomeScreen')
+          }}
+          text={'Pay'}
+          textColor={Color.white}
+          width={windowWidth * 0.8}
+          height={windowHeight * 0.07}
+          fontSize={moderateScale(16, 0.6)}
+          // marginBottom={moderateScale(10,.3)}
+          // marginTop={moderateScale(20, 0.3)}
+          bgColor={['#F89D52', '#FF6E2E']}
+          borderRadius={moderateScale(30, 0.3)}
+          isGradient
+        />
+        </View>
           );
         }}
       /> 
+
+
     </ScreenBoiler>
   );
 };

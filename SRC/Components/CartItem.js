@@ -9,8 +9,12 @@ import CustomImage from './CustomImage';
 import {Icon} from 'native-base';
 import {
   addQuantity,
+  decrementQuantity,
+  increamentQuantity,
+  setColor,
   setProductColor,
   setProductSize,
+  setSize,
   subQuantity,
 } from '../Store/slices/common';
 import {useDispatch, useSelector} from 'react-redux';
@@ -19,6 +23,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const CartItem = ({item, fromCheckout}) => {
   const cartData = useSelector(state => state.commonReducer.cartData);
+  console.log(item?.img)
   console.log("🚀 ~ file: CartItem.js:22 ~ CartItem ~ cartData:", cartData)
   const dispatch = useDispatch();
 
@@ -43,7 +48,7 @@ const CartItem = ({item, fromCheckout}) => {
           
           />
           <CustomImage
-            source={item?.image}
+            source={item?.img}
             style={{
               width: windowWidth * 0.3,
               height: windowHeight * 0.15,
@@ -69,12 +74,12 @@ const CartItem = ({item, fromCheckout}) => {
                   <TouchableOpacity
                     activeOpacity={0.9}
                     onPress={() => {
-                      // dispatch(
-                      //   setProductSize({
-                      //     id: item?.id,
-                      //     size: item1,
-                      //   }),
-                      // );
+                      dispatch(
+                        setSize({
+                          id: item?.id,
+                          size: item1,
+                        }),
+                      );
                     }}
                     style={styles.sizeBox}>
                     <CustomText style={{color: Color.black}}>
@@ -86,7 +91,7 @@ const CartItem = ({item, fromCheckout}) => {
             )}
           </View>
           {item?.selectedColor ? (
-            <CustomText style={{color: Color.black, alignItems: 'center'}}>
+            <CustomText style={{color: Color.black, textAlign : 'left'}}>
               Selected Color:{' '}
               {
                 <View
@@ -109,12 +114,12 @@ const CartItem = ({item, fromCheckout}) => {
                   <TouchableOpacity
                     activeOpacity={0.9}
                     onPress={() => {
-                      // dispatch(
-                      //   setProductColor({
-                      //     id: item?.id,
-                      //     color: item1,
-                      //   }),
-                      // );
+                      dispatch(
+                        setColor({
+                          id: item?.id,
+                          colors: item1,
+                        }),
+                      );
                     }}
                     style={[
                       styles.colorBox,
@@ -146,7 +151,7 @@ const CartItem = ({item, fromCheckout}) => {
             <CustomText style={styles.amount}>
               {numeral(item?.price * item?.qty).format('$0,0.00')}
             </CustomText>
-            {
+            {/* {
               fromCheckout ? 
               <CustomText
               isBold
@@ -156,7 +161,7 @@ const CartItem = ({item, fromCheckout}) => {
               }}>
               Quantity : {item?.qty}
             </CustomText>
-              :
+              : */}
             
             <View
               style={{
@@ -167,10 +172,10 @@ const CartItem = ({item, fromCheckout}) => {
               <Icon
                 name={'add-circle-sharp'}
                 as={Ionicons}
-                color={Color.green}
+                color={Color.themeColor}
                 size={moderateScale(25, 0.3)}
                 onPress={() => {
-                  dispatch(addQuantity({id: item?.id}));
+                  item?.qty < item?.totalQty &&  dispatch(increamentQuantity({id: item?.id}));
                 }}
               />
               <CustomText
@@ -184,14 +189,14 @@ const CartItem = ({item, fromCheckout}) => {
               <Icon
                 name={'circle-with-minus'}
                 as={Entypo}
-                color={Color.green}
+                color={Color.themeColor}
                 size={moderateScale(24, 0.3)}
                 onPress={() => {
-                  dispatch(subQuantity({id: item?.id}));
+                  item?.qty > 1 && dispatch(decrementQuantity({id: item?.id}));
                 }}
               />
             </View>
-}
+{/* } */}
           </View>
         </View>
       </View>
@@ -254,10 +259,10 @@ const styles = StyleSheet.create({
     width: moderateScale(20, 0.3),
     height: moderateScale(20, 0.3),
     borderRadius: moderateScale(10, 0.3),
-    marginRight: moderateScale(5, 0.3),
+    // marginRight: moderateScale(5, 0.3),
   },
   amount: {
     fontSize: moderateScale(18, 0.3),
-    color: Color.green,
+    color: Color.themeColor,
   },
 });

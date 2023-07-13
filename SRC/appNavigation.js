@@ -43,7 +43,10 @@ const AppNavigator = () => {
     const firstScreen =
         token != null
         ? 'HomeScreen'
-        : 'WelcomeScreen';
+        : walkThrough == true ?
+        'GetStarted' : 
+        
+        'WelcomeScreen';
 
     return (
       <NavigationContainer ref={navigationService.navigationRef}>

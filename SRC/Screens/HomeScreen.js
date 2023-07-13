@@ -27,6 +27,8 @@ const HomeScreen = () => {
       name: 'All',
       image2: require('../Assets/Images/menu.png'),
       image: require('../Assets/Images/menu1.png'),
+      onPress:()=>{ 
+        console.log('here')}
     },
     {
       name: 'Dress',
@@ -40,16 +42,22 @@ const HomeScreen = () => {
       name: 'T-shirt',
       image: require('../Assets/Images/tshirt.png'),
       image2: require('../Assets/Images/tshirt1.png'),
+      onPress:()=>{ 
+        console.log('here')}
     },
     {
       name: 'jeans',
       image: require('../Assets/Images/jeans.png'),
       image2: require('../Assets/Images/jeans1.png'),
-    },
+      onPress:()=>{ 
+        console.log('here')}
+  },
     {
       name: 'shoes',
       image: require('../Assets/Images/shoes.png'),
       image2: require('../Assets/Images/shoes1.png'),
+      onPress:()=>{ 
+        console.log('here')}
     },
   ];
   const specialOffers = [
@@ -176,12 +184,16 @@ const HomeScreen = () => {
       showsVerticalScrollIndicator={false}
         style={{
           height: windowHeight,
-          width: windowWidth * 0.95,
+          width: windowWidth,
           //   alignItems: 'center',
           alignSelf: 'center',
           //   paddingTop: windowHeight * 0.1,
             backgroundColor: '#FDFDFD',
-        }}>
+        }}
+        contentContainerStyle={{
+          paddingHorizontal : moderateScale(10,0.6)
+        }}
+        >
         <CustomText
           style={{
             fontSize: moderateScale(24, 0.6),
@@ -254,10 +266,10 @@ const HomeScreen = () => {
             justifyContent: 'space-between',
           }}>
           {categories.map((item, index) => {
-            // console.log(
-            //   '🚀 ~ file: HomeScreen.js:146 ~ {categories.map ~ item:',
-            //   item,
-            // );
+            console.log(
+              '🚀 ~ file: HomeScreen.js:146 ~ {categories.map ~ item:',
+              item,
+            );
             return (
               <>
                 <TouchableOpacity style={{alignItems: 'center', width: windowWidth * 0.16}} onPress={item?.onPress}>
@@ -287,6 +299,7 @@ const HomeScreen = () => {
                       resizeMode={'cover'}
                       onPress={() => {
                         setSelectedCategory(item?.name);
+                        item?.onPress()
                       }}
                     />
                   </LinearGradient>
@@ -309,10 +322,13 @@ const HomeScreen = () => {
             style={{
               flexDirection: 'row',
               // justifyContent: 'space-between',
-              width: windowWidth * 0.95,
+              width: windowWidth,
               marginTop: moderateScale(20, 0.3),
               height: windowHeight * 0.1,
               //   backgroundColor: 'black',
+            }}
+            contentContainerStyle={{
+              paddingHorizontal : moderateScale(10,0.6)
             }}
             horizontal={true}
             showsHorizontalScrollIndicator={false}>
@@ -332,15 +348,6 @@ const HomeScreen = () => {
                   start={{x: 0, y: 0}}
                   end={{x: 0, y: 1}}>
                   <View
-                  //   style={{
-                  //     width: windowWidth * 0.5,
-                  //     height: windowHeight * 0.12,
-                  //     borderRadius: moderateScale(20, 0.6),
-                  //     // backgroundColor: 'orange',
-                  //     marginLeft: moderateScale(10, 0.3),
-                  //     alignItems: 'center',
-                  //     justifyContent: 'center',
-                  //   }}
                   >
                     <CustomText
                       style={{
