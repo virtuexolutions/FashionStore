@@ -19,16 +19,16 @@ const ProductCard = ({item}) => {
   const dispatch = useDispatch();
 
   const cartData = useSelector(state => state.commonReducer.cart);
-  console.log("🚀 ~ file: ProductCard.js:21 ~ ProductCard ~ cartData:", cartData)
+  // console.log("🚀 ~ file: ProductCard.js:21 ~ ProductCard ~ cartData:", cartData)
 
   const addedItem = item => {
-    console.log('add DATA===>', cartData);
+    // console.log('add DATA===>', cartData);
 
     dispatch(AddToCart(item));
   };
 
   const removeItem = item => {
-    console.log('REMOVE DATA', cartData);
+    // console.log('REMOVE DATA', cartData);
     dispatch(RemoveToCart(item));
   };
   const tempitem = cartData?.find((x,index)=> x?.id == item?.id)

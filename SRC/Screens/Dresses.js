@@ -13,6 +13,7 @@ import navigationService from '../navigationService';
 import {useSelector, useDispatch} from 'react-redux';
 import {AddToCart, RemoveToCart} from '../Store/slices/common';
 import CustomButton from '../Components/CustomButton';
+import ProductCard from '../Components/ProductCard';
 
 const Dresses = () => {
   const [like, SetLike] = useState(false);
@@ -41,9 +42,13 @@ const Dresses = () => {
       img: require('../Assets/Images/Image.png'),
       like: true,
       sale: '30% off',
-      qty: 0,
+      qty: 1,
       colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
-      size:['XS', 'S', 'M', 'L', 'XL']
+      size:['XS', 'S', 'M', 'L', 'XL'],
+      cotton:1,
+      selectedSize : '',
+      selectedColor : '',
+      totalQty : 18,
     },
     {
       id: 2,
@@ -52,9 +57,13 @@ const Dresses = () => {
       price: 15.0,
       img: require('../Assets/Images/Image.png'),
       like: false,
-      qty: 0,
+      qty: 1,
       colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
-      size:['XS', 'S', 'M', 'L', 'XL']
+      size:['XS', 'S', 'M', 'L', 'XL'],
+      cotton:1,
+      selectedSize : '',
+      selectedColor : '',
+      totalQty : 18,
     },
     {
       id: 3,
@@ -63,9 +72,13 @@ const Dresses = () => {
       price: 4.5,
       img: require('../Assets/Images/image3.png'),
       like: true,
-      qty: 0,
+      qty: 1,
       colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
-      size:['XS', 'S', 'M', 'L', 'XL']
+      size:['XS', 'S', 'M', 'L', 'XL'],
+      cotton:1,
+      selectedSize : '',
+      selectedColor : '',
+      totalQty : 18,
     },
     {
       id: 4,
@@ -75,9 +88,13 @@ const Dresses = () => {
       img: require('../Assets/Images/Image.png'),
       like: true,
       sale: '30% off',
-      qty: 0,
+      qty: 1,
       colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
-      size:['XS', 'S', 'M', 'L', 'XL']
+      size:['XS', 'S', 'M', 'L', 'XL'],
+      cotton:1,
+      selectedSize : '',
+      selectedColor : '',
+      totalQty : 18,
     },
     {
       id: 5,
@@ -86,9 +103,13 @@ const Dresses = () => {
       price: 8.94,
       img: require('../Assets/Images/Image.png'),
       like: false,
-      qty: 0,
+      qty: 1,
       colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
-      size:['XS', 'S', 'M', 'L', 'XL']
+      size:['XS', 'S', 'M', 'L', 'XL'],
+      cotton:1,
+      selectedSize : '',
+      selectedColor : '',
+      totalQty : 18,
     },
     {
       id: 6,
@@ -97,9 +118,13 @@ const Dresses = () => {
       price: 18.5,
       img: require('../Assets/Images/Image.png'),
       like: true,
-      qty: 0,
+      qty: 1,
       colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
-      size:['XS', 'S', 'M', 'L', 'XL']
+      size:['XS', 'S', 'M', 'L', 'XL'],
+      cotton:1,
+      selectedSize : '',
+      selectedColor : '',
+      totalQty : 18,
     },
   ];
 
@@ -142,130 +167,131 @@ const Dresses = () => {
           const tempitem = cartData.find((x,index)=> x?.id == item?.id)
 
           return (
-            <View>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => addedItem(item)}
-                style={{
-                  width: windowWidth * 0.45,
-                  height: windowHeight * 0.35,
-                  backgroundColor: '#fff',
-                  margin: moderateScale(5, 0.3),
-                  borderRadius: 5,
-                  alignItems: 'center',
-                }}>
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  style={{
-                    width: windowWidth * 0.35,
-                    height: windowHeight * 0.22,
-                    overflow: 'hidden',
-                    borderRadius: 5,
-                    marginTop: moderateScale(15, 0.3),
-                  }}>
-                  {item?.like && (
-                    <TouchableOpacity
-                      activeOpacity={0.8}
-                      style={styles.heartIcon}>
-                      <Icon
-                        name={'heart'}
-                        as={Entypo}
-                        size={moderateScale(25, 0.3)}
-                        color={'#ff0000'}
-                      />
-                    </TouchableOpacity>
-                  )}
+            <ProductCard item={item}/>
+            // <View>
+            //   <TouchableOpacity
+            //     activeOpacity={0.8}
+            //     onPress={() => addedItem(item)}
+            //     style={{
+            //       width: windowWidth * 0.45,
+            //       height: windowHeight * 0.35,
+            //       backgroundColor: '#fff',
+            //       margin: moderateScale(5, 0.3),
+            //       borderRadius: 5,
+            //       alignItems: 'center',
+            //     }}>
+            //     <TouchableOpacity
+            //       activeOpacity={0.8}
+            //       style={{
+            //         width: windowWidth * 0.35,
+            //         height: windowHeight * 0.22,
+            //         overflow: 'hidden',
+            //         borderRadius: 5,
+            //         marginTop: moderateScale(15, 0.3),
+            //       }}>
+            //       {item?.like && (
+            //         <TouchableOpacity
+            //           activeOpacity={0.8}
+            //           style={styles.heartIcon}>
+            //           <Icon
+            //             name={'heart'}
+            //             as={Entypo}
+            //             size={moderateScale(25, 0.3)}
+            //             color={'#ff0000'}
+            //           />
+            //         </TouchableOpacity>
+            //       )}
 
-                  <CustomImage
-                     onPress={() => addedItem(item)}
-                    source={item.img}
-                    resizeMode={'cover'}
-                    style={{
-                      height: '100%',
-                      height: '100%',
-                    }}
-                  />
+            //       <CustomImage
+            //          onPress={() => addedItem(item)}
+            //         source={item.img}
+            //         resizeMode={'cover'}
+            //         style={{
+            //           height: '100%',
+            //           height: '100%',
+            //         }}
+            //       />
 
                   
 
-                  {item?.sale && (
-                    <View style={styles.sale}>
-                      <CustomText
-                        isBold
-                        style={{
-                          color: '#fff',
-                          fontSize: 12,
-                        }}>
-                        {item.sale}
-                      </CustomText>
-                    </View>
-                  )}
-                </TouchableOpacity>
+            //       {item?.sale && (
+            //         <View style={styles.sale}>
+            //           <CustomText
+            //             isBold
+            //             style={{
+            //               color: '#fff',
+            //               fontSize: 12,
+            //             }}>
+            //             {item.sale}
+            //           </CustomText>
+            //         </View>
+            //       )}
+            //     </TouchableOpacity>
 
-                <CustomText
-                  isBold
-                  style={{
-                    textAlign: 'left',
-                    width: windowWidth * 0.35,
-                    height: windowHeight * 0.03,
-                    color: '#464342',
-                    marginTop: moderateScale(10, 0.3),
-                  }}>
-                  {item.Title}
-                </CustomText>
+            //     <CustomText
+            //       isBold
+            //       style={{
+            //         textAlign: 'left',
+            //         width: windowWidth * 0.35,
+            //         height: windowHeight * 0.03,
+            //         color: '#464342',
+            //         marginTop: moderateScale(10, 0.3),
+            //       }}>
+            //       {item.Title}
+            //     </CustomText>
 
-                <CustomText
-                  style={{
-                    textAlign: 'left',
-                    width: windowWidth * 0.35,
-                    height: windowHeight * 0.03,
-                    color: '#a2a2a2',
-                  }}>
-                  {item.subTitle}
-                </CustomText>
+            //     <CustomText
+            //       style={{
+            //         textAlign: 'left',
+            //         width: windowWidth * 0.35,
+            //         height: windowHeight * 0.03,
+            //         color: '#a2a2a2',
+            //       }}>
+            //       {item.subTitle}
+            //     </CustomText>
 
-                <CustomText
-                  style={{
-                    textAlign: 'left',
-                    width: windowWidth * 0.35,
-                    color: '#E56A36',
-                  }}>
-                  $ {item.price}
-                </CustomText>
+            //     <CustomText
+            //       style={{
+            //         textAlign: 'left',
+            //         width: windowWidth * 0.35,
+            //         color: '#E56A36',
+            //       }}>
+            //       $ {item.price}
+            //     </CustomText>
 
-                <CustomText
-                  onPress={() => {
-                    navigationService.navigate('DressesDetail', {item});
-                  }}
-                  style={{
-                    textAlign: 'right',
-                    width: windowWidth * 0.35,
-                    color: '#2C2928',
-                    position: 'absolute',
-                    bottom: moderateScale(10, 0.3),
-                    right: moderateScale(15, 0.3),
-                    fontSize: 13,
-                  }}>
-                  View all
-                </CustomText>
-              </TouchableOpacity>
+            //     <CustomText
+            //       onPress={() => {
+            //         navigationService.navigate('DressesDetail', {item});
+            //       }}
+            //       style={{
+            //         textAlign: 'right',
+            //         width: windowWidth * 0.35,
+            //         color: '#2C2928',
+            //         position: 'absolute',
+            //         bottom: moderateScale(10, 0.3),
+            //         right: moderateScale(15, 0.3),
+            //         fontSize: 13,
+            //       }}>
+            //       View all
+            //     </CustomText>
+            //   </TouchableOpacity>
 
-              {tempitem && item?.qty >= 0 && (
-                <CustomButton 
-                  isBold
-                  onPress={() => removeItem(item)}
-                  text={'Remove'}
-                  textColor={Color.white}
-                  width={windowWidth * 0.28}
-                  marginTop={10}
-                  marginBottom={10}
-                  height={windowHeight * 0.04}
-                  bgColor={'#FF6E2E'}
-                  fontSize={14}
-                  borderRadius={moderateScale(5, 0.3)}
-                />
-              )}
-            </View>
+            //   {tempitem && item?.qty >= 0 && (
+            //     <CustomButton 
+            //       isBold
+            //       onPress={() => removeItem(item)}
+            //       text={'Remove'}
+            //       textColor={Color.white}
+            //       width={windowWidth * 0.28}
+            //       marginTop={10}
+            //       marginBottom={10}
+            //       height={windowHeight * 0.04}
+            //       bgColor={'#FF6E2E'}
+            //       fontSize={14}
+            //       borderRadius={moderateScale(5, 0.3)}
+            //     />
+            //   )}
+            // </View>
           );
         }}
       />

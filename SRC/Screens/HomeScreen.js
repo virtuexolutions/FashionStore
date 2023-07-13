@@ -75,7 +75,12 @@ const HomeScreen = () => {
       sale: '30% off',
       qty: 1,
       colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
-      size:['XS', 'S', 'M', 'L', 'XL']
+      size:['XS', 'S', 'M', 'L', 'XL'],
+      cotton:1,
+      selectedSize : '',
+      selectedColor : '',
+      totalQty : 18,
+      images:[require('../Assets/Images/Mask2.png'),require('../Assets/Images/Mask2.png'),require('../Assets/Images/Mask2.png'),require('../Assets/Images/Mask2.png'),require('../Assets/Images/Mask2.png'),],
     },
     {
       id: 2,
@@ -86,7 +91,11 @@ const HomeScreen = () => {
       like: false,
       qty: 1,
       colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
-      size:['XS', 'S', 'M', 'L', 'XL']
+      size:['XS', 'S', 'M', 'L', 'XL'],
+      cotton:1,
+      selectedSize : '',
+      selectedColor : '',
+      totalQty : 18,
     },
     {
       id: 3,
@@ -97,7 +106,11 @@ const HomeScreen = () => {
       like: true,
       qty: 1,
       colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
-      size:['XS', 'S', 'M', 'L', 'XL']
+      size:['XS', 'S', 'M', 'L', 'XL'],
+      cotton:1,
+      selectedSize : '',
+      selectedColor : '',
+      totalQty : 18,
     },
     {
       id: 4,
@@ -109,7 +122,11 @@ const HomeScreen = () => {
       sale: '30% off',
       qty: 1,
       colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
-      size:['XS', 'S', 'M', 'L', 'XL']
+      size:['XS', 'S', 'M', 'L', 'XL'],
+      cotton:1,
+      selectedSize : '',
+      selectedColor : '',
+      totalQty : 18,
     },
     {
       id: 5,
@@ -120,7 +137,11 @@ const HomeScreen = () => {
       like: false,
       qty: 1,
       colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
-      size:['XS', 'S', 'M', 'L', 'XL']
+      size:['XS', 'S', 'M', 'L', 'XL'],
+      cotton:1,
+      selectedSize : '',
+      selectedColor : '',
+      totalQty : 18,
     },
     {
       id: 6,
@@ -131,9 +152,13 @@ const HomeScreen = () => {
       like: true,
       qty: 1,
       colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
-      size:['XS', 'S', 'M', 'L', 'XL']
+      size:['XS', 'S', 'M', 'L', 'XL'],
+      cotton:1,
+      selectedSize : '',
+      selectedColor : '',
+      totalQty : 18,
     },
-  ]; 
+  ];
   return (
     <>
       <CustomStatusBar backgroundColor={'#FDFDFD'} barStyle={'dark-content'} />

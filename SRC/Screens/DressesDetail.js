@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {windowHeight, windowWidth} from '../Utillity/utils';
 import CustomText from '../Components/CustomText';
 import {ScaledSheet, moderateScale} from 'react-native-size-matters';
@@ -14,30 +14,59 @@ import {
   AddToCart,
   decrementQuantity,
   increamentQuantity,
+  setColor,
+  setCotton,
+  setLiked,
+  setSize,
 } from '../Store/slices/common';
 import CustomStatusBar from '../Components/CustomStatusBar';
 import Header from '../Components/Header';
+import {useIsFocused} from '@react-navigation/native';
 
 const DressesDetail = props => {
   const item = props.route.params.item;
+  console.log("🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:", item)
+  const cartData = useSelector(state => state.commonReducer.cart);
+  console.log(
+    '🚀 ~ file: DressesDetail.js:26 ~ DressesDetail ~ cartData:',
+    cartData,
+  );
+  const cartitem = cartData?.find((x, index) => x?.id == item?.id);
+  // console.log("🚀 ~ file: DressesDetail.js:23 ~ DressesDetail ~ item:", item)
   const dispatch = useDispatch();
+  const focused = useIsFocused();
+  const [Selectedcolor, SetSelectedColor] = useState(
+    cartitem ? cartitem?.selectedColor : '',
+  );
+  console.log(
+    '🚀 ~ file: DressesDetail.js:30 ~ DressesDetail ~ Selectedcolor:',
+    Selectedcolor,
+  );
+  const [Selectedsize, setSelectedSize] = useState(
+    cartitem ? cartitem?.selectedSize : '',
+  );
+  console.log(
+    '🚀 ~ file: DressesDetail.js:35 ~ DressesDetail ~ Selectedsize:',
+    Selectedsize,
+  );
+  const [like, setLike] = useState(cartitem ? cartitem.like : item?.like);
+  console.log('🚀 ~ file: DressesDetail.js:39 ~ DressesDetail ~ liked:', like);
 
-  const [Selectedcolor, SetSelectedColor] = useState('');
-  const [Selectedsize, SetSelectedSize] = useState('');
-  const [liked, setLiked] = useState(false);
   const [index, setIndex] = useState(1);
-  console.log("🚀 ~ file: DressesDetail.js:29 ~ DressesDetail ~ index:", index)
-
-  const CartData = useSelector(state => state.commonReducer.cart);
-  console.log("🚀 ~ file: DressesDetail.js:32 ~ DressesDetail ~ CartData:", CartData)
+  const [quantity, setQuantity] = useState(
+    cartitem ? cartitem?.qty : item?.qty,
+  );
+  const [cotton, setcotton] = useState(cartitem ? cartitem?.cotton : item?.cotton);
+  // console.log(
+  //   '🚀 ~ file: DressesDetail.js:32 ~ DressesDetail ~ CartData:',
+  //   cartData,
+  // );
 
   // const [image1, setimage1] = useState(second)
 
   const addedItem = item => {
     dispatch(AddToCart(item));
   };
-
-
 
   const images = [
     require('../Assets/Images/image3.png'),
@@ -47,13 +76,28 @@ const DressesDetail = props => {
     require('../Assets/Images/Mask.png'),
   ];
 
- console.log("Hello WORLD",cartData)
+  // console.log('', cartData);
 
+  // console.log("🚀 ~ file: DressesDetail.js:58 ~ DressesDetail ~ cartitem:", cartitem)
+  const [finalItem, setFinalItem] = useState(
+    cartitem != undefined ? cartitem : item,
+  );
+  const body={
+    Title : item?.Title,
+    colors: Selectedcolor,
+    cotton: cotton,
+    id: item?.id,
+    img:item?.img,
+    like: like,
+    price:item?.price,
+    qty: quantity,
+    sale: item?.sale, 
+    size:Selectedsize, 
+    subTitle:item?.subTitle
+  }
 
-  const cartitem = cartData?.find((x,index)=> x?.id == item?.id)
   return (
     <>
-    
       <CustomStatusBar backgroundColor={'#FDFDFD'} barStyle={'dark-content'} />
       <Header
         showLeft={true}
@@ -74,42 +118,46 @@ const DressesDetail = props => {
               justifyContent: 'center',
               alignItems: 'center',
               alignSelf: 'center',
-            }}>{index>0 && (<>
-            <View
-              style={{
-                width: windowWidth * 0.6,
-                height: windowHeight * 0.28,
-                alignItems: 'center',
-                overflow: 'hidden',
-                alignSelf: 'center',
-                left: -170,
-                position: 'absolute',
-                backgroundColor: 'black',
-              }}>
-              <CustomImage
-                source={images[index - 1]}
-                style={{
-                  height: '100%',
-                  height: '100%',
-                }}
-                resizeMode={'cover'}
-              />
-            </View>
-            <TouchableOpacity
-              onPress={() => {
-                setIndex(index - 1);
-              }}
-              style={{
-                height: moderateScale(25, 0.6),
-                width: moderateScale(25, 0.6),
-                borderRadius: moderateScale(25, 0.6) / 2,
-                alignItems: 'center',
-                justifyContent: 'center',
-                left: -5,
-                backgroundColor: '#FF6E2E',
-              }}>
-              <Icon name={'left'} as={AntDesign} color={'white'} />
-            </TouchableOpacity></>) }
+            }}>
+            {index > 0 && (
+              <>
+                <View
+                  style={{
+                    width: windowWidth * 0.6,
+                    height: windowHeight * 0.28,
+                    alignItems: 'center',
+                    overflow: 'hidden',
+                    alignSelf: 'center',
+                    left: -170,
+                    position: 'absolute',
+                    backgroundColor: 'black',
+                  }}>
+                  <CustomImage
+                    source={images[index - 1]}
+                    style={{
+                      height: '100%',
+                      height: '100%',
+                    }}
+                    resizeMode={'cover'}
+                  />
+                </View>
+                <TouchableOpacity
+                  onPress={() => {
+                    setIndex(index - 1);
+                  }}
+                  style={{
+                    height: moderateScale(25, 0.6),
+                    width: moderateScale(25, 0.6),
+                    borderRadius: moderateScale(25, 0.6) / 2,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    left: -5,
+                    backgroundColor: '#FF6E2E',
+                  }}>
+                  <Icon name={'left'} as={AntDesign} color={'white'} />
+                </TouchableOpacity>
+              </>
+            )}
 
             <View
               style={{
@@ -128,43 +176,45 @@ const DressesDetail = props => {
                 }}
               />
             </View>
-            {index < images.length-1 && ( <>
-            <TouchableOpacity
-              onPress={() => {
-                setIndex(index + 1);
-              }}
-              style={{
-                height: moderateScale(25, 0.6),
-                width: moderateScale(25, 0.6),
-                borderRadius: moderateScale(25, 0.6) / 2,
-                alignItems: 'center',
-                zIndex: 1,
-                justifyContent: 'center',
-                right: -5,
-                backgroundColor: '#FF6E2E',
-              }}>
-              <Icon name={'right'} as={AntDesign} color={'white'} />
-            </TouchableOpacity>
-           
-              <View
-                style={{
-                  width: windowWidth * 0.6,
-                  height: windowHeight * 0.28,
-                  alignItems: 'center',
-                  overflow: 'hidden',
-                  alignSelf: 'center',
-                  right: -170,
-                  position: 'absolute',
-                  backgroundColor: 'black',
-                }}>
-                <CustomImage
-                  source={images[index + 1]}
-                  style={{
-                    height: '100%',
-                    height: '100%',
+            {index < images.length - 1 && (
+              <>
+                <TouchableOpacity
+                  onPress={() => {
+                    setIndex(index + 1);
                   }}
-                />
-              </View></>
+                  style={{
+                    height: moderateScale(25, 0.6),
+                    width: moderateScale(25, 0.6),
+                    borderRadius: moderateScale(25, 0.6) / 2,
+                    alignItems: 'center',
+                    zIndex: 1,
+                    justifyContent: 'center',
+                    right: -5,
+                    backgroundColor: '#FF6E2E',
+                  }}>
+                  <Icon name={'right'} as={AntDesign} color={'white'} />
+                </TouchableOpacity>
+
+                <View
+                  style={{
+                    width: windowWidth * 0.6,
+                    height: windowHeight * 0.28,
+                    alignItems: 'center',
+                    overflow: 'hidden',
+                    alignSelf: 'center',
+                    right: -170,
+                    position: 'absolute',
+                    backgroundColor: 'black',
+                  }}>
+                  <CustomImage
+                    source={images[index + 1]}
+                    style={{
+                      height: '100%',
+                      height: '100%',
+                    }}
+                  />
+                </View>
+              </>
             )}
           </View>
 
@@ -186,7 +236,7 @@ const DressesDetail = props => {
                 textAlign: 'left',
                 // backgroundColor:'orange',
               }}>
-              {item?.Title}
+              {finalItem?.Title}
             </CustomText>
 
             <CustomText
@@ -198,16 +248,17 @@ const DressesDetail = props => {
                 // backgroundColor:'red',
               }}
               numberOfLines={1}>
-              {item?.subTitle}
+              {finalItem?.subTitle}
             </CustomText>
 
             <TouchableOpacity
               activeOpacity={0.6}
               style={{paddingRight: 10}}
               onPress={() => {
-                setLiked(!liked);
+                setLike(!like);
+                dispatch(setLiked({id: item?.id, liked: !like}));
               }}>
-              {item?.liked || liked ? (
+              {like ? (
                 <Icon
                   name={'heart'}
                   as={Entypo}
@@ -239,12 +290,13 @@ const DressesDetail = props => {
                 fontSize: 24,
                 width: windowWidth * 0.24,
               }}>
-              ${item.price}.00
+              ${finalItem?.price}.00
             </CustomText>
 
             <View style={styles.conterContainer}>
               <TouchableOpacity
                 onPress={() => {
+                  setQuantity(quantity + 1);
                   dispatch(increamentQuantity(item));
                 }}
                 style={{
@@ -271,11 +323,14 @@ const DressesDetail = props => {
                   color: '#1B1721',
                   fontSize: moderateScale(14, 0.6),
                 }}>
-                {}1
+                {quantity}
               </CustomText>
 
               <TouchableOpacity
                 onPress={() => {
+                  if (quantity > 1) {
+                    setQuantity(quantity - 1);
+                  }
                   dispatch(decrementQuantity(item));
                 }}
                 style={{
@@ -309,22 +364,23 @@ const DressesDetail = props => {
           </CustomText>
 
           <View style={styles.ColorLine}>
-            {item?.colors.map(item => {
+            {item?.colors.map(color => {
               return (
                 <TouchableOpacity
                   onPress={() => {
-                    SetSelectedColor(item);
+                    SetSelectedColor(color);
+                    dispatch(setColor({id: item?.id, colors:color}));
                   }}
                   style={{
                     height: windowHeight * 0.04,
                     width: windowWidth * 0.08,
                     borderRadius: (windowWidth * 0.1) / 2,
-                    backgroundColor: item,
+                    backgroundColor: color,
                     alignItems: 'center',
                     justifyContent: 'center',
                     marginLeft: moderateScale(15, 0.3),
                   }}>
-                  {Selectedcolor == item && (
+                  {Selectedcolor == color && (
                     <Icon
                       name={'check'}
                       as={Entypo}
@@ -349,11 +405,17 @@ const DressesDetail = props => {
           </CustomText>
 
           <View style={styles.ColorLine1}>
-            {item?.size.map(item => {
+            {item?.size.map(size => {
               return (
                 <TouchableOpacity
                   onPress={() => {
-                    SetSelectedSize(item);
+                    setSelectedSize(size);
+                    dispatch(
+                      setSize({
+                        id: cartitem ? cartitem?.id : item?.id,
+                        size: size,
+                      }),
+                    );
                   }}
                   style={{
                     height: windowHeight * 0.04,
@@ -361,15 +423,15 @@ const DressesDetail = props => {
                     borderRadius: (windowWidth * 0.1) / 2,
                     justifyContent: 'center',
                     backgroundColor:
-                      Selectedsize == item ? '#E56A36' : '#F4F5F6',
+                      Selectedsize == size ? '#E56A36' : '#F4F5F6',
                   }}>
                   <CustomText
                     style={{
-                      color: Selectedsize == item ? 'white' : '#8e9194',
+                      color: Selectedsize == size ? 'white' : '#8e9194',
                       fontSize: moderateScale(14, 0.6),
                       textTransform: 'uppercase',
                     }}>
-                    {item}
+                    {size}
                   </CustomText>
                 </TouchableOpacity>
               );
@@ -411,6 +473,10 @@ const DressesDetail = props => {
                   backgroundColor: '#f2f2f2',
                   alignItems: 'center',
                   justifyContent: 'center',
+                }}
+                onPress={() => {
+                  setcotton(cotton+1)
+                  dispatch(setCotton({id: item.id, val: 1}));
                 }}>
                 <CustomText
                   isBold
@@ -428,10 +494,18 @@ const DressesDetail = props => {
                   color: '#2F2B29',
                   fontSize: 18,
                 }}>
-                1
+                {cotton}
               </CustomText>
 
               <TouchableOpacity
+                onPress={() => {
+
+                  if(cotton>1){
+                    setcotton(cotton-1)
+                  }
+                  item?.cotton > 1 &&
+                    dispatch(setCotton({id: item?.id, val: -1}));
+                }}
                 style={{
                   width: windowWidth * 0.06,
                   height: windowHeight * 0.03,
@@ -464,27 +538,10 @@ const DressesDetail = props => {
           bottom: 0,
           justifyContent: 'center',
         }}>
-
-
-          
-          {cartitem && item?.qty >= 0 ? ( 
-          <CustomButton
-          disabled={true}
+        <CustomButton
+          disabled={cartitem?.qty > 0 ? true : false}
           isBold
-          text={'ADD TO CART'}
-          textColor={Color.white}
-          width={windowWidth * 0.8}
-          height={windowHeight * 0.07}
-          fontSize={moderateScale(16, 0.6)}
-          // marginBottom={moderateScale(10,.3)}
-          // marginTop={moderateScale(20, 0.3)}
-          bgColor={['#F89D52', '#FF6E2E']}
-          borderRadius={moderateScale(30, 0.3)}
-          isGradient
-        /> ) : (
-          <CustomButton
-          isBold
-          onPress={() => addedItem(item)}
+          onPress={() => addedItem(body)}
           text={'ADD TO CART'}
           textColor={Color.white}
           width={windowWidth * 0.8}
@@ -496,10 +553,6 @@ const DressesDetail = props => {
           borderRadius={moderateScale(30, 0.3)}
           isGradient
         />
-        )}
-
-
-
       </View>
     </>
   );
@@ -510,10 +563,10 @@ export default DressesDetail;
 const styles = StyleSheet.create({
   banner: {
     width: windowWidth * 0.95,
-  height: windowHeight * 0.77,
+    height: windowHeight * 0.77,
     backgroundColor: '#ffffff',
     alignSelf: 'center',
-    overflow:'hidden',
+    overflow: 'hidden',
     borderRadius: 10,
     marginTop: moderateScale(10, 0.3),
     shadowColor: '#0000000A',
