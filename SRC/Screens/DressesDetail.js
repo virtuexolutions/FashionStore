@@ -28,7 +28,8 @@ const DressesDetail = props => {
   const [index, setIndex] = useState(1);
   console.log("🚀 ~ file: DressesDetail.js:29 ~ DressesDetail ~ index:", index)
 
-  const addData = useSelector(state => state.commonReducer.cart);
+  const CartData = useSelector(state => state.commonReducer.cart);
+  console.log("🚀 ~ file: DressesDetail.js:32 ~ DressesDetail ~ CartData:", CartData)
 
   // const [image1, setimage1] = useState(second)
 
@@ -36,16 +37,8 @@ const DressesDetail = props => {
     dispatch(AddToCart(item));
   };
 
-  const colors = [
-    '#4e86c2',
-    '#2c4973',
-    '#1ABFBC',
-    '#C8CDD2',
-    '#ECECEC',
-    '#313436',
-  ];
 
-  const size = ['XS', 'S', 'M', 'L', 'XL'];
+
   const images = [
     require('../Assets/Images/image3.png'),
     require('../Assets/Images/Mask2.png'),
@@ -96,6 +89,7 @@ const DressesDetail = props => {
                   height: '100%',
                   height: '100%',
                 }}
+                resizeMode={'cover'}
               />
             </View>
             <TouchableOpacity
@@ -312,7 +306,7 @@ const DressesDetail = props => {
           </CustomText>
 
           <View style={styles.ColorLine}>
-            {colors.map(item => {
+            {item?.colors.map(item => {
               return (
                 <TouchableOpacity
                   onPress={() => {
@@ -352,7 +346,7 @@ const DressesDetail = props => {
           </CustomText>
 
           <View style={styles.ColorLine1}>
-            {size.map(item => {
+            {item?.size.map(item => {
               return (
                 <TouchableOpacity
                   onPress={() => {

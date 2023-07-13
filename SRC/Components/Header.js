@@ -32,6 +32,7 @@ const Header = props => {
   const dispatch = useDispatch();
   const focused = useIsFocused();
   const token = useSelector(state => state.authReducer.token);
+  const cartData = useSelector(state=> state?.commonReducer?.cart)
   // console.log('🚀 ~ file: Header.js:42 ~ Header ~ token:', token);
   const [isLoveNotesVisible, setLoveNotesVisible] = useState(false);
   const notification = useSelector(state => state.commonReducer.notification);
@@ -41,11 +42,10 @@ const Header = props => {
   // const [switchEnabled, setSwitchEnabled] = useState(false);
   const [isSpotLightVisible, setSpotLightVisible] = useState(false);
   const [discreteModal, setDiscreteModal] = useState(false);
- 
+
   const [isVisible, setIsVisible] = useState(false);
   const [isBoostModalvisible, setBoostModalvisible] = useState(false);
   const [notificationData, setNotificationData] = useState([]);
-
 
 
   const {
@@ -78,7 +78,8 @@ const Header = props => {
             styles.text,
             textStyle,
             alignRight && {textAlign: 'right', width: windowWidth * 0.9},
-          ]} isBold>
+          ]}
+          isBold>
           {title}
         </CustomText>
       )}
@@ -107,24 +108,43 @@ const Header = props => {
       )}
       {showRight &&
         (rightName ? (
-          <Icon
-            name={rightName}
-            as={rightType ? rightType : FontAwesome}
-            size={moderateScale(22, 0.3)}
-            color={Color.black  }
-            onPress={
-              rightName == 'bell'
-                ? () => {
-                    setIsVisible(true);
-                  }
-                : rightPress
-            }
+          <>
+            <Icon
+              name={rightName}
+              as={rightType ? rightType : FontAwesome}
+              size={moderateScale(22, 0.3)}
+              color={Color.black}
+              onPress={
+                rightName == 'bell'
+                  ? () => {
+                      setIsVisible(true);
+                    }
+                  : rightPress
+              }
+              style={{
+                position: 'absolute',
+                right: moderateScale(10, 0.3),
+                zIndex: 1,
+              }}
+            />{cartData?.length>0 &&
+            <View
             style={{
+              width: moderateScale(15, 0.6),
+              height: moderateScale(15, 0.6),
               position: 'absolute',
-              right: moderateScale(10, 0.3),
-              zIndex: 1,
-            }}
-          />
+              zIndex:2,
+              right: moderateScale(5, 0.3),
+              top:moderateScale(17,.6),
+              borderRadius: moderateScale(15, 0.6) / 2,
+              backgroundColor: '#E56A36',
+            }}>
+              <CustomText
+                style={{fontSize: moderateScale(10, 0.6), color: 'white'}}>
+                {cartData?.length}
+              </CustomText>
+            </View>
+                }
+          </>
         ) : (
           <View
             style={{
@@ -147,8 +167,6 @@ const Header = props => {
           </View>
         ))}
     </View>
-    
-      
   );
 };
 const styles = ScaledSheet.create({

@@ -7,112 +7,156 @@ import CustomText from './CustomText'
 import Entypo from 'react-native-vector-icons/Entypo'
 import { Icon } from 'native-base'
 import navigationService from '../navigationService'
+import { useDispatch, useSelector } from 'react-redux'
+import { AddToCart, RemoveToCart } from '../Store/slices/common'
+import CustomButton from './CustomButton'
+
+
 
 const ProductCard = ({item}) => {
+
+
+  const dispatch = useDispatch();
+
+  const cartData = useSelector(state => state.commonReducer.cart);
+  console.log("🚀 ~ file: ProductCard.js:21 ~ ProductCard ~ cartData:", cartData)
+
+  const addedItem = item => {
+    console.log('add DATA===>', cartData);
+
+    dispatch(AddToCart(item));
+  };
+
+  const removeItem = item => {
+    console.log('REMOVE DATA', cartData);
+    dispatch(RemoveToCart(item));
+  };
+  const tempitem = cartData?.find((x,index)=> x?.id == item?.id)
+  console.log("QTY+++",tempitem)
   return (
+    <View>
     <TouchableOpacity
-    onPress={()=>{
-        // console.log('Hello')
-        navigationService.navigate('DressesDetail',{item:item})
-    }}
-    style={{
-      width: windowWidth * 0.45,
-      height: windowHeight * 0.35,
-      backgroundColor: '#fff',
-      margin: moderateScale(5, 0.3),
-      borderRadius: 5,
-      alignItems: 'center',
-    }}>
-    <View
+      activeOpacity={0.8}
+      onPress={() =>{ 
+        if(!tempitem){
+          addedItem(item)}}
+        }
       style={{
-        width: windowWidth * 0.35,
-        height: windowHeight * 0.22,
-        overflow: 'hidden',
+        width: windowWidth * 0.45,
+        height: windowHeight * 0.35,
+        backgroundColor: '#fff',
+        margin: moderateScale(5, 0.3),
         borderRadius: 5,
-        marginTop: moderateScale(15, 0.3),
+        alignItems: 'center',
       }}>
-      {item?.like && (
-        <TouchableOpacity
-          activeOpacity={0.6}
-          style={styles.heartIcon}>
-          <Icon
-            name={'heart'}
-            as={Entypo}
-            size={moderateScale(25, 0.3)}
-            color={'#F03710'}
-          />
-        </TouchableOpacity>
-      )}
-      <CustomImage
-        source={item.img}
-        resizeMode={'cover'}
+      <TouchableOpacity
+        activeOpacity={0.8}
         style={{
-          height: '100%',
-          height: '100%',
-        }}
-        onPress={()=>{
-            // console.log('Hello')
-            navigationService.navigate('DressesDetail',{item:item})
-        }}
-      />
-
-      {item?.sale && (
-        // <View style={styles.sale}>
-        <CustomText
-          isBold
+          width: windowWidth * 0.35,
+          height: windowHeight * 0.22,
+          overflow: 'hidden',
+          borderRadius: 5,
+          marginTop: moderateScale(15, 0.3),
+        }}>
+        {item?.like && (
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.heartIcon}>
+            <Icon
+              name={'heart'}
+              as={Entypo}
+              size={moderateScale(25, 0.3)}
+              color={'#ff0000'}
+            />
+          </TouchableOpacity>
+        )}
+        <CustomImage
+          source={item.img}
+          resizeMode={'cover'}
           style={{
-            position: 'absolute',
-            bottom: moderateScale(10, 0.3),
-            right: moderateScale(5, 0.3),
-            zIndex: 1,
-            width: windowWidth * 0.17,
-            // height:windowHeight*0.03,
-            fontSize: moderateScale(12, 0.6),
-            color: '#fff',
-            backgroundColor: 'red',
-            borderRadius: moderateScale(10, 0.6),
-            height: windowHeight * 0.03,
-          }}>
-          {item.sale}
-        </CustomText>
-        // </View>
-      )}
-    </View>
+            height: '100%',
+            height: '100%',
+          }}
+        />
 
-    <CustomText
-      isBold
-      style={{
-        textAlign: 'left',
-        width: windowWidth * 0.35,
-        height: windowHeight * 0.03,
-        fontSize:moderateScale(14,.6),
-        color: '#464342',
-        marginTop: moderateScale(10, 0.3),
-      }}>
-      {item?.Title}
-    </CustomText>
+        {item?.sale && (
+          <View style={styles.sale}>
+            <CustomText
+              isBold
+              style={{
+                color: '#fff',
+                fontSize: 12,
+              }}>
+              {item.sale}
+            </CustomText>
+          </View>
+        )}
+      </TouchableOpacity>
 
-    <CustomText
-      style={{
-        textAlign: 'left',
-        width: windowWidth * 0.35,
-        height: windowHeight * 0.03,
-        fontSize:moderateScale(12,.6),
+      <CustomText
+        isBold
+        style={{
+          textAlign: 'left',
+          width: windowWidth * 0.35,
+          height: windowHeight * 0.03,
+          color: '#464342',
+          marginTop: moderateScale(10, 0.3),
+        }}>
+        {item.Title}
+      </CustomText>
 
-        color: '#999999',
-      }}>
-      {item?.subTitle}
-    </CustomText>
-    <CustomText
-      style={{
-        textAlign: 'left',
-        width: windowWidth * 0.35,
-        color: '#fe6e2e',
-        fontSize:moderateScale(18,.6),
-      }} isBold>
-      ${item?.price}
-    </CustomText>
-  </TouchableOpacity>
+      <CustomText
+        style={{
+          textAlign: 'left',
+          width: windowWidth * 0.35,
+          height: windowHeight * 0.03,
+          color: '#a2a2a2',
+        }}>
+        {item.subTitle}
+      </CustomText>
+
+      <CustomText
+        style={{
+          textAlign: 'left',
+          width: windowWidth * 0.35,
+          color: '#E56A36',
+        }}>
+        $ {item.price}
+      </CustomText>
+
+      <CustomText
+        onPress={() => {
+          navigationService.navigate('DressesDetail', {item});
+        }}
+        style={{
+          textAlign: 'right',
+          width: windowWidth * 0.35,
+          color: '#2C2928',
+          position: 'absolute',
+          bottom: moderateScale(10, 0.3),
+          right: moderateScale(15, 0.3),
+          fontSize: 13,
+        }}>
+        View all
+      </CustomText>
+    </TouchableOpacity>
+
+    {tempitem != undefined && tempitem?.qty > 0 && (
+      <CustomButton 
+        isBold
+        onPress={() => removeItem(item)}
+        text={'Remove Cart'}
+        textColor={Color.white}
+        width={windowWidth * 0.28}
+        marginTop={10}
+        marginBottom={10}
+        height={windowHeight * 0.04}
+        bgColor={'#FF6E2E'}
+        fontSize={14}
+        borderRadius={moderateScale(5, 0.3)}
+      />
+    )}
+  </View>
   )
 }
 

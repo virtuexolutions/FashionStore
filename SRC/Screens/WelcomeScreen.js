@@ -31,12 +31,12 @@ const WelcomeScreen = () => {
     {
       title: 'Safely',
       description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy`,
-      image: require('../Assets/Images/Mask2.png'),
+      image: require('../Assets/Images/image3.png'),
     },
     {
       title: 'Easy',
       description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy`,
-      image: require('../Assets/Images/Image.png'),
+      image: require('../Assets/Images/Mask3.png'),
     },
   ]);
 
@@ -65,48 +65,52 @@ const WelcomeScreen = () => {
                 <View
                   style={{
                     height: windowHeight * 0.45,
-                    width: windowWidth * 0.8,
-                    justifyContent:'center',
-                    flexDirection:'row',
-                    overflow:'hidden'
+                    flexDirection: 'row',
+                    justifyContent: 'space-around',
+                    alignItems: 'center',
+                    overflow:'auto',
+                    width: windowWidth* 0.15,
 
                   }}>
                   <View
                     style={{
-                      // backgroundColor:'black',
                       height: windowHeight * 0.45,
-                      width: windowWidth * 0.7,
+                      width: windowWidth * 0.65,
                       overflow: 'hidden',
                       borderRadius: moderateScale(20, 0.6),
+                      zIndex:1,
                     }}>
                     <CustomImage
-                      source={data?.image}
+                      source={starterData[step%3]?.image}
                       style={{width: '100%', height: '100%'}}
                     />
                   </View>
-                  <View
+                   <View
                     style={{
-                      // backgroundColor:'black',
-                      height: windowHeight * 0.45,
-                      width: windowWidth * 0.7,
+                      height: windowHeight * 0.43,
+                      width: windowWidth * 0.65,
                       overflow: 'hidden',
                       borderRadius: moderateScale(20, 0.6),
+                      zIndex:0,
+
                     }}>
                     <CustomImage
-                      source={data?.image}
+                      source={starterData[(step+1)%3]?.image}
                       style={{width: '100%', height: '100%'}}
                     />
                   </View>
-                  <View
+                 <View
                     style={{
                       // backgroundColor:'black',
-                      height: windowHeight * 0.45,
-                      width: windowWidth * 0.7,
+                      height: windowHeight * 0.41,
+                      width: windowWidth * 0.65,
                       overflow: 'hidden',
                       borderRadius: moderateScale(20, 0.6),
+                      zIndex:-1,
+
                     }}>
                     <CustomImage
-                      source={data?.image}
+                      source={starterData[(step+2)%3]?.image}
                       style={{width: '100%', height: '100%'}}
                     />
                   </View>
@@ -147,6 +151,7 @@ const WelcomeScreen = () => {
                   borderRadius={moderateScale(30, 0.3)}
                   fontSize={moderateScale(16, 0.6)}
                   onPress={() => {
+                   
                     if (step < 2) {
                       setstep(step + 1);
                     } else {
@@ -170,6 +175,7 @@ const WelcomeScreen = () => {
                   <TouchableOpacity
                     onPress={() => {
                       setstep(0);
+                  
                     }}
                     style={{
                       width: moderateScale(15, 0.6),
@@ -181,6 +187,8 @@ const WelcomeScreen = () => {
                   <TouchableOpacity
                     onPress={() => {
                       setstep(1);
+                      
+                    
                     }}
                     style={{
                       width: moderateScale(15, 0.6),
@@ -192,6 +200,8 @@ const WelcomeScreen = () => {
                   <TouchableOpacity
                     onPress={() => {
                       setstep(2);
+                      
+                      
                     }}
                     style={{
                       width: moderateScale(15, 0.6),

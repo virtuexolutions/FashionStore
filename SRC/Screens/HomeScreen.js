@@ -73,7 +73,9 @@ const HomeScreen = () => {
       img: require('../Assets/Images/Image.png'),
       like: true,
       sale: '30% off',
-      qty: 0,
+      qty: 1,
+      colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
+      size:['XS', 'S', 'M', 'L', 'XL']
     },
     {
       id: 2,
@@ -82,7 +84,9 @@ const HomeScreen = () => {
       price: 15.0,
       img: require('../Assets/Images/Image.png'),
       like: false,
-      qty: 0,
+      qty: 1,
+      colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
+      size:['XS', 'S', 'M', 'L', 'XL']
     },
     {
       id: 3,
@@ -91,7 +95,9 @@ const HomeScreen = () => {
       price: 4.5,
       img: require('../Assets/Images/image3.png'),
       like: true,
-      qty: 0,
+      qty: 1,
+      colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
+      size:['XS', 'S', 'M', 'L', 'XL']
     },
     {
       id: 4,
@@ -101,7 +107,9 @@ const HomeScreen = () => {
       img: require('../Assets/Images/Image.png'),
       like: true,
       sale: '30% off',
-      qty: 0,
+      qty: 1,
+      colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
+      size:['XS', 'S', 'M', 'L', 'XL']
     },
     {
       id: 5,
@@ -110,7 +118,9 @@ const HomeScreen = () => {
       price: 8.94,
       img: require('../Assets/Images/Image.png'),
       like: false,
-      qty: 0,
+      qty: 1,
+      colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
+      size:['XS', 'S', 'M', 'L', 'XL']
     },
     {
       id: 6,
@@ -119,10 +129,11 @@ const HomeScreen = () => {
       price: 18.5,
       img: require('../Assets/Images/Image.png'),
       like: true,
-      qty: 0,
+      qty: 1,
+      colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
+      size:['XS', 'S', 'M', 'L', 'XL']
     },
-  ];
- 
+  ]; 
   return (
     <>
       <CustomStatusBar backgroundColor={'#FDFDFD'} barStyle={'dark-content'} />
