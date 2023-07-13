@@ -62,13 +62,6 @@ const AppNavigator = () => {
           <RootNav.Screen name="VerifyNumber" component={VerifyNumber} />
           <RootNav.Screen name="ResetPassword" component={ResetPassword} />
           <RootNav.Screen name="Signup" component={Signup} />
-          {/* <RootNav.Screen name="MyAccounts" component={MyAccounts} />
-          <RootNav.Screen name="ChangePassword" component={ChangePassword} />
-          <RootNav.Screen name="FriendRequest" component={FriendRequest} />
-          <RootNav.Screen name="SeeAllScreen" component={SeeAllScreen} />
-          <RootNav.Screen name="Support" component={Support} />
-          <RootNav.Screen name="SelectedChat" component={SelectedChat} /> */}
-
 
          {/* 
           <RootNav.Screen

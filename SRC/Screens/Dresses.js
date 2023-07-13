@@ -21,7 +21,7 @@ const Dresses = () => {
   const dispatch = useDispatch();
 
   const cartData = useSelector(state => state.commonReducer.cart);
-
+  console.log( 'the data is ========>> >> ',cartData)
   const addedItem = item => {
     console.log('add DATA===>', cartData);
 
