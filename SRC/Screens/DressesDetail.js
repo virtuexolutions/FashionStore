@@ -47,10 +47,13 @@ const DressesDetail = props => {
     require('../Assets/Images/Mask.png'),
   ];
 
-  console.log('COLORS', Selectedcolor);
+ console.log("Hello WORLD",cartData)
 
+
+  const cartitem = cartData?.find((x,index)=> x?.id == item?.id)
   return (
     <>
+    
       <CustomStatusBar backgroundColor={'#FDFDFD'} barStyle={'dark-content'} />
       <Header
         showLeft={true}
@@ -461,7 +464,25 @@ const DressesDetail = props => {
           bottom: 0,
           justifyContent: 'center',
         }}>
-        <CustomButton
+
+
+          
+          {cartitem && item?.qty >= 0 ? ( 
+          <CustomButton
+          disabled={true}
+          isBold
+          text={'ADD TO CART'}
+          textColor={Color.white}
+          width={windowWidth * 0.8}
+          height={windowHeight * 0.07}
+          fontSize={moderateScale(16, 0.6)}
+          // marginBottom={moderateScale(10,.3)}
+          // marginTop={moderateScale(20, 0.3)}
+          bgColor={['#F89D52', '#FF6E2E']}
+          borderRadius={moderateScale(30, 0.3)}
+          isGradient
+        /> ) : (
+          <CustomButton
           isBold
           onPress={() => addedItem(item)}
           text={'ADD TO CART'}
@@ -475,6 +496,10 @@ const DressesDetail = props => {
           borderRadius={moderateScale(30, 0.3)}
           isGradient
         />
+        )}
+
+
+
       </View>
     </>
   );

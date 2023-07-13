@@ -23,6 +23,7 @@ import VerifyNumber from './Screens/VerifyNumber';
 import GetStarted from './Screens/GetStarted';
 import WelcomeScreen from './Screens/WelcomeScreen';
 import DressesDetail from './Screens/DressesDetail';
+import CheckOutScreen from './Screens/CheckOutScreen';
 
 
 const AppNavigator = () => {
@@ -47,12 +48,13 @@ const AppNavigator = () => {
     return (
       <NavigationContainer ref={navigationService.navigationRef}>
         <RootNav.Navigator
-          initialRouteName={firstScreen}
+          initialRouteName={"Dresses"}
           screenOptions={{headerShown: false}}>
           <RootNav.Screen name="WelcomeScreen" component={WelcomeScreen} />
+          <RootNav.Screen name="CheckOutScreen" component={CheckOutScreen} />
           <RootNav.Screen name="DressesDetail" component={DressesDetail} />
-          <RootNav.Screen name="GetStarted" component={GetStarted} />
           <RootNav.Screen name="Dresses" component={Dresses} />
+          <RootNav.Screen name="GetStarted" component={GetStarted} />
           <RootNav.Screen name="ResetInstruction" component={ResetInstruction} />
           <RootNav.Screen name="HomeScreen" component={HomeScreen} />
           <RootNav.Screen name="LoginScreen" component={LoginScreen} />
