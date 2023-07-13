@@ -140,7 +140,7 @@ const Dresses = () => {
         }}
         renderItem={({item, index}) => {
           const tempitem = cartData.find((x,index)=> x?.id == item?.id)
-          console.log("QTY+++",tempitem)
+
           return (
             <View>
               <TouchableOpacity
@@ -175,7 +175,9 @@ const Dresses = () => {
                       />
                     </TouchableOpacity>
                   )}
+
                   <CustomImage
+                     onPress={() => addedItem(item)}
                     source={item.img}
                     resizeMode={'cover'}
                     style={{
@@ -183,6 +185,8 @@ const Dresses = () => {
                       height: '100%',
                     }}
                   />
+
+                  
 
                   {item?.sale && (
                     <View style={styles.sale}>
@@ -246,11 +250,11 @@ const Dresses = () => {
                 </CustomText>
               </TouchableOpacity>
 
-              {tempitem != undefined && tempitem?.qty >= 0 && (
+              {tempitem && item?.qty >= 0 && (
                 <CustomButton 
                   isBold
                   onPress={() => removeItem(item)}
-                  text={'Remove Cart'}
+                  text={'Remove'}
                   textColor={Color.white}
                   width={windowWidth * 0.28}
                   marginTop={10}
