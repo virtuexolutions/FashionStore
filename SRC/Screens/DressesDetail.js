@@ -28,8 +28,8 @@ const DressesDetail = props => {
   const [index, setIndex] = useState(1);
   console.log("🚀 ~ file: DressesDetail.js:29 ~ DressesDetail ~ index:", index)
 
-  const CartData = useSelector(state => state.commonReducer.cart);
-  console.log("🚀 ~ file: DressesDetail.js:32 ~ DressesDetail ~ CartData:", CartData)
+  const cartData = useSelector(state => state.commonReducer.cart);
+  console.log("🚀 ~ file: DressesDetail.js:32 ~ DressesDetail ~ CartData:", cartData)
 
   // const [image1, setimage1] = useState(second)
 

@@ -13,6 +13,7 @@ import navigationService from '../navigationService';
 import {useSelector, useDispatch} from 'react-redux';
 import {AddToCart, RemoveToCart} from '../Store/slices/common';
 import CustomButton from '../Components/CustomButton';
+import ProductCard from '../Components/ProductCard';
 
 const Dresses = () => {
   const [like, SetLike] = useState(false);
@@ -20,7 +21,7 @@ const Dresses = () => {
   const dispatch = useDispatch();
 
   const cartData = useSelector(state => state.commonReducer.cart);
-
+  console.log( 'the data is ========>> >> ',cartData)
   const addedItem = item => {
     console.log('add DATA===>', cartData);
 
@@ -43,7 +44,10 @@ const Dresses = () => {
       sale: '30% off',
       qty: 0,
       colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
-      size:['XS', 'S', 'M', 'L', 'XL']
+      size:['XS', 'S', 'M', 'L', 'XL'],
+      selectedSize : '',
+      selectedColor : ''
+     
     },
     {
       id: 2,
@@ -54,7 +58,9 @@ const Dresses = () => {
       like: false,
       qty: 0,
       colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
-      size:['XS', 'S', 'M', 'L', 'XL']
+      size:['XS', 'S', 'M', 'L', 'XL'],
+      selectedSize : '',
+      selectedColor : ''
     },
     {
       id: 3,
@@ -65,7 +71,9 @@ const Dresses = () => {
       like: true,
       qty: 0,
       colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
-      size:['XS', 'S', 'M', 'L', 'XL']
+      size:['XS', 'S', 'M', 'L', 'XL'],
+      selectedSize : '',
+      selectedColor : ''
     },
     {
       id: 4,
@@ -77,7 +85,9 @@ const Dresses = () => {
       sale: '30% off',
       qty: 0,
       colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
-      size:['XS', 'S', 'M', 'L', 'XL']
+      size:['XS', 'S', 'M', 'L', 'XL'],
+      selectedSize : '',
+      selectedColor : ''
     },
     {
       id: 5,
@@ -88,7 +98,9 @@ const Dresses = () => {
       like: false,
       qty: 0,
       colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
-      size:['XS', 'S', 'M', 'L', 'XL']
+      size:['XS', 'S', 'M', 'L', 'XL'],
+      selectedSize : '',
+      selectedColor : ''
     },
     {
       id: 6,
@@ -99,7 +111,9 @@ const Dresses = () => {
       like: true,
       qty: 0,
       colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
-      size:['XS', 'S', 'M', 'L', 'XL']
+      size:['XS', 'S', 'M', 'L', 'XL'],
+      selectedSize : '',
+      selectedColor : ''
     },
   ];
 
@@ -142,6 +156,7 @@ const Dresses = () => {
           const tempitem = cartData.find((x,index)=> x?.id == item?.id)
 
           return (
+            // <ProductCard item={item}/>
             <View>
               <TouchableOpacity
                 activeOpacity={0.8}
