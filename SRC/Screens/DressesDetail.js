@@ -119,7 +119,7 @@ const DressesDetail = props => {
               alignItems: 'center',
               alignSelf: 'center',
             }}>
-            {index > 0 && (
+            {index > 0 && item?.images.length>1 &&(
               <>
                 <View
                   style={{
@@ -133,7 +133,7 @@ const DressesDetail = props => {
                     backgroundColor: 'black',
                   }}>
                   <CustomImage
-                    source={images[index - 1]}
+                    source={item?.images[index - 1]}
                     style={{
                       height: '100%',
                       height: '100%',
@@ -169,14 +169,14 @@ const DressesDetail = props => {
                 backgroundColor: 'black',
               }}>
               <CustomImage
-                source={images[index]}
+                source={item?.images.length==1 ? item?.images[index-1]:item?.images[index] }
                 style={{
                   height: '100%',
                   height: '100%',
                 }}
               />
             </View>
-            {index < images.length - 1 && (
+            {index < item?.images.length - 1 && (
               <>
                 <TouchableOpacity
                   onPress={() => {
@@ -207,7 +207,7 @@ const DressesDetail = props => {
                     backgroundColor: 'black',
                   }}>
                   <CustomImage
-                    source={images[index + 1]}
+                    source={item?.images[index + 1]}
                     style={{
                       height: '100%',
                       height: '100%',

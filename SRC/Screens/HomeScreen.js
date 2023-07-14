@@ -80,7 +80,7 @@ const HomeScreen = () => {
       selectedSize : '',
       selectedColor : '',
       totalQty : 18,
-      images:[require('../Assets/Images/Mask2.png'),require('../Assets/Images/Mask2.png'),require('../Assets/Images/Mask2.png'),require('../Assets/Images/Mask2.png'),require('../Assets/Images/Mask2.png'),],
+      images:[require('../Assets/Images/Mask.png'),require('../Assets/Images/Mask2.png'),],
     },
     {
       id: 2,
@@ -96,6 +96,8 @@ const HomeScreen = () => {
       selectedSize : '',
       selectedColor : '',
       totalQty : 18,
+      images:[require('../Assets/Images/Image.png'),require('../Assets/Images/Mask.png'),require('../Assets/Images/Mask2.png')],
+
     },
     {
       id: 3,
@@ -111,6 +113,8 @@ const HomeScreen = () => {
       selectedSize : '',
       selectedColor : '',
       totalQty : 18,
+      images:[require('../Assets/Images/Mask.png'),require('../Assets/Images/Mask2.png')],
+
     },
     {
       id: 4,
@@ -127,6 +131,8 @@ const HomeScreen = () => {
       selectedSize : '',
       selectedColor : '',
       totalQty : 18,
+      images:[require('../Assets/Images/Mask3.png'),require('../Assets/Images/Image.png'),require('../Assets/Images/Mask.png'),require('../Assets/Images/Mask2.png')],
+
     },
     {
       id: 5,
@@ -142,6 +148,7 @@ const HomeScreen = () => {
       selectedSize : '',
       selectedColor : '',
       totalQty : 18,
+      images:[require('../Assets/Images/Mask2.png')],
     },
     {
       id: 6,
@@ -157,6 +164,7 @@ const HomeScreen = () => {
       selectedSize : '',
       selectedColor : '',
       totalQty : 18,
+      images:[require('../Assets/Images/Image.png'),require('../Assets/Images/Mask.png'),require('../Assets/Images/Mask2.png')],
     },
   ];
   return (
