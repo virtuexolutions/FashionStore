@@ -84,7 +84,7 @@ const DressesDetail = props => {
   );
   const body={
     Title : item?.Title,
-    colors: Selectedcolor,
+    colors: item?.colors,
     cotton: cotton,
     id: item?.id,
     img:item?.img,
@@ -92,8 +92,12 @@ const DressesDetail = props => {
     price:item?.price,
     qty: quantity,
     sale: item?.sale, 
-    size:Selectedsize, 
-    subTitle:item?.subTitle
+    size:item?.size, 
+    subTitle:item?.subTitle,
+    selectedSize : Selectedsize,
+    selectedColor : Selectedcolor,
+    totalQty : item?.totalQty,
+  
   }
 
   return (

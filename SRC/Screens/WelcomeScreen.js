@@ -6,16 +6,12 @@ import CustomImage from '../Components/CustomImage';
 import CustomButton from '../Components/CustomButton';
 import CustomText from '../Components/CustomText';
 import Color from '../Assets/Utilities/Color';
-import navigationService from '../navigationService';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Feather from 'react-native-vector-icons/Feather';
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import TextInputWithTitle from '../Components/TextInputWithTitle';
-import {Icon} from 'native-base';
 import CustomStatusBar from '../Components/CustomStatusBar';
+import { setWalkThrough } from '../Store/slices/auth';
+import { useDispatch } from 'react-redux';
 
 const WelcomeScreen = () => {
+  const dispatch = useDispatch()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [checked, setChecked] = useState(false);
@@ -155,7 +151,7 @@ const WelcomeScreen = () => {
                     if (step < 2) {
                       setstep(step + 1);
                     } else {
-                      navigationService.navigate('GetStarted');
+                     dispatch(setWalkThrough(true))
                     }
                   }}
                   isGradient

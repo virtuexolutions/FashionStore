@@ -8,11 +8,12 @@ const CustomImage = (props) => {
     errorImageSource = require(`../Assets/Images/dummyman6.png`),
     style,
     onPress,
+    onLongPress
   } = props;
   const [errorLoadingProfileImage, setErrorLoadingProfileImage] =
     useState(false);
   return (
-    <TouchableOpacity onPress={onPress && onPress} activeOpacity={0.9}>
+    <TouchableOpacity onLongPress={onLongPress} onPress={onPress && onPress} activeOpacity={0.9}>
       <Image
       
         resizeMode={resizeMode}

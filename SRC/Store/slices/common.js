@@ -44,21 +44,20 @@ const CommonSlice = createSlice({
     AddToCart(state, action) {
       
       const itemId = action.payload.id;
-      const item = state.cart.find(item => item.id === itemId);
-      if(item){
-        item.qty++ ;
-      }
-      else{
-        
+     
         state.cart.push(action.payload);
 
-      }
+    
  
     },
 
     RemoveToCart(state, action) {
       const itemId = action.payload.id;
       state.cart = state.cart.filter((item, index) => item.id !== itemId);
+    },
+
+    EmptyCart(State,action){
+      State.cart = []
     },
 
     
@@ -113,6 +112,7 @@ const CommonSlice = createSlice({
     setLiked(state,action){
       console.log(action.payload)
       const itemId = action.payload.id;
+      console.log(itemId)
       const item = state.cart.find(item => item.id === itemId);
       if(item){
         item.like = action.payload.liked
@@ -141,7 +141,8 @@ export const {
   setColor,
   setSize,
   setCotton,
-  setLiked
+  setLiked,
+  EmptyCart
 } = CommonSlice.actions;
 
 export default CommonSlice.reducer;

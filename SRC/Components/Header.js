@@ -1,12 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Icon} from 'native-base';
-import {
-  View,
-  Platform,
-  Dimensions,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
+import {View, Dimensions, ToastAndroid} from 'react-native';
 import {
   DrawerActions,
   useIsFocused,
@@ -17,7 +11,6 @@ import {moderateScale, ScaledSheet} from 'react-native-size-matters';
 import Color from '../Assets/Utilities/Color';
 import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import CustomText from './CustomText';
-import CustomImage from './CustomImage';
 const {height, width} = Dimensions.get('window');
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -32,7 +25,7 @@ const Header = props => {
   const dispatch = useDispatch();
   const focused = useIsFocused();
   const token = useSelector(state => state.authReducer.token);
-  const cartData = useSelector(state=> state?.commonReducer?.cart)
+  const cartData = useSelector(state => state?.commonReducer?.cart);
   // console.log('🚀 ~ file: Header.js:42 ~ Header ~ token:', token);
   const [isLoveNotesVisible, setLoveNotesVisible] = useState(false);
   const notification = useSelector(state => state.commonReducer.notification);
@@ -46,7 +39,6 @@ const Header = props => {
   const [isVisible, setIsVisible] = useState(false);
   const [isBoostModalvisible, setBoostModalvisible] = useState(false);
   const [notificationData, setNotificationData] = useState([]);
-
 
   const {
     title,
@@ -116,9 +108,11 @@ const Header = props => {
               color={Color.black}
               onPress={
                 rightName == 'shopping-bag'
-                  ? () => {
-                      navigationService.navigate('CheckOutScreen')
-                    }
+                  ? cartData.length == 0
+                    ? ()=>{ToastAndroid.show('Cart is Empty', ToastAndroid.SHORT)}
+                    : () => {
+                        navigationService.navigate('CheckOutScreen');
+                      }
                   : rightPress
               }
               style={{
@@ -126,24 +120,25 @@ const Header = props => {
                 right: moderateScale(10, 0.3),
                 zIndex: 1,
               }}
-            />{cartData?.length>0 &&
-            <View
-            style={{
-              width: moderateScale(15, 0.6),
-              height: moderateScale(15, 0.6),
-              position: 'absolute',
-              zIndex:2,
-              right: moderateScale(5, 0.3),
-              top:moderateScale(17,.6),
-              borderRadius: moderateScale(15, 0.6) / 2,
-              backgroundColor: '#E56A36',
-            }}>
-              <CustomText
-                style={{fontSize: moderateScale(10, 0.6), color: 'white'}}>
-                {cartData?.length}
-              </CustomText>
-            </View>
-                }
+            />
+            {cartData?.length > 0 && (
+              <View
+                style={{
+                  width: moderateScale(15, 0.6),
+                  height: moderateScale(15, 0.6),
+                  position: 'absolute',
+                  zIndex: 2,
+                  right: moderateScale(5, 0.3),
+                  top: moderateScale(17, 0.6),
+                  borderRadius: moderateScale(15, 0.6) / 2,
+                  backgroundColor: '#E56A36',
+                }}>
+                <CustomText
+                  style={{fontSize: moderateScale(10, 0.6), color: 'white'}}>
+                  {cartData?.length}
+                </CustomText>
+              </View>
+            )}
           </>
         ) : (
           <View
