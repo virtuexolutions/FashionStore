@@ -29,7 +29,6 @@ const Signup = () => {
         paddingTop: windowHeight * 0.1,
         backgroundColor : '#FEFDFC'
 
-        // marginTop: moderateScale(30, 0.3),
       }}>
       <CustomText />
       <View
@@ -42,7 +41,6 @@ const Signup = () => {
           source={require('../Assets/Images/logo.png')}
           resizeMode={'contain'}
           style={{
-            // alignItems: 'center',
             height: '100%',
             // width:'100%',
           }}
@@ -128,7 +126,7 @@ const Signup = () => {
         height={windowHeight * 0.07}
         fontSize={moderateScale(16,.6)}
         // marginTop={moderateScale(20, 0.3)}
-        bgColor={['#F89D52', '#FF6E2E']}
+        bgColor={Color.themeBgColor}
         borderRadius={moderateScale(30, 0.3)}
         onPress={() => {
           navigationService.navigate('LoginScreen');

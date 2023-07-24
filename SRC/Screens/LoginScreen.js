@@ -41,9 +41,7 @@ const LoginScreen = () => {
           source={require('../Assets/Images/logo.png')}
           resizeMode={'contain'}
           style={{
-            // justifyContent: 'center',
-            // alignItems: 'center',
-            // backgroundColor: 'black',
+          
             height: '100%',
             // width:'100%',
           }}
@@ -53,8 +51,7 @@ const LoginScreen = () => {
       <CustomText
         style={{
           fontSize: moderateScale(18, 0.6),
-          // marginTop: moderateScale(0, 0.3),
-          // color:'#fffff',
+       
         }}
         isBold>
         Sign in
@@ -77,12 +74,7 @@ const LoginScreen = () => {
         color={'#ABB1C0'}
         placeholderColor={'#ABB1C0'}
         borderRadius={moderateScale(20, 0.6)}
-        // elevation={elevation}
-        // rightIcon={rightIcon}
-        // onPressLeft={() => {
-        //   setIsVisble(true);
-        // }}
-        // disable
+      
       />
       <TextInputWithTitle
         iconName="lock"
@@ -103,12 +95,7 @@ const LoginScreen = () => {
         color={'#ABB1C0'}
         placeholderColor={'#ABB1C0'}
         borderRadius={moderateScale(20, 0.6)}
-        // elevation={elevation}
-        // rightIcon={rightIcon}
-        // onPressLeft={() => {
-        //   setIsVisble(true);
-        // }}
-        // disable
+       
       />
       <CustomText
         style={{
@@ -173,7 +160,7 @@ const LoginScreen = () => {
         height={windowHeight * 0.07}
         fontSize={moderateScale(16,.6)}
         marginTop={moderateScale(20, 0.3)}
-        bgColor={['#F89D52', '#FF6E2E']}
+        bgColor={Color.themeBgColor}
         borderRadius={moderateScale(30, 0.3)}
         onPress={() => {
           navigationService.navigate('HomeScreen');

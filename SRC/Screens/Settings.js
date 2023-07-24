@@ -23,21 +23,6 @@ const Settings = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [data, setData] = useState([]);
 
-  // const getApplication = ()=>{
-  //   RNInstalledApplication.getApps()
-  //   .then(apps => {
-  //     console.log(apps[63] , moment(apps[63].firstInstallTime).format('ll') ,  moment(apps[63].lastUpdateTime).format('ll') );
-  //     setData(apps)
-  //   })
-  //   .catch(error => {
-  //     console.log(error);
-  //   });
-  // }
-
-  // useEffect(() => {
-  //   getApplication()
-  // }, [])
-
   return (
     <ScreenBoiler
       showHeader={true}
@@ -71,13 +56,7 @@ const Settings = () => {
             paddingBottom: windowHeight * 0.2,
             paddingTop: moderateScale(40, 0.3),
           }}>
-          {/* {
-             data && data.map((x,index)=>{
-              return(
-                <CustomText>{x?.appName}</CustomText>
-              )
-             })
-            } */}
+        
           <View style={[styles.image1]}>
             <CustomImage
               onPress={() => {
@@ -104,7 +83,11 @@ const Settings = () => {
             height={windowHeight * 0.07}
             marginTop={moderateScale(10, 0.3)}
             onPress={() => {
-              navigationService.navigate(userRole == 'Qbid Member' ? 'MyAccounts' : 'NegotiatorPortfolio');
+              navigationService.navigate(
+                userRole == 'Qbid Member'
+                  ? 'MyAccounts'
+                  : 'NegotiatorPortfolio',
+              );
             }}
             bgColor={Color.white}
             // isGradient

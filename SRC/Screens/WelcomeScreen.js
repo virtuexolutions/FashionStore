@@ -143,7 +143,7 @@ const WelcomeScreen = () => {
                   width={windowWidth * 0.75}
                   height={windowHeight * 0.07}
                   marginTop={moderateScale(30, 0.3)}
-                  bgColor={['#F89D52', '#FF6E2E']}
+                  bgColor={Color.themeBgColor}
                   borderRadius={moderateScale(30, 0.3)}
                   fontSize={moderateScale(16, 0.6)}
                   onPress={() => {
@@ -176,7 +176,7 @@ const WelcomeScreen = () => {
                     style={{
                       width: moderateScale(15, 0.6),
                       height: moderateScale(7, 0.6),
-                      backgroundColor: step == 0 ? '#FF6E2E' : '#FBCEB1',
+                      backgroundColor: step == 0 ? Color.themeColor : '#FBCEB1',
                       borderRadius: moderateScale(10, 0.6),
                     }}
                   />
@@ -189,7 +189,7 @@ const WelcomeScreen = () => {
                     style={{
                       width: moderateScale(15, 0.6),
                       height: moderateScale(7, 0.6),
-                      backgroundColor: step == 1 ? '#FF6E2E' : '#FBCEB1',
+                      backgroundColor: step == 1 ? Color.themeColor  : '#FBCEB1',
                       borderRadius: moderateScale(10, 0.6),
                     }}
                   />
@@ -202,7 +202,7 @@ const WelcomeScreen = () => {
                     style={{
                       width: moderateScale(15, 0.6),
                       height: moderateScale(7, 0.6),
-                      backgroundColor: step == 2 ? '#FF6E2E' : '#FBCEB1',
+                      backgroundColor: step == 2 ? Color.themeColor  : '#FBCEB1',
                       borderRadius: moderateScale(10, 0.6),
                     }}
                   />

@@ -14,6 +14,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {AddToCart, RemoveToCart} from '../Store/slices/common';
 import CustomButton from '../Components/CustomButton';
 import ProductCard from '../Components/ProductCard';
+import Color from '../Assets/Utilities/Color';
 
 const Dresses = () => {
   const [like, SetLike] = useState(false);
@@ -49,6 +50,7 @@ const Dresses = () => {
       selectedSize : '',
       selectedColor : '',
       totalQty : 18,
+      images:[require('../Assets/Images/Mask.png'),require('../Assets/Images/Mask2.png'),],
     },
     {
       id: 2,
@@ -64,6 +66,8 @@ const Dresses = () => {
       selectedSize : '',
       selectedColor : '',
       totalQty : 18,
+      images:[require('../Assets/Images/Image.png'),require('../Assets/Images/Mask.png'),require('../Assets/Images/Mask2.png')],
+
     },
     {
       id: 3,
@@ -79,6 +83,8 @@ const Dresses = () => {
       selectedSize : '',
       selectedColor : '',
       totalQty : 18,
+      images:[require('../Assets/Images/Mask.png'),require('../Assets/Images/Mask2.png')],
+
     },
     {
       id: 4,
@@ -95,6 +101,8 @@ const Dresses = () => {
       selectedSize : '',
       selectedColor : '',
       totalQty : 18,
+      images:[require('../Assets/Images/Mask3.png'),require('../Assets/Images/Image.png'),require('../Assets/Images/Mask.png'),require('../Assets/Images/Mask2.png')],
+
     },
     {
       id: 5,
@@ -110,6 +118,7 @@ const Dresses = () => {
       selectedSize : '',
       selectedColor : '',
       totalQty : 18,
+      images:[require('../Assets/Images/Mask2.png')],
     },
     {
       id: 6,
@@ -125,15 +134,13 @@ const Dresses = () => {
       selectedSize : '',
       selectedColor : '',
       totalQty : 18,
+      images:[require('../Assets/Images/Image.png'),require('../Assets/Images/Mask.png'),require('../Assets/Images/Mask2.png')],
     },
   ];
 
   return (
     <>
-    <CustomStatusBar
-        backgroundColor={'white'}
-      barStyle={'dark-content'}
-    />
+   <CustomStatusBar backgroundColor={'#FDFDFD'} barStyle={'dark-content'} />
     <Header
       showLeft={true}
       leftName={'arrow-left'}
@@ -194,7 +201,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
     width: windowWidth * 0.17,
     height: windowHeight * 0.04,
-    backgroundColor: '#ff6e2e',
+    backgroundColor:Color.themeColor,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: (windowWidth * 0.17) / 2,

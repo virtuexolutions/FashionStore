@@ -27,37 +27,42 @@ const HomeScreen = () => {
       name: 'All',
       image2: require('../Assets/Images/menu.png'),
       image: require('../Assets/Images/menu1.png'),
-      onPress:()=>{ 
-        console.log('here')}
+      onPress: () => {
+        console.log('here');
+      },
     },
     {
       name: 'Dress',
       image: require('../Assets/Images/dress.png'),
       image2: require('../Assets/Images/dress1.png'),
-      onPress:()=>{ 
-        console.log('here')
-        navigationService.navigate('Dresses')}
+      onPress: () => {
+        console.log('here');
+        navigationService.navigate('Dresses');
+      },
     },
     {
       name: 'T-shirt',
       image: require('../Assets/Images/tshirt.png'),
       image2: require('../Assets/Images/tshirt1.png'),
-      onPress:()=>{ 
-        console.log('here')}
+      onPress: () => {
+        console.log('here');
+      },
     },
     {
       name: 'jeans',
       image: require('../Assets/Images/jeans.png'),
       image2: require('../Assets/Images/jeans1.png'),
-      onPress:()=>{ 
-        console.log('here')}
-  },
+      onPress: () => {
+        console.log('here');
+      },
+    },
     {
       name: 'shoes',
       image: require('../Assets/Images/shoes.png'),
       image2: require('../Assets/Images/shoes1.png'),
-      onPress:()=>{ 
-        console.log('here')}
+      onPress: () => {
+        console.log('here');
+      },
     },
   ];
   const specialOffers = [
@@ -82,13 +87,23 @@ const HomeScreen = () => {
       like: true,
       sale: '30% off',
       qty: 1,
-      colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
-      size:['XS', 'S', 'M', 'L', 'XL'],
-      cotton:1,
-      selectedSize : '',
-      selectedColor : '',
-      totalQty : 18,
-      images:[require('../Assets/Images/Mask.png'),require('../Assets/Images/Mask2.png'),],
+      colors: [
+        '#4e86c2',
+        '#2c4973',
+        '#1ABFBC',
+        '#C8CDD2',
+        '#ECECEC',
+        '#313436',
+      ],
+      size: ['XS', 'S', 'M', 'L', 'XL'],
+      cotton: 1,
+      selectedSize: '',
+      selectedColor: '',
+      totalQty: 18,
+      images: [
+        require('../Assets/Images/Mask.png'),
+        require('../Assets/Images/Mask2.png'),
+      ],
     },
     {
       id: 2,
@@ -98,14 +113,24 @@ const HomeScreen = () => {
       img: require('../Assets/Images/Image.png'),
       like: false,
       qty: 1,
-      colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
-      size:['XS', 'S', 'M', 'L', 'XL'],
-      cotton:1,
-      selectedSize : '',
-      selectedColor : '',
-      totalQty : 18,
-      images:[require('../Assets/Images/Image.png'),require('../Assets/Images/Mask.png'),require('../Assets/Images/Mask2.png')],
-
+      colors: [
+        '#4e86c2',
+        '#2c4973',
+        '#1ABFBC',
+        '#C8CDD2',
+        '#ECECEC',
+        '#313436',
+      ],
+      size: ['XS', 'S', 'M', 'L', 'XL'],
+      cotton: 1,
+      selectedSize: '',
+      selectedColor: '',
+      totalQty: 18,
+      images: [
+        require('../Assets/Images/Image.png'),
+        require('../Assets/Images/Mask.png'),
+        require('../Assets/Images/Mask2.png'),
+      ],
     },
     {
       id: 3,
@@ -115,14 +140,23 @@ const HomeScreen = () => {
       img: require('../Assets/Images/image3.png'),
       like: true,
       qty: 1,
-      colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
-      size:['XS', 'S', 'M', 'L', 'XL'],
-      cotton:1,
-      selectedSize : '',
-      selectedColor : '',
-      totalQty : 18,
-      images:[require('../Assets/Images/Mask.png'),require('../Assets/Images/Mask2.png')],
-
+      colors: [
+        '#4e86c2',
+        '#2c4973',
+        '#1ABFBC',
+        '#C8CDD2',
+        '#ECECEC',
+        '#313436',
+      ],
+      size: ['XS', 'S', 'M', 'L', 'XL'],
+      cotton: 1,
+      selectedSize: '',
+      selectedColor: '',
+      totalQty: 18,
+      images: [
+        require('../Assets/Images/Mask.png'),
+        require('../Assets/Images/Mask2.png'),
+      ],
     },
     {
       id: 4,
@@ -133,14 +167,25 @@ const HomeScreen = () => {
       like: true,
       sale: '30% off',
       qty: 1,
-      colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
-      size:['XS', 'S', 'M', 'L', 'XL'],
-      cotton:1,
-      selectedSize : '',
-      selectedColor : '',
-      totalQty : 18,
-      images:[require('../Assets/Images/Mask3.png'),require('../Assets/Images/Image.png'),require('../Assets/Images/Mask.png'),require('../Assets/Images/Mask2.png')],
-
+      colors: [
+        '#4e86c2',
+        '#2c4973',
+        '#1ABFBC',
+        '#C8CDD2',
+        '#ECECEC',
+        '#313436',
+      ],
+      size: ['XS', 'S', 'M', 'L', 'XL'],
+      cotton: 1,
+      selectedSize: '',
+      selectedColor: '',
+      totalQty: 18,
+      images: [
+        require('../Assets/Images/Mask3.png'),
+        require('../Assets/Images/Image.png'),
+        require('../Assets/Images/Mask.png'),
+        require('../Assets/Images/Mask2.png'),
+      ],
     },
     {
       id: 5,
@@ -150,13 +195,20 @@ const HomeScreen = () => {
       img: require('../Assets/Images/Image.png'),
       like: false,
       qty: 1,
-      colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
-      size:['XS', 'S', 'M', 'L', 'XL'],
-      cotton:1,
-      selectedSize : '',
-      selectedColor : '',
-      totalQty : 18,
-      images:[require('../Assets/Images/Mask2.png')],
+      colors: [
+        '#4e86c2',
+        '#2c4973',
+        '#1ABFBC',
+        '#C8CDD2',
+        '#ECECEC',
+        '#313436',
+      ],
+      size: ['XS', 'S', 'M', 'L', 'XL'],
+      cotton: 1,
+      selectedSize: '',
+      selectedColor: '',
+      totalQty: 18,
+      images: [require('../Assets/Images/Mask2.png')],
     },
     {
       id: 6,
@@ -166,13 +218,24 @@ const HomeScreen = () => {
       img: require('../Assets/Images/Image.png'),
       like: true,
       qty: 1,
-      colors:[ '#4e86c2','#2c4973','#1ABFBC','#C8CDD2', '#ECECEC','#313436'],
-      size:['XS', 'S', 'M', 'L', 'XL'],
-      cotton:1,
-      selectedSize : '',
-      selectedColor : '',
-      totalQty : 18,
-      images:[require('../Assets/Images/Image.png'),require('../Assets/Images/Mask.png'),require('../Assets/Images/Mask2.png')],
+      colors: [
+        '#4e86c2',
+        '#2c4973',
+        '#1ABFBC',
+        '#C8CDD2',
+        '#ECECEC',
+        '#313436',
+      ],
+      size: ['XS', 'S', 'M', 'L', 'XL'],
+      cotton: 1,
+      selectedSize: '',
+      selectedColor: '',
+      totalQty: 18,
+      images: [
+        require('../Assets/Images/Image.png'),
+        require('../Assets/Images/Mask.png'),
+        require('../Assets/Images/Mask2.png'),
+      ],
     },
   ];
   return (
@@ -186,30 +249,26 @@ const HomeScreen = () => {
         showRight={true}
         rightName={'shopping-bag'}
         rightType={Feather}
-        textStyle={{fontSize:moderateScale(18,.6)}}
+        textStyle={{fontSize: moderateScale(18, 0.6)}}
       />
       <ScrollView
-      showsVerticalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
         style={{
           height: windowHeight,
           width: windowWidth,
-          //   alignItems: 'center',
           alignSelf: 'center',
-          //   paddingTop: windowHeight * 0.1,
-            backgroundColor: '#FDFDFD',
+          backgroundColor: '#FDFDFD',
         }}
         contentContainerStyle={{
-          paddingHorizontal : moderateScale(10,0.6)
-        }}
-        >
+          paddingHorizontal: moderateScale(10, 0.6),
+        }}>
         <CustomText
           style={{
             fontSize: moderateScale(24, 0.6),
-            color: '#FF6E2E',
+            color: Color.themeColor,
             textAlign: 'left',
             width: windowWidth,
             height: windowHeight * 0.04,
-            // backgroundColor:'black'
           }}
           isBold>
           Fashion Store
@@ -243,20 +302,19 @@ const HomeScreen = () => {
           }}>
           <CustomText
             style={{
-              //   backgroundColor: 'red',
               fontSize: moderateScale(16, 0.6),
               color: 'black',
-            }} isBold>
+            }}
+            isBold>
             Categories
           </CustomText>
           <CustomText
             style={{
               //   backgroundColor: 'red',
-              color: '#FF6E2E',
+              color: Color.themeColor,
               borderRadius: moderateScale(20, 0.6),
               backgroundColor: '#FBCEB1',
               fontSize: moderateScale(12, 0.6),
-              //height:windowHeight*0.03,
               padding: moderateScale(5, 0.6),
             }}
             isBold>
@@ -264,15 +322,7 @@ const HomeScreen = () => {
           </CustomText>
         </View>
         <View
-          style={{
-            height: windowHeight * 0.09,
-            width: windowWidth * 0.95,
-            // backgroundColor:'red',
-            marginTop: moderateScale(20, 0.3),
-            flexDirection: 'row',
-            // alignItems:'center',
-            justifyContent: 'space-between',
-          }}>
+          style={styles.categoryContainer}>
           {categories.map((item, index) => {
             console.log(
               '🚀 ~ file: HomeScreen.js:146 ~ {categories.map ~ item:',
@@ -280,21 +330,20 @@ const HomeScreen = () => {
             );
             return (
               <>
-                <TouchableOpacity style={{alignItems: 'center', width: windowWidth * 0.16}} onPress={item?.onPress}>
+                <TouchableOpacity
+                  style={{alignItems: 'center', width: windowWidth * 0.16}}
+                  onPress={item?.onPress}>
                   <LinearGradient
                     style={{
-                      height: moderateScale(52,.6),
-                      width:  moderateScale(52,.6),
-                      // backgroundColor:
-                      //   selectedCategory == item?.name ? 'orange' : '#E5E4E2',
-                      // color: selectedCategory == item?.name ? 'white' : '#DDD2',
+                      height: moderateScale(52, 0.6),
+                      width: moderateScale(52, 0.6),
                       borderRadius: moderateScale(10, 0.6),
                       alignItems: 'center',
                       justifyContent: 'center',
                     }}
                     colors={
                       selectedCategory == item?.name
-                        ? ['#F89D52', '#FF6E2E']
+                        ? Color.themeBgColor
                         : ['#F4F4F4', '#F4F4F4']
                     }>
                     <CustomImage
@@ -307,7 +356,7 @@ const HomeScreen = () => {
                       resizeMode={'cover'}
                       onPress={() => {
                         setSelectedCategory(item?.name);
-                        item?.onPress()
+                        item?.onPress();
                       }}
                     />
                   </LinearGradient>
@@ -329,38 +378,26 @@ const HomeScreen = () => {
           <ScrollView
             style={{
               flexDirection: 'row',
-              // justifyContent: 'space-between',
               width: windowWidth,
               marginTop: moderateScale(20, 0.3),
               height: windowHeight * 0.1,
-              //   backgroundColor: 'black',
             }}
             contentContainerStyle={{
-              paddingHorizontal : moderateScale(10,0.6)
+              paddingHorizontal: moderateScale(10, 0.6),
             }}
             horizontal={true}
             showsHorizontalScrollIndicator={false}>
             {specialOffers.map((item, index) => {
               return (
                 <LinearGradient
-                  style={{
-                    width: windowWidth * 0.5,
-                    height: windowHeight * 0.12,
-                    borderRadius: moderateScale(20, 0.6),
-                    // backgroundColor: 'orange',
-                    marginRight: moderateScale(10, 0.3),
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                  colors={['#F89D52', '#FF6E2E']}
+                  style={styles.icons}
+                  colors={Color.themeBgColor}
                   start={{x: 0, y: 0}}
                   end={{x: 0, y: 1}}>
-                  <View
-                  >
+                  <View>
                     <CustomText
                       style={{
                         color: 'white',
-                        // backgroundColor: 'red',
                         textAlign: 'left',
                         width: windowWidth * 0.45,
                         fontSize: moderateScale(14, 0.6),
@@ -370,16 +407,13 @@ const HomeScreen = () => {
                     <View
                       style={{
                         flexDirection: 'row',
-                        // backgroundColor: 'purple',
                         width: windowWidth * 0.45,
                         alignItems: 'center',
                       }}>
                       <CustomText
                         style={{
                           color: 'white',
-                          // backgroundColor: 'red',
                           textAlign: 'left',
-                          // width: windowWidth * 0.2,
                           fontSize: moderateScale(25, 0.6),
                         }}>
                         {item?.off}
@@ -387,12 +421,9 @@ const HomeScreen = () => {
                       <CustomText
                         style={{
                           color: 'white',
-                          // backgroundColor: 'red',
                           textAlign: 'left',
-                          // width: windowWidth * 0.2,
                           fontSize: moderateScale(12, 0.6),
                         }}>
-                        {'  '}
                         off
                       </CustomText>
                     </View>
@@ -400,7 +431,6 @@ const HomeScreen = () => {
                     <CustomText
                       style={{
                         color: 'white',
-                        // backgroundColor: 'red',
                         textAlign: 'left',
                         width: windowWidth * 0.45,
                         fontSize: moderateScale(10, 0.6),
@@ -419,7 +449,6 @@ const HomeScreen = () => {
             alignItems: 'center',
             justifyContent: 'space-between',
             width: windowWidth * 0.95,
-            // backgroundColor:'purple'
           }}>
           <CustomText
             style={{
@@ -431,7 +460,6 @@ const HomeScreen = () => {
           </CustomText>
           <CustomText
             style={{
-              
               color: 'black',
               borderRadius: moderateScale(20, 0.6),
               fontSize: moderateScale(12, 0.6),
@@ -450,9 +478,7 @@ const HomeScreen = () => {
             marginTop: moderateScale(5, 0.3),
           }}
           renderItem={({item, index}) => {
-            return (
-            <ProductCard item={item} />
-            );
+            return <ProductCard item={item} />;
           }}
         />
       </ScrollView>
@@ -463,6 +489,22 @@ const HomeScreen = () => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
+  categoryContainer:{
+    height: windowHeight * 0.09,
+    width: windowWidth * 0.95,
+    marginTop: moderateScale(20, 0.3),
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  icons:{
+    width: windowWidth * 0.5,
+    height: windowHeight * 0.12,
+    borderRadius: moderateScale(20, 0.6),
+    // backgroundColor: 'orange',
+    marginRight: moderateScale(10, 0.3),
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   bottomImage: {
     width: '100%',
     height: '100%',

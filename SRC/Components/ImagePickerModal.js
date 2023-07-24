@@ -203,65 +203,7 @@ const ImagePickerModal = props => {
           <CustomText style={styles.modalBtnText}>Cancel</CustomText>
         </TouchableOpacity>
       </View>
-      {/* <View
-        style={{
-          // flex: 1,
-          backgroundColor: Color.black,
-          height: Dimensions.get("window").height * 0.33,
-          width: Dimensions.get("window").width * 0.8,
-          paddingHorizontal: moderateScale(10, 0.3),
-          paddingVertical: moderateScale(10, 0.3),
-          borderRadius: Dimensions.get("window").width * 0.02,
-        }}
-      >
-        <CustomText style={styles.modalHead}>Upload picture</CustomText>
-        <View style={styles.modalContentContianer}>
-          <TouchableOpacity
-            onPress={() => {
-              if (Platform.OS === "android") {
-                setShow(false);
-              }
-              openGallery();
-            }}
-            style={styles.modalContentBtn}
-          >
-            <Icon
-              name={"folder-images"}
-              as={Entypo}
-              size={moderateScale(25, 0.3)}
-              style={{
-                color: Color.black,
-              }}
-            />
-            <CustomText style={styles.modalBtnText}>Gallery</CustomText>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              if (Platform.OS === "android") {
-                setShow(false);
-              }
-              openCamera();
-            }}
-            style={styles.modalContentBtn}
-          >
-            <Icon
-              name={"camera"}
-              as={FontAwesome5}
-              size={moderateScale(25, 0.3)}
-              style={{
-                color: Color.black,
-              }}
-            />
-            <CustomText style={styles.modalBtnText}>Camera</CustomText>
-          </TouchableOpacity>
-        </View>
-        <TouchableOpacity
-          onPress={() => setShow(false)}
-          style={styles.modalCancelBtn}
-        >
-          <CustomText style={styles.modalBtnText}>Cancel</CustomText>
-        </TouchableOpacity>
-      </View> */}
+    
     </Modal>
   );
 };

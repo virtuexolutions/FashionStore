@@ -22,10 +22,11 @@ import {
 import CustomStatusBar from '../Components/CustomStatusBar';
 import Header from '../Components/Header';
 import {useIsFocused} from '@react-navigation/native';
+import Color from '../Assets/Utilities/Color';
 
 const DressesDetail = props => {
   const item = props.route.params.item;
-  console.log("🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:", item)
+  console.log('🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:', item);
   const cartData = useSelector(state => state.commonReducer.cart);
   console.log(
     '🚀 ~ file: DressesDetail.js:26 ~ DressesDetail ~ cartData:',
@@ -56,7 +57,9 @@ const DressesDetail = props => {
   const [quantity, setQuantity] = useState(
     cartitem ? cartitem?.qty : item?.qty,
   );
-  const [cotton, setcotton] = useState(cartitem ? cartitem?.cotton : item?.cotton);
+  const [cotton, setcotton] = useState(
+    cartitem ? cartitem?.cotton : item?.cotton,
+  );
   // console.log(
   //   '🚀 ~ file: DressesDetail.js:32 ~ DressesDetail ~ CartData:',
   //   cartData,
@@ -82,23 +85,22 @@ const DressesDetail = props => {
   const [finalItem, setFinalItem] = useState(
     cartitem != undefined ? cartitem : item,
   );
-  const body={
-    Title : item?.Title,
+  const body = {
+    Title: item?.Title,
     colors: item?.colors,
     cotton: cotton,
     id: item?.id,
-    img:item?.img,
+    img: item?.img,
     like: like,
-    price:item?.price,
+    price: item?.price,
     qty: quantity,
-    sale: item?.sale, 
-    size:item?.size, 
-    subTitle:item?.subTitle,
-    selectedSize : Selectedsize,
-    selectedColor : Selectedcolor,
-    totalQty : item?.totalQty,
-  
-  }
+    sale: item?.sale,
+    size: item?.size,
+    subTitle: item?.subTitle,
+    selectedSize: Selectedsize,
+    selectedColor: Selectedcolor,
+    totalQty: item?.totalQty,
+  };
 
   return (
     <>
@@ -114,16 +116,8 @@ const DressesDetail = props => {
       />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.banner}>
-          <View
-            style={{
-              flexDirection: 'row',
-              height: windowHeight * 0.3,
-              width: windowWidth,
-              justifyContent: 'center',
-              alignItems: 'center',
-              alignSelf: 'center',
-            }}>
-            {index > 0 && item?.images.length>1 &&(
+          <View style={styles.container}>
+            {index > 0 && item?.images.length > 1 && (
               <>
                 <View
                   style={{
@@ -156,7 +150,7 @@ const DressesDetail = props => {
                     alignItems: 'center',
                     justifyContent: 'center',
                     left: -5,
-                    backgroundColor: '#FF6E2E',
+                    backgroundColor: Color.themeColor,
                   }}>
                   <Icon name={'left'} as={AntDesign} color={'white'} />
                 </TouchableOpacity>
@@ -173,7 +167,11 @@ const DressesDetail = props => {
                 backgroundColor: 'black',
               }}>
               <CustomImage
-                source={item?.images.length==1 ? item?.images[index-1]:item?.images[index] }
+                source={
+                  item?.images.length == 1
+                    ? item?.images[index - 1]
+                    : item?.images[index]
+                }
                 style={{
                   height: '100%',
                   height: '100%',
@@ -194,7 +192,7 @@ const DressesDetail = props => {
                     zIndex: 1,
                     justifyContent: 'center',
                     right: -5,
-                    backgroundColor: '#FF6E2E',
+                    backgroundColor: Color.themeColor,
                   }}>
                   <Icon name={'right'} as={AntDesign} color={'white'} />
                 </TouchableOpacity>
@@ -290,7 +288,7 @@ const DressesDetail = props => {
             <CustomText
               isBold
               style={{
-                color: '#FF6E2E',
+                color: Color.themeColor,
                 fontSize: 24,
                 width: windowWidth * 0.24,
               }}>
@@ -303,14 +301,7 @@ const DressesDetail = props => {
                   setQuantity(quantity + 1);
                   dispatch(increamentQuantity(item));
                 }}
-                style={{
-                  width: windowWidth * 0.06,
-                  height: windowWidth * 0.06,
-                  borderRadius: (windowWidth * 0.06) / 2,
-                  backgroundColor: '#E56A36',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
+                style={styles.icon}>
                 <CustomText
                   isBold
                   style={{
@@ -337,14 +328,7 @@ const DressesDetail = props => {
                   }
                   dispatch(decrementQuantity(item));
                 }}
-                style={{
-                  width: windowWidth * 0.06,
-                  height: windowWidth * 0.06,
-                  borderRadius: (windowWidth * 0.06) / 2,
-                  backgroundColor: '#E56A36',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
+                style={styles.icon}>
                 <CustomText
                   isBold
                   style={{
@@ -373,17 +357,9 @@ const DressesDetail = props => {
                 <TouchableOpacity
                   onPress={() => {
                     SetSelectedColor(color);
-                    dispatch(setColor({id: item?.id, colors:color}));
+                    dispatch(setColor({id: item?.id, colors: color}));
                   }}
-                  style={{
-                    height: windowHeight * 0.04,
-                    width: windowWidth * 0.08,
-                    borderRadius: (windowWidth * 0.1) / 2,
-                    backgroundColor: color,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginLeft: moderateScale(15, 0.3),
-                  }}>
+                  style={[styles.colorContainer, {backgroundColor: color}]}>
                   {Selectedcolor == color && (
                     <Icon
                       name={'check'}
@@ -401,7 +377,6 @@ const DressesDetail = props => {
             isBold
             style={{
               fontSize: moderateScale(14, 0.6),
-
               color: '#201E1D',
               width: windowWidth * 0.17,
             }}>
@@ -421,14 +396,13 @@ const DressesDetail = props => {
                       }),
                     );
                   }}
-                  style={{
-                    height: windowHeight * 0.04,
-                    width: windowWidth * 0.08,
-                    borderRadius: (windowWidth * 0.1) / 2,
-                    justifyContent: 'center',
-                    backgroundColor:
-                      Selectedsize == size ? '#E56A36' : '#F4F5F6',
-                  }}>
+                  style={[
+                    styles.size,
+                    {
+                      backgroundColor:
+                        Selectedsize == size ? Color.themeColor : '#F4F5F6',
+                    },
+                  ]}>
                   <CustomText
                     style={{
                       color: Selectedsize == size ? 'white' : '#8e9194',
@@ -479,7 +453,7 @@ const DressesDetail = props => {
                   justifyContent: 'center',
                 }}
                 onPress={() => {
-                  setcotton(cotton+1)
+                  setcotton(cotton + 1);
                   dispatch(setCotton({id: item.id, val: 1}));
                 }}>
                 <CustomText
@@ -503,9 +477,8 @@ const DressesDetail = props => {
 
               <TouchableOpacity
                 onPress={() => {
-
-                  if(cotton>1){
-                    setcotton(cotton-1)
+                  if (cotton > 1) {
+                    setcotton(cotton - 1);
                   }
                   item?.cotton > 1 &&
                     dispatch(setCotton({id: item?.id, val: -1}));
@@ -532,16 +505,7 @@ const DressesDetail = props => {
         </View>
       </ScrollView>
 
-      <View
-        style={{
-          position: 'absolute',
-          width: windowWidth,
-          height: windowHeight * 0.08,
-          backgroundColor: '#FFFFFF',
-          //  alignItems:'center',
-          bottom: 0,
-          justifyContent: 'center',
-        }}>
+      <View style={styles.bottomContainer}>
         <CustomButton
           disabled={cartitem?.qty > 0 ? true : false}
           isBold
@@ -553,7 +517,7 @@ const DressesDetail = props => {
           fontSize={moderateScale(16, 0.6)}
           // marginBottom={moderateScale(10,.3)}
           // marginTop={moderateScale(20, 0.3)}
-          bgColor={['#F89D52', '#FF6E2E']}
+          bgColor={Color.themeBgColor}
           borderRadius={moderateScale(30, 0.3)}
           isGradient
         />
@@ -565,6 +529,45 @@ const DressesDetail = props => {
 export default DressesDetail;
 
 const styles = StyleSheet.create({
+  size: {
+    height: windowHeight * 0.04,
+    width: windowWidth * 0.08,
+    borderRadius: (windowWidth * 0.1) / 2,
+    justifyContent: 'center',
+  },
+  bottomContainer: {
+    position: 'absolute',
+    width: windowWidth,
+    height: windowHeight * 0.08,
+    backgroundColor: '#FFFFFF',
+    //  alignItems:'center',
+    bottom: 0,
+    justifyContent: 'center',
+  },
+  container: {
+    flexDirection: 'row',
+    height: windowHeight * 0.3,
+    width: windowWidth,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+  },
+  colorContainer: {
+    height: windowHeight * 0.04,
+    width: windowWidth * 0.08,
+    borderRadius: (windowWidth * 0.1) / 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: moderateScale(15, 0.3),
+  },
+  icon: {
+    width: windowWidth * 0.06,
+    height: windowWidth * 0.06,
+    borderRadius: (windowWidth * 0.06) / 2,
+    backgroundColor: Color.themeColor,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   banner: {
     width: windowWidth * 0.95,
     height: windowHeight * 0.77,

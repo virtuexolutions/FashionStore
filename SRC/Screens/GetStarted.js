@@ -35,7 +35,7 @@ const GetStarted = () => {
 
       <CustomButton
       text={'Sign in'}
-        textColor={'#FF6E2E'}
+        textColor={Color.themeColor}
         width={windowWidth * 0.8}
         height={windowHeight * 0.07}
         marginTop={moderateScale(80, 0.3)}
@@ -58,7 +58,7 @@ const GetStarted = () => {
         marginTop={moderateScale(15, 0.3)}
         borderRadius={moderateScale(30, 0.3)}
         fontSize={moderateScale(16,.6)}
-        bgColor={['#F89D52', '#FF6E2E']}
+        bgColor={Color.themeBgColor}
         onPress={()=>{
           
           navigationService.navigate('Signup')

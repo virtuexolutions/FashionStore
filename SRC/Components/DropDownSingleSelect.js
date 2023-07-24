@@ -6,8 +6,6 @@ import {Icon} from 'native-base';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Color from '../Assets/Utilities/Color';
 import Entypo from 'react-native-vector-icons/Entypo';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {windowWidth} from '../Utillity/utils';
 
 const width = Dimensions.get('window').width;

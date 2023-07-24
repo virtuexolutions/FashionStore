@@ -96,7 +96,7 @@ const SearchContainer = ({ width, text, input, onPress, data, setData , style , 
               name={'filter'}
               as={Ionicons}
               size={moderateScale(20,0.3)}
-              color={'#FF6E2E'}
+              color={Color.themeColor}
               // style={{backgroundColor : 'red'}}
               />
 

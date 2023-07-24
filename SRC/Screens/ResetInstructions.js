@@ -7,8 +7,8 @@ import CustomButton from '../Components/CustomButton';
 import CustomText from '../Components/CustomText';
 import Color from '../Assets/Utilities/Color';
 import navigationService from '../navigationService';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+// import FontAwesome from 'react-native-vector-icons/FontAwesome';
+// import AntDesign from 'react-native-vector-icons/AntDesign';
 import TextInputWithTitle from '../Components/TextInputWithTitle';
 import { Icon } from 'native-base';
 import CustomStatusBar from '../Components/CustomStatusBar';
@@ -75,7 +75,7 @@ const ResetInstruction = () => {
             fontSize={moderateScale(16,.6)}
 
         marginTop={moderateScale(20, 0.3)}
-        bgColor={['#F89D52', '#FF6E2E']}
+        bgColor={Color.themeBgColor}
         borderRadius={moderateScale(30, 0.3)}
         onPress={() => {
           navigationService.navigate('LoginScreen');

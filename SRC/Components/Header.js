@@ -6,7 +6,6 @@ import {
   useIsFocused,
   useNavigation,
 } from '@react-navigation/native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import {moderateScale, ScaledSheet} from 'react-native-size-matters';
 import Color from '../Assets/Utilities/Color';
 import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
@@ -16,7 +15,6 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useDispatch, useSelector} from 'react-redux';
 import navigationService from '../navigationService';
-import Entypo from 'react-native-vector-icons/Entypo';
 import {Get, Post} from '../Axios/AxiosInterceptorFunction';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {setUserData, setUserLogOut} from '../Store/slices/common';
@@ -131,7 +129,7 @@ const Header = props => {
                   right: moderateScale(5, 0.3),
                   top: moderateScale(17, 0.6),
                   borderRadius: moderateScale(15, 0.6) / 2,
-                  backgroundColor: '#E56A36',
+                  backgroundColor: Color?.themeColor,
                 }}>
                 <CustomText
                   style={{fontSize: moderateScale(10, 0.6), color: 'white'}}>

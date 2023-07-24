@@ -10,6 +10,7 @@ import navigationService from '../navigationService';
 import {useDispatch, useSelector} from 'react-redux';
 import {AddToCart, RemoveToCart, setLiked} from '../Store/slices/common';
 import CustomButton from './CustomButton';
+import Color from '../Assets/Utilities/Color';
 
 const ProductCard = ({item}) => {
   const dispatch = useDispatch();
@@ -148,7 +149,7 @@ const ProductCard = ({item}) => {
           style={{
             textAlign: 'left',
             width: windowWidth * 0.35,
-            color: '#E56A36',
+            color: Color.themeColor,
           }}>
           $ {item.price}
         </CustomText>
@@ -180,7 +181,7 @@ const ProductCard = ({item}) => {
           marginTop={10}
           marginBottom={10}
           height={windowHeight * 0.04}
-          bgColor={'#FF6E2E'}
+          bgColor={Color.themeColor}
           fontSize={14}
           borderRadius={moderateScale(5, 0.3)}
         />
