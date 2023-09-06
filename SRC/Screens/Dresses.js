@@ -4,7 +4,7 @@ import {windowHeight, windowWidth} from '../Utillity/utils';
 import CustomText from '../Components/CustomText';
 import {ScaledSheet, moderateScale} from 'react-native-size-matters';
 import CustomImage from '../Components/CustomImage';
-import {Icon} from 'native-base';
+import {Icon, ScrollView} from 'native-base';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Feather from 'react-native-vector-icons/Feather';
 import CustomStatusBar from '../Components/CustomStatusBar';
@@ -143,6 +143,9 @@ const Dresses = () => {
       rightName={'shopping-bag'}
       rightType={Feather}
     />
+
+    <ScrollView 
+     showsHorizontalScrollIndicator={false}>
       <View
         style={{
           flexDirection: 'row',
@@ -156,7 +159,6 @@ const Dresses = () => {
       </View>
 
       <FlatList
-        showsVerticalScrollIndicator={false}
         numColumns={2}
         data={makeUp}
         contentContainerStyle={{
@@ -172,6 +174,7 @@ const Dresses = () => {
           );
         }}
       />
+    </ScrollView>
    
     </>
   );
