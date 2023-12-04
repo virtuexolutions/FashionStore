@@ -1,6 +1,6 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, Alert, ToastAndroid, ActivityIndicator} from 'react-native';
 import React, {useState} from 'react';
-import {windowHeight, windowWidth} from '../Utillity/utils';
+import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import {moderateScale, ScaledSheet} from 'react-native-size-matters';
 import CustomImage from '../Components/CustomImage';
 import CustomButton from '../Components/CustomButton';
@@ -12,11 +12,41 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import TextInputWithTitle from '../Components/TextInputWithTitle';
 import {Icon} from 'native-base';
 import CustomStatusBar from '../Components/CustomStatusBar';
+import { Post } from '../Axios/AxiosInterceptorFunction';
 
 const EnterPhone = () => {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false)
+
+  const ForgotPassword = async () => {
+    const body = {
+      email: email,
+    };
+
+    const url = 'password/email';
+
+    if (['', null, undefined].includes(email)) {
+      return Platform.OS == 'android'
+        ? ToastAndroid.show('Email is required', ToastAndroid.SHORT)
+        : Alert.alert('Email is required');
+    }
+    setIsLoading(true);
+    const response = await Post(url, body, apiHeader());
+    setIsLoading(false);
+
+    if (response != undefined) {
+      console.log('response data =>', response?.data);
+      Alert.alert(`${response?.data?.data[0]?.code}`);
+      navigationService.navigate('VerifyNumber', {
+        email: `${email}`,
+      });
+
+    }
+  };
+
+
+
+
 
   return (
     <>
@@ -73,7 +103,7 @@ const EnterPhone = () => {
         />
 
         <CustomButton
-          text={'send Code'}
+          text={isLoading ? <ActivityIndicator color={Color.white} size={'small'} />:'send Code'}
           textColor={Color.white}
           width={windowWidth * 0.8}
           height={windowHeight * 0.07}
@@ -82,7 +112,8 @@ const EnterPhone = () => {
           fontSize={moderateScale(16, 0.6)}
           borderRadius={moderateScale(30, 0.3)}
           onPress={() => {
-            navigationService.navigate('VerifyNumber');
+            ForgotPassword()
+            // navigationService.navigate('VerifyNumber');
           }}
           isGradient
         />

@@ -13,7 +13,7 @@ import {Icon} from 'native-base';
 import Color from '../Assets/Utilities/Color';
 import {useState} from 'react';
 import {moderateScale, scale, ScaledSheet} from 'react-native-size-matters';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import {windowHeight, windowWidth} from '../Utillity/utils';
@@ -152,12 +152,12 @@ elevation: 9,
               // backgroundColor: "red",
             }}
           >
-            {/* <Icon
-              name={showPassword ? 'eye' : 'eye-slash'}
-              as={FontAwesome}
+            <Icon
+              name={showPassword ? 'unlock' : 'lock'}
+              as={AntDesign}
               color={Color.themeLightGray}
               size={moderateScale(18,0.3)}
-            /> */}
+            />
           </TouchableOpacity>
         </>
       ) : (

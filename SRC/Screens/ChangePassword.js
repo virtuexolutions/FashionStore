@@ -24,16 +24,12 @@ import CustomText from '../Components/CustomText';
 import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import CustomButton from '../Components/CustomButton';
 import {ActivityIndicator} from 'react-native';
-import {Post} from '../Axios/AxiosInterceptorFunction';
 import CardContainer from '../Components/CardContainer';
-import CustomHeader from '../Components/CustomHeader';
+
 import { Icon } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import { setUserToken } from '../Store/slices/auth';
 import LinearGradient from 'react-native-linear-gradient';
-
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
 
 const ChangePassword = props => {
   const navigationN = useNavigation()

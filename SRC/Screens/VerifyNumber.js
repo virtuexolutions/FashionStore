@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   ImageBackground,
@@ -8,6 +8,7 @@ import {
   ToastAndroid,
   TouchableOpacity,
   View,
+  Alert
 } from 'react-native';
 import {
   CodeField,
@@ -17,40 +18,22 @@ import {
 } from 'react-native-confirmation-code-field';
 import Color from '../Assets/Utilities/Color';
 import CustomStatusBar from '../Components/CustomStatusBar';
-// import CustomText from '../Components/CustomText';
-// import CustomImage from '../Components/CustomImage';
 import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import {moderateScale, ScaledSheet} from 'react-native-size-matters';
-// import TextInputWithTitle from '../Components/TextInputWithTitle';
-// import FontAwesome from 'react-native-vector-icons/FontAwesome';
-// import CustomButton from '../Components/CustomButton';
-import {Image, ScrollView} from 'native-base';
-import {useIsFocused} from '@react-navigation/native';
 import {Post} from '../Axios/AxiosInterceptorFunction';
-import {validateEmail} from '../Config';
-import {setSelectedRole, setUserData} from '../Store/slices/common';
-import {setUserLogin, setUserToken, setWalkThrough} from '../Store/slices/auth';
 import {useDispatch, useSelector} from 'react-redux';
 import CustomImage from '../Components/CustomImage';
-import TextInputWithTitle from '../Components/TextInputWithTitle';
 import CustomText from '../Components/CustomText';
 import CustomButton from '../Components/CustomButton';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {FloatingLabelInput} from 'react-native-floating-label-input';
-import Header from '../Components/Header';
 import navigationService from '../navigationService';
 
 const VerifyNumber = props => {
   const disptach = useDispatch();
-  const [firstSection, setFirstSection] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
-  const [username, setusername] = useState('');
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState('');
-  const [selectedRole, setSelectedType] = useState('Qbid Member');
-  const phoneNumber = props?.route?.params?.phoneNumber;
 
-  //states
+  const email = props?.route?.params?.email;
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading2, setIsLoading2] = useState(false)
   const [code, setCode] = useState('');
 
   const CELL_COUNT = 4;
@@ -59,7 +42,7 @@ const VerifyNumber = props => {
     code,
     setCode,
   });
-  const [time, settime] = useState(120);
+  const [time, settime] = useState(10);
   const [timerLabel, settimerLabel] = useState('Resend In ');
   if (time > 0) {
     setTimeout(function () {
@@ -74,27 +57,29 @@ const VerifyNumber = props => {
   const sendOTP = async () => {
     const url = 'password/email';
     setIsLoading(true);
-    const response = await Post(url, {email: phoneNumber}, apiHeader());
+    const response = await Post(url, {email: email}, apiHeader());
     setIsLoading(false);
     if (response != undefined) {
+      Alert.alert(`${response?.data?.data[0]?.code}`);
+      setCode('');
       Platform.OS == 'android'
-        ? ToastAndroid.show(`OTP sent to ${phoneNumber}`, ToastAndroid.SHORT)
-        : alert(`OTP sent to ${phoneNumber}`);
+        ? ToastAndroid.show(`OTP sent to ${email}`, ToastAndroid.SHORT)
+        : alert(`OTP sent to ${email}`);
     }
   };
 
   const VerifyOTP = async () => {
     const url = 'password/code/check';
-    setIsLoading(true);
+    setIsLoading2(true);
     console.log(code);
     const response = await Post(url, {code: code}, apiHeader());
-    setIsLoading(false);
+    setIsLoading2(false);
     if (response != undefined) {
       Platform.OS == 'android'
         ? ToastAndroid.show(`otp verified`, ToastAndroid.SHORT)
         : alert(`otp verified`);
 
-      navigationService.navigate('ResetPassword', {phoneNumber: phoneNumber});
+      navigationService.navigate('ResetPassword', {email: email});
     }
   };
 
@@ -102,50 +87,7 @@ const VerifyNumber = props => {
     label();
   }, [time]);
 
-  // useEffect(()=>{
-  //   if(timerLabel == )
-  //   sendOTP();
-  // },[timerLabel])
-
-  // const handleLogin = async loginFor => {
-  //   console.log(
-  //     '🚀 ~ file: LoginScreen.js:38 ~ handleLogin ~ loginFor',
-  //     loginFor,
-  //   );
-  //   const url = 'login';
-  //   const body = {
-  //     email: email.trim(),
-  //     password: password,
-  //   };
-  //   if (email == '' || password == '') {
-  //     return Platform.OS == 'android'
-  //       ? ToastAndroid.show('Required Field is empty', ToastAndroid.SHORT)
-  //       : alert('Required Field is empty');
-  //   }
-  //   if (!validateEmail(email)) {
-  //     return Platform.OS == 'android'
-  //       ? ToastAndroid.show('Please use valid email', ToastAndroid.SHORT)
-  //       : alert('Please use valid email');
-  //   }
-  //   setIsLoading(true);
-  //   const response = await Post(url, body, apiHeader());
-  //   setIsLoading(false);
-  //   if (response != undefined) {
-  //     console.log(response?.data);
-  //     // console.log('yes' ,  response?.data?.data?.user_info?.role , loginFor)
-  //     response?.data?.data?.user_info?.role == loginFor
-  //       ? (dispatch(setUserData(response?.data?.data?.user_info)),
-  //         dispatch(setUserLogin(response?.data?.data?.token)))
-  //       : Platform.OS == 'android'
-  //       ? ToastAndroid.show(
-  //           'This User is not registered for selected role',
-  //           ToastAndroid.SHORT,
-  //         )
-  //       : alert('This User is not registered for selected role');
-  //   }
-  // };
-
-  return (
+ return (
     <>
       <CustomStatusBar backgroundColor={'#FEFDFC'} barStyle={'dark-content'} />
       <View
@@ -179,64 +121,80 @@ const VerifyNumber = props => {
           isBold>
           Enter OTP
         </CustomText>
-        <View style={styles.conatiner}>
-          <CodeField
-            placeholder={'0'}
-            ref={ref}
-            value={code}
-            onChangeText={setCode}
-            cellCount={CELL_COUNT}
-            rootStyle={styles.codeFieldRoot}
-            keyboardType="number-pad"
-            textContentType="oneTimeCode"
-            renderCell={({index, symbol, isFocused}) => (
-              <View
-                onLayout={getCellOnLayoutHandler(index)}
-                key={index}
-                style={[styles.cellRoot, isFocused && styles.focusCell]}>
-                <CustomText
-                  style={[styles.cellText, isFocused && {color: Color.black}]}>
-                  {symbol || (isFocused ? <Cursor /> : null)}
-                </CustomText>
-              </View>
-            )}
-          />
-          <CustomText style={[styles.txt3, {width: windowWidth * 0.6}]}>
-            Haven't Recieved Verification Code ?{' '}
-            {
-              <TouchableOpacity
-                disabled={timerLabel == 'Resend Code ' ? false : true}
-                onPress={() => {
-                  settimerLabel('ReSend in '), settime(120);
-                }}>
-                <CustomText style={[styles.txt4]}>
-                  {timerLabel} {time}
-                </CustomText>
-              </TouchableOpacity>
-            }
-          </CustomText>
-          <CustomButton
-            text={
-              isLoading ? (
-                <ActivityIndicator color={'#FFFFFF'} size={'small'} />
-              ) : (
-                'Verify Now'
-              )
-            }
-            textColor={Color.white}
-            fontSize={moderateScale(16, 0.6)}
-            width={windowWidth * 0.8}
-            height={windowHeight * 0.07}
-            marginTop={moderateScale(30, 0.3)}
-            onPress={() => {
-              // disptach(setUserToken({token : 'fasdasd awdawdawdada'}))
-              navigationService.navigate('ResetPassword');
-            }}
-            bgColor={Color.themeBgColor}
-            borderRadius={moderateScale(30, 0.3)}
-            isGradient
-          />
-        </View>
+        {isLoading ? (
+          <View
+            style={{
+              width: windowWidth,
+              height: windowHeight * 0.5,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <ActivityIndicator size={'large'} color={Color.themeColor} />
+          </View>
+        ) : (
+          <View style={styles.conatiner}>
+            <CodeField
+              placeholder={'0'}
+              ref={ref}
+              value={code}
+              onChangeText={setCode}
+              cellCount={CELL_COUNT}
+              rootStyle={styles.codeFieldRoot}
+              keyboardType="number-pad"
+              textContentType="oneTimeCode"
+              renderCell={({index, symbol, isFocused}) => (
+                <View
+                  onLayout={getCellOnLayoutHandler(index)}
+                  key={index}
+                  style={[styles.cellRoot, isFocused && styles.focusCell]}>
+                  <CustomText
+                    style={[
+                      styles.cellText,
+                      isFocused && {color: Color.black},
+                    ]}>
+                    {symbol || (isFocused ? <Cursor /> : null)}
+                  </CustomText>
+                </View>
+              )}
+            />
+            <CustomText style={[styles.txt3, {width: windowWidth * 0.6}]}>
+              Haven't Recieved Verification Code ?{' '}
+              {
+                <TouchableOpacity
+                  disabled={timerLabel == 'Resend Code ' ? false : true}
+                  onPress={() => {
+                    sendOTP();
+                    settimerLabel('ReSend in '), settime(10);
+                  }}>
+                  <CustomText style={[styles.txt4]}>
+                    {timerLabel} {time}
+                  </CustomText>
+                </TouchableOpacity>
+              }
+            </CustomText>
+            <CustomButton
+              text={
+                isLoading2 ? (
+                  <ActivityIndicator color={'#FFFFFF'} size={'small'} />
+                ) : (
+                  'Verify Now'
+                )
+              }
+              textColor={Color.white}
+              fontSize={moderateScale(16, 0.6)}
+              width={windowWidth * 0.8}
+              height={windowHeight * 0.07}
+              marginTop={moderateScale(30, 0.3)}
+              onPress={() => {
+                VerifyOTP();
+                // navigationService.navigate('ResetPassword');
+              }}
+              bgColor={Color.themeBgColor}
+              borderRadius={moderateScale(30, 0.3)}
+              isGradient
+            />
+          </View>
+        )}
       </View>
     </>
   );

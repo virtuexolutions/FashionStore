@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {windowHeight, windowWidth} from '../Utillity/utils';
 import {moderateScale, ScaledSheet} from 'react-native-size-matters';
 import CustomImage from '../Components/CustomImage';
@@ -15,12 +15,29 @@ import SearchContainer from '../Components/SearchContainer';
 import LinearGradient from 'react-native-linear-gradient';
 import ProductCard from '../Components/ProductCard';
 import navigationService from '../navigationService';
+import {Get} from '../Axios/AxiosInterceptorFunction';
+import {useSelector} from 'react-redux';
 
 const HomeScreen = () => {
   const [searchData, setSearchData] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [isLoading, setisLoading] = useState(false);
+  const [products, setProducts] = useState([]);
+  const token = useSelector(state => state.authReducer.token);
+
+  const getData = async () => {
+    const url = 'auth/products';
+    setisLoading(true);
+    const response = await Get(url, token);
+    setisLoading(false);
+    if (response != undefined) {
+      setProducts(response?.data?.data?.data);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   const categories = [
     {
@@ -65,6 +82,7 @@ const HomeScreen = () => {
       },
     },
   ];
+
   const specialOffers = [
     {
       title: 'black Friday',
@@ -77,6 +95,7 @@ const HomeScreen = () => {
       detail: '*for selection item',
     },
   ];
+
   const newArrivals = [
     {
       id: 1,
@@ -321,13 +340,9 @@ const HomeScreen = () => {
             See all
           </CustomText>
         </View>
-        <View
-          style={styles.categoryContainer}>
+        <View style={styles.categoryContainer}>
           {categories.map((item, index) => {
-            console.log(
-              '🚀 ~ file: HomeScreen.js:146 ~ {categories.map ~ item:',
-              item,
-            );
+           
             return (
               <>
                 <TouchableOpacity
@@ -472,7 +487,7 @@ const HomeScreen = () => {
         <FlatList
           showsVerticalScrollIndicator={false}
           numColumns={2}
-          data={newArrivals}
+          data={products}
           contentContainerStyle={{
             alignSelf: 'center',
             marginTop: moderateScale(5, 0.3),
@@ -489,14 +504,14 @@ const HomeScreen = () => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
-  categoryContainer:{
+  categoryContainer: {
     height: windowHeight * 0.09,
     width: windowWidth * 0.95,
     marginTop: moderateScale(20, 0.3),
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  icons:{
+  icons: {
     width: windowWidth * 0.5,
     height: windowHeight * 0.12,
     borderRadius: moderateScale(20, 0.6),

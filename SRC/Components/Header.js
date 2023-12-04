@@ -82,7 +82,8 @@ const Header = props => {
           onPress={
             leftName == 'menu'
               ? () => {
-                  setDrawerModal(true);
+                  // setDrawerModal(true);
+                  navigationN.toggleDrawer()
                 }
               : leftPress
               ? leftPress

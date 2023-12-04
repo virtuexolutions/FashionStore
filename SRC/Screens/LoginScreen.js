@@ -1,6 +1,14 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ToastAndroid,
+  Alert,
+  ActivityIndicator,
+} from 'react-native';
 import React, {useState} from 'react';
-import {windowHeight, windowWidth} from '../Utillity/utils';
+import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import {moderateScale, ScaledSheet} from 'react-native-size-matters';
 import CustomImage from '../Components/CustomImage';
 import CustomButton from '../Components/CustomButton';
@@ -13,11 +21,55 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import TextInputWithTitle from '../Components/TextInputWithTitle';
 import {Icon} from 'native-base';
+import {validateEmail} from '../Config';
+import {Post} from '../Axios/AxiosInterceptorFunction';
+import { setUserData } from '../Store/slices/common';
+import { setUserToken } from '../Store/slices/auth';
+import { useDispatch } from 'react-redux';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [checked, setChecked] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const dispatch = useDispatch()
+
+  const Login = async () => {
+    const url = 'login';
+    const body = {
+      email: email,
+      password: password,
+    };
+    for (let key in body) {
+      if (body[key] == '') {
+        return Platform.OS == 'android'
+          ? ToastAndroid.show('All Fields are required', ToastAndroid.SHORT)
+          : Alert.alert('All Fields are required');
+      }
+    }
+    if (!validateEmail(email)) {
+      return Platform.OS == 'android'
+        ? ToastAndroid.show(
+            'Please enter valid email address',
+            ToastAndroid.SHORT,
+          )
+        : Alert.alert('Please enter valid email address');
+    }
+
+    setIsLoading(true);
+    const response = await Post(url, body, apiHeader());
+    setIsLoading(false);
+
+    if (response != undefined) {
+      console.log(
+        '🚀 ~ file: Signup.js:66 ~ register ~ response:',
+        response?.data,
+      );
+      dispatch(setUserData(response?.data?.data?.use_info));
+      dispatch(setUserToken({token: response?.data?.data?.token}));
+    }
+  };
 
   return (
     <View
@@ -26,7 +78,7 @@ const LoginScreen = () => {
         width: windowWidth,
         alignItems: 'center',
         paddingTop: windowHeight * 0.1,
-        backgroundColor : '#FEFDFC'
+        backgroundColor: '#FEFDFC',
 
         // marginTop: moderateScale(30, 0.3),
       }}>
@@ -41,7 +93,6 @@ const LoginScreen = () => {
           source={require('../Assets/Images/logo.png')}
           resizeMode={'contain'}
           style={{
-          
             height: '100%',
             // width:'100%',
           }}
@@ -51,7 +102,6 @@ const LoginScreen = () => {
       <CustomText
         style={{
           fontSize: moderateScale(18, 0.6),
-       
         }}
         isBold>
         Sign in
@@ -74,12 +124,8 @@ const LoginScreen = () => {
         color={'#ABB1C0'}
         placeholderColor={'#ABB1C0'}
         borderRadius={moderateScale(20, 0.6)}
-      
       />
       <TextInputWithTitle
-        iconName="lock"
-        iconType={AntDesign}
-        rightIcon
         secureText={true}
         titleText={'Your Password'}
         placeholder={'Your Password'}
@@ -95,7 +141,6 @@ const LoginScreen = () => {
         color={'#ABB1C0'}
         placeholderColor={'#ABB1C0'}
         borderRadius={moderateScale(20, 0.6)}
-       
       />
       <CustomText
         style={{
@@ -120,23 +165,24 @@ const LoginScreen = () => {
           alignItems: 'center',
           justifyContent: 'center',
         }}>
-          <TouchableOpacity
-            style={{
-              width: windowWidth * 0.04,
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: windowWidth * 0.04,
-              borderRadius: (windowWidth * 0.04) / 2,
-              borderColor: '#D8D8D8',
-              borderWidth: 1,
-            }}
-            onPress={() => {
-              setChecked(!checked);
-            }}>
-              {checked &&  <Icon as={Feather} name={'check'} size={3} color={'black'} />}
-          </TouchableOpacity>
-     
-  
+        <TouchableOpacity
+          style={{
+            width: windowWidth * 0.04,
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: windowWidth * 0.04,
+            borderRadius: (windowWidth * 0.04) / 2,
+            borderColor: '#D8D8D8',
+            borderWidth: 1,
+          }}
+          onPress={() => {
+            setChecked(!checked);
+          }}>
+          {checked && (
+            <Icon as={Feather} name={'check'} size={3} color={'black'} />
+          )}
+        </TouchableOpacity>
+
         <CustomText
           style={{
             fontSize: moderateScale(12, 0.6),
@@ -154,22 +200,26 @@ const LoginScreen = () => {
       </View>
 
       <CustomButton
-        text={'Sign In'}
+        text={
+          isLoading ? (
+            <ActivityIndicator color={Color.white} size={'small'} />
+          ) : (
+            'Sign In'
+          )
+        }
         textColor={Color.white}
         width={windowWidth * 0.8}
         height={windowHeight * 0.07}
-        fontSize={moderateScale(16,.6)}
+        fontSize={moderateScale(16, 0.6)}
         marginTop={moderateScale(20, 0.3)}
         bgColor={Color.themeBgColor}
         borderRadius={moderateScale(30, 0.3)}
         onPress={() => {
-          navigationService.navigate('HomeScreen');
+          Login();
+          // navigationService.navigate('HomeScreen');
         }}
         isGradient
       />
-
-     
-    
     </View>
   );
 };
