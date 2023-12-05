@@ -17,16 +17,8 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import CustomButton from '../Components/CustomButton';
-import {useSelector, useDispatch} from 'react-redux';
-import {
-  AddToCart,
-  decrementQuantity,
-  increamentQuantity,
-  setColor,
-  setCotton,
-  setLiked,
-  setSize,
-} from '../Store/slices/common';
+
+
 import CustomStatusBar from '../Components/CustomStatusBar';
 import Header from '../Components/Header';
 import {useIsFocused} from '@react-navigation/native';
