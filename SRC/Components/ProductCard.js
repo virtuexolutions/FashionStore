@@ -1,4 +1,5 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity,Platform,
+  ToastAndroid,} from 'react-native';
 import React, {useState} from 'react';
 import {moderateScale} from 'react-native-size-matters';
 import {windowHeight, windowWidth} from '../Utillity/utils';
@@ -11,11 +12,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import CustomButton from './CustomButton';
 import Color from '../Assets/Utilities/Color';
 import numeral from 'numeral';
-import { AddToCart, RemoveFromCart } from '../Store/slices/common';
+import {AddToCart, RemoveFromCart} from '../Store/slices/common';
 
 const ProductCard = ({item}) => {
-  const cardData = useSelector(state => state.commonReducer.item)
-  console.log("🚀 ~ file: ProductCard.js:18 ~ ProductCard ~ cardData:", cardData)
+  const cardData = useSelector(state => state.commonReducer.item);
+  // console.log("🚀 ~ file: ProductCard.js:18 ~ ProductCard ~ cardData:", cardData)
   const dispatch = useDispatch();
   const [like, setLike] = useState(item?.like);
 
@@ -23,12 +24,18 @@ const ProductCard = ({item}) => {
     <View>
       <TouchableOpacity
         onLongPress={() => {
-         
           setLike(!like);
         }}
         activeOpacity={0.8}
         onPress={() => {
-          dispatch(AddToCart(item))
+          if (cardData.find((data, index) => data?.id == item?.id)) {
+           Platform.OS == 'android' 
+           ? ToastAndroid.show('item already added', ToastAndroid.SHORT)
+        : Alert.alert('item already added');
+          }
+          else{
+            dispatch(AddToCart(item));
+          }
         }}
         style={{
           width: windowWidth * 0.45,
@@ -50,9 +57,7 @@ const ProductCard = ({item}) => {
           onLongPress={() => {
             setLike(!like);
           }}
-          onPress={() => {
-            
-          }}
+          onPress={() => {}}
           activeOpacity={0.8}
           style={{
             width: windowWidth * 0.35,
@@ -77,9 +82,7 @@ const ProductCard = ({item}) => {
             onLongPress={() => {
               setLike(!like);
             }}
-            onPress={() => {
-            
-            }}
+            onPress={() => {}}
             source={
               item?.image
                 ? {uri: item?.large_image}
@@ -156,13 +159,11 @@ const ProductCard = ({item}) => {
         </CustomText>
       </TouchableOpacity>
 
-     
-     {   
-     cardData.find((data ,index) => data?.id == item?.id)  &&
-     <CustomButton
+      {cardData.find((data, index) => data?.id == item?.id) && (
+        <CustomButton
           isBold
-          onPress={() =>{
-            dispatch(RemoveFromCart(item))
+          onPress={() => {
+            dispatch(RemoveFromCart(item));
           }}
           text={'Remove Cart'}
           textColor={Color.white}
@@ -174,7 +175,7 @@ const ProductCard = ({item}) => {
           fontSize={14}
           borderRadius={moderateScale(5, 0.3)}
         />
-}
+      )}
     </View>
   );
 };

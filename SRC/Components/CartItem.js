@@ -10,15 +10,19 @@ import {Icon} from 'native-base';
 import {useDispatch, useSelector} from 'react-redux';
 import numeral from 'numeral';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { decrementQuantity, increamentQuantity } from '../Store/slices/common';
 
 const CartItem = ({item, fromCheckout}) => {
+//  console.log("🚀 ~ file: CartItem.js:15 ~ CartItem ~ item:", item)
+//  const cardData =useSelector(state =>state.commonReducer.item)
+ const dispatch =useDispatch()
  
 
   return (
     <View style={styles.cardContainer}>
-      <CustomText isBold style={styles.name}>
+      {/* <CustomText isBold style={styles.name}>
         Sleeve Hoodie
-      </CustomText>
+      </CustomText> */}
       <View
         style={{
           flexDirection: 'row',
@@ -34,7 +38,7 @@ const CartItem = ({item, fromCheckout}) => {
             }}
           />
           <CustomImage
-            source={item?.img}
+            source={{uri :item?.img}}
             style={{
               width: windowWidth * 0.3,
               height: windowHeight * 0.15,
@@ -43,7 +47,7 @@ const CartItem = ({item, fromCheckout}) => {
           />
         </View>
         <View style={styles.other1}>
-          <CustomText style={styles.text1}>{item?.name}</CustomText>
+          <CustomText style={styles.text1}>{item?.title}</CustomText>
           <View
             style={{
               flexDirection: 'row',
@@ -52,10 +56,10 @@ const CartItem = ({item, fromCheckout}) => {
               marginTop: moderateScale(5, 0.3),
             }}>
             {item?.selectedSize != '' ? (
-              <CustomText>Selected Size : {item?.selectedSize}</CustomText>
+              <CustomText>Selected Size : {item?.size}</CustomText>
             ) : (
               // <></>
-              item?.size.map((item1, index) => {
+              item?.size?.map((item1, index) => {
                 return (
                   <TouchableOpacity
                     activeOpacity={0.9}
@@ -88,7 +92,7 @@ const CartItem = ({item, fromCheckout}) => {
                 width: windowWidth * 0.45,
                 marginTop: moderateScale(5, 0.3),
               }}>
-              {item?.colors.map((item1, index) => {
+              {item?.colors?.map((item1, index) => {
                 return (
                   <TouchableOpacity
                     activeOpacity={0.9}
@@ -121,7 +125,7 @@ const CartItem = ({item, fromCheckout}) => {
               },
             ]}>
             <CustomText style={styles.amount}>
-              {numeral(item?.price * item?.qty).format('$0,0.00')}
+              {numeral(item?.wholsale_price * item?.qty).format('$0,0.00')}
             </CustomText>
             {/* {
               fromCheckout ? 
@@ -146,7 +150,9 @@ const CartItem = ({item, fromCheckout}) => {
                 as={Ionicons}
                 color={Color.themeColor}
                 size={moderateScale(25, 0.3)}
-                onPress={() => {}}
+                onPress={() => {
+                  dispatch(increamentQuantity(item?.id))
+                }}
               />
               <CustomText
                 isBold
@@ -154,14 +160,16 @@ const CartItem = ({item, fromCheckout}) => {
                   marginHorizontal: moderateScale(5, 0.3),
                   fontSize: moderateScale(12, 0.3),
                 }}>
-                {item?.qty}
+                {item?.quantity}
               </CustomText>
               <Icon
                 name={'circle-with-minus'}
                 as={Entypo}
                 color={Color.themeColor}
                 size={moderateScale(24, 0.3)}
-                onPress={() => {}}
+                onPress={() => {
+                  dispatch(decrementQuantity(item?.id))
+                }}
               />
             </View>
             {/* } */}

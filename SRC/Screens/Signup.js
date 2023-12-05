@@ -1,8 +1,8 @@
 import {
   Alert,
   Platform,
-  StyleSheet,
   ToastAndroid,
+  StyleSheet,
   ActivityIndicator,
   View,
 } from 'react-native';

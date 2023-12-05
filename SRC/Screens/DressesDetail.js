@@ -23,10 +23,11 @@ import CustomStatusBar from '../Components/CustomStatusBar';
 import Header from '../Components/Header';
 import {useIsFocused} from '@react-navigation/native';
 import Color from '../Assets/Utilities/Color';
+import { useSelector } from 'react-redux';
 
 const DressesDetail = props => {
   const item = props.route.params.item;
-  console.log('🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:', item);
+  // console.log('🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:', item);
   const [Selectedcolor, SetSelectedColor] = useState('');
   const [Selectedsize, setSelectedsize] = useState('');
   const cardData =useSelector(state => state.commonReducer.item)
