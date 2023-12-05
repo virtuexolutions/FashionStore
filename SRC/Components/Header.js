@@ -20,10 +20,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {setUserData, setUserLogOut} from '../Store/slices/common';
 
 const Header = props => {
-  const dispatch = useDispatch();
   const focused = useIsFocused();
   const token = useSelector(state => state.authReducer.token);
-  const cartData = useSelector(state => state?.commonReducer?.cart);
   // console.log('🚀 ~ file: Header.js:42 ~ Header ~ token:', token);
   const [isLoveNotesVisible, setLoveNotesVisible] = useState(false);
   const notification = useSelector(state => state.commonReducer.notification);
@@ -83,7 +81,7 @@ const Header = props => {
             leftName == 'menu'
               ? () => {
                   // setDrawerModal(true);
-                  navigationN.toggleDrawer()
+                  navigationN.toggleDrawer();
                 }
               : leftPress
               ? leftPress
@@ -105,39 +103,12 @@ const Header = props => {
               as={rightType ? rightType : FontAwesome}
               size={moderateScale(22, 0.3)}
               color={Color.black}
-              onPress={
-                rightName == 'shopping-bag'
-                  ? cartData.length == 0
-                    ? ()=>{ToastAndroid.show('Cart is Empty', ToastAndroid.SHORT)}
-                    : () => {
-                        navigationService.navigate('CheckOutScreen');
-                      }
-                  : rightPress
-              }
               style={{
                 position: 'absolute',
                 right: moderateScale(10, 0.3),
                 zIndex: 1,
               }}
             />
-            {cartData?.length > 0 && (
-              <View
-                style={{
-                  width: moderateScale(15, 0.6),
-                  height: moderateScale(15, 0.6),
-                  position: 'absolute',
-                  zIndex: 2,
-                  right: moderateScale(5, 0.3),
-                  top: moderateScale(17, 0.6),
-                  borderRadius: moderateScale(15, 0.6) / 2,
-                  backgroundColor: Color?.themeColor,
-                }}>
-                <CustomText
-                  style={{fontSize: moderateScale(10, 0.6), color: 'white'}}>
-                  {cartData?.length}
-                </CustomText>
-              </View>
-            )}
           </>
         ) : (
           <View

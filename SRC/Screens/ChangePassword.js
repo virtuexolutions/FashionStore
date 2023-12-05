@@ -1,241 +1,158 @@
-import React, {useState} from 'react';
 import {
-  Image,
-  Dimensions,
-  ImageBackground,
-  Platform,
-  ToastAndroid,
-  TouchableOpacity,
+  StyleSheet,
+  Text,
   View,
+  Alert,
+  ToastAndroid,
+  ActivityIndicator,
 } from 'react-native';
-import {ScaledSheet, moderateScale} from 'react-native-size-matters';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-
-import {useDispatch, useSelector} from 'react-redux';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-
-import navigationService from '../navigationService';
-
-import TextInputWithTitle from '../Components/TextInputWithTitle';
-import Color from '../Assets/Utilities/Color';
-import CustomStatusBar from '../Components/CustomStatusBar';
-import CustomText from '../Components/CustomText';
-
+import React, {useState} from 'react';
 import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
+import {moderateScale, ScaledSheet} from 'react-native-size-matters';
 import CustomButton from '../Components/CustomButton';
-import {ActivityIndicator} from 'react-native';
-import CardContainer from '../Components/CardContainer';
+import Color from '../Assets/Utilities/Color';
+import Feather from 'react-native-vector-icons/Feather';
+import TextInputWithTitle from '../Components/TextInputWithTitle';
+import CustomStatusBar from '../Components/CustomStatusBar';
+import {Post} from '../Axios/AxiosInterceptorFunction';
+import Header from '../Components/Header';
+import {useSelector} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
 
-import { Icon } from 'native-base';
-import { useNavigation } from '@react-navigation/native';
-import { setUserToken } from '../Store/slices/auth';
-import LinearGradient from 'react-native-linear-gradient';
+const ForgotPassword = () => {
+  const token = useSelector(state => state.authReducer.token);
 
-const ChangePassword = props => {
-  const navigationN = useNavigation()
-  const SelecteduserRole = useSelector(
-    state => state.commonReducer.selectedRole,
-  );
-  const dispatch = useDispatch();
-  const [currentPassword , setCurrentPassword] = useState('');
-  const [newPassword , setNewPassword] = useState('');
-  const [confirmNewPassword , setConfirmNewPassword] = useState('');
+  const navigation = useNavigation();
 
-
+  const [password, setPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
- 
+  const updatePassword = async () => {
+    const url = 'changepassword';
+    const body = {
+      old_password: password,
+      password: newPassword,
+      confirm_password: confirmNewPassword,
+    };
+    for (let i in body) {
+      if (body[i] == '') {
+        return Platform.OS == 'android'
+          ? ToastAndroid.show('All Fields are required', ToastAndroid.SHORT)
+          : Alert.alert('All Fields are required');
+      }
+    }
+    setIsLoading(true);
+    const response = await Post(url, body, apiHeader(token));
+    setIsLoading(false);
+    if (response != undefined) {
+      navigation.goBack();
+    }
+  };
 
   return (
     <>
-      <CustomStatusBar
-       backgroundColor={
-        Color.white
-      }
-        barStyle={'dark-content'}
+      <CustomStatusBar backgroundColor={'#FEFDFC'} barStyle={'dark-content'} />
+      <Header
+        showLeft={true}
+        leftName={'menu'}
+        leftType={Feather}
+        title={'Change Password'}
+        showRight={true}
+        rightName={'shopping-bag'}
+        rightType={Feather}
+        textStyle={{fontSize: moderateScale(18, 0.6)}}
       />
-         <LinearGradient
+      <View
         style={{
+          height: windowHeight * 0.9,
           width: windowWidth,
-          height: windowHeight,
-        }}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y:1}}
-        colors={Color.themeBgColor}
-        // locations ={[0, 0.5, 0.6]}
-        >
-            <TouchableOpacity
-            activeOpacity={0.8}
-          style={{
-            position : 'absolute',
-            top : moderateScale(20,0.3),
-            left : moderateScale(20,0.3),
-            height: moderateScale(30, 0.3),
-            width: moderateScale(30, 0.3),
-            borderRadius: moderateScale(5, 0.3),
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor:'white',
-            zIndex : 1
-          }}>
-         
-            <Icon
-              name={'arrowleft'}
-              as={AntDesign}
-              size={moderateScale(22, 0.3)}
-              color={Color.themeColor}
-              onPress={()=>{
-                navigationN.goBack()
-              }}
-            />
-            </TouchableOpacity>
-        <KeyboardAwareScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            paddingBottom: moderateScale(20, 0.3),
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '100%',
-            height: windowHeight,
-          }}>
-          <CardContainer
-            style={{
-              paddingVertical: moderateScale(30, 0.3),
-              alignItems: 'center',
-            }}>
-            <CustomText isBold style={styles.txt2}>
-              Change Password
-            </CustomText>
-            <CustomText style={styles.txt3}>
-              Want to change password ? don't worry, jsut take a simple step and
-              create your new password!
-            </CustomText>
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#FEFDFC',
+        }}>
+        <TextInputWithTitle
+          secureText={true}
+          titleText={'Current password'}
+          placeholder={'Current password'}
+          setText={setPassword}
+          value={password}
+          viewHeight={0.06}
+          viewWidth={0.8}
+          inputWidth={0.7}
+          border={1}
+          borderColor={'#0F02022E'}
+          backgroundColor={'white'}
+          color={'#ABB1C0'}
+          placeholderColor={'#ABB1C0'}
+          borderRadius={moderateScale(20, 0.6)}
+        />
+        <TextInputWithTitle
+          secureText={true}
+          titleText={'New password'}
+          placeholder={'New password'}
+          setText={setNewPassword}
+          value={newPassword}
+          viewHeight={0.06}
+          viewWidth={0.8}
+          inputWidth={0.7}
+          border={1}
+          borderColor={'#0F02022E'}
+          backgroundColor={'white'}
+          marginTop={moderateScale(20, 0.3)}
+          color={'#ABB1C0'}
+          placeholderColor={'#ABB1C0'}
+          borderRadius={moderateScale(20, 0.6)}
+        />
+        <TextInputWithTitle
+          secureText={true}
+          titleText={'Confirm New password'}
+          placeholder={'Confirm New password'}
+          setText={setConfirmNewPassword}
+          value={confirmNewPassword}
+          viewHeight={0.06}
+          viewWidth={0.8}
+          inputWidth={0.7}
+          border={1}
+          borderColor={'#0F02022E'}
+          backgroundColor={'white'}
+          marginTop={moderateScale(20, 0.3)}
+          color={'#ABB1C0'}
+          placeholderColor={'#ABB1C0'}
+          borderRadius={moderateScale(20, 0.6)}
+        />
 
-            <TextInputWithTitle
-              titleText={'Current Passwrod'}
-              secureText={false}
-              placeholder={'Current Passwrod'}
-              setText={setCurrentPassword}
-              value={currentPassword}
-              viewHeight={0.07}
-              viewWidth={0.75}
-              inputWidth={0.7}
-              // border={1}
-              borderColor={'#ffffff'}
-              backgroundColor={'#FFFFFF'}
-              marginTop={moderateScale(35, 0.3)}
-              color={Color.themeColor}
-              placeholderColor={Color.themeLightGray}
-              borderRadius={moderateScale(25, 0.3)}
-              elevation
-            />
-
-            <TextInputWithTitle
-              titleText={'Enter New Password'}
-              secureText={false}
-              placeholder={'Enter New Password'}
-              setText={setNewPassword}
-              value={newPassword}
-              viewHeight={0.07}
-              viewWidth={0.75}
-              inputWidth={0.7}
-              // border={1}
-              borderColor={'#ffffff'}
-              backgroundColor={'#FFFFFF'}
-              marginTop={moderateScale(10, 0.3)}
-              color={Color.themeColor}
-              placeholderColor={Color.themeLightGray}
-              borderRadius={moderateScale(25, 0.3)}
-              elevation
-            />
-            <TextInputWithTitle
-              titleText={'Confirm your new password'}
-              secureText={false}
-              placeholder={'Confirm your new password'}
-              setText={setConfirmNewPassword}
-              value={confirmNewPassword}
-              viewHeight={0.07}
-              viewWidth={0.75}
-              inputWidth={0.7}
-              // border={1}
-              borderColor={'#ffffff'}
-              backgroundColor={'#FFFFFF'}
-              marginTop={moderateScale(10, 0.3)}
-              color={Color.themeColor}
-              placeholderColor={Color.themeLightGray}
-              borderRadius={moderateScale(25, 0.3)}
-              elevation
-            />
-            <CustomButton
-              text={
-                isLoading ? (
-                  <ActivityIndicator color={'#FFFFFF'} size={'small'} />
-                ) : (
-                  'Reset'
-                )
-              }
-              textColor={Color.white}
-              width={windowWidth * 0.75}
-              height={windowHeight * 0.06}
-              marginTop={moderateScale(20, 0.3)}
-              onPress={() => {
-              dispatch(setUserToken({token : 'sadasdawdadas'}))
-              }}
-              bgColor={SelecteduserRole == 'Qbid member' ? Color.blue : Color.themeColor
-            }
-              // borderColor={Color.white}
-              // borderWidth={2}
-              borderRadius={moderateScale(30, 0.3)}
-            />
-
-           
-             
-            
-          </CardContainer>
-        </KeyboardAwareScrollView>
-      </LinearGradient>
+        <CustomButton
+          text={
+            isLoading ? (
+              <ActivityIndicator color={Color.white} size={'small'} />
+            ) : (
+              'Update'
+            )
+          }
+          textColor={Color.white}
+          width={windowWidth * 0.8}
+          height={windowHeight * 0.07}
+          marginTop={moderateScale(30, 0.3)}
+          bgColor={Color.themeBgColor}
+          fontSize={moderateScale(16, 0.6)}
+          borderRadius={moderateScale(30, 0.3)}
+          onPress={() => {
+            updatePassword();
+          }}
+          isGradient
+        />
+      </View>
     </>
   );
 };
 
-const styles = ScaledSheet.create({
-  txt2: {
-    color: Color.black,
-    fontSize: moderateScale(25, 0.6),
-  },
-  txt3: {
-    color: Color.themeLightGray,
-    fontSize: moderateScale(10, 0.6),
-    textAlign: 'center',
-    width: '80%',
-    marginTop: moderateScale(5, 0.3),
-    lineHeight: moderateScale(17, 0.3),
-  },
+export default ForgotPassword;
 
-  phoneView: {
-    width: '80%',
-    paddingVertical: moderateScale(5, 0.3),
-    flexDirection: 'row',
-    marginTop: moderateScale(20, 0.3),
-  },
-  container2: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: windowWidth * 0.9,
-    // marginTop: moderateScale(10,0.3),
-  },
-  txt4: {
-    color: Color.purple,
-    fontSize: moderateScale(14, 0.6),
-    marginTop: moderateScale(8, 0.3),
-    fontWeight: 'bold',
-  },
-  txt5: {
-    color: Color.themeLightGray,
-    marginTop: moderateScale(10, 0.3),
-    fontSize: moderateScale(12, 0.6),
+const styles = StyleSheet.create({
+  bottomImage: {
+    width: '100%',
+    height: '100%',
   },
 });
-
-export default ChangePassword;

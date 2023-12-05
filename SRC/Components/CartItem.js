@@ -7,25 +7,12 @@ import Color from '../Assets/Utilities/Color';
 import Entypo from 'react-native-vector-icons/Entypo';
 import CustomImage from './CustomImage';
 import {Icon} from 'native-base';
-import {
-  addQuantity,
-  decrementQuantity,
-  increamentQuantity,
-  setColor,
-  setProductColor,
-  setProductSize,
-  setSize,
-  subQuantity,
-} from '../Store/slices/common';
 import {useDispatch, useSelector} from 'react-redux';
 import numeral from 'numeral';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const CartItem = ({item, fromCheckout}) => {
-  const cartData = useSelector(state => state.commonReducer.cartData);
-  console.log(item?.img)
-  console.log("🚀 ~ file: CartItem.js:22 ~ CartItem ~ cartData:", cartData)
-  const dispatch = useDispatch();
+ 
 
   return (
     <View style={styles.cardContainer}>
@@ -45,7 +32,6 @@ const CartItem = ({item, fromCheckout}) => {
             style={{
               marginRight: moderateScale(5, 0.3),
             }}
-          
           />
           <CustomImage
             source={item?.img}
@@ -69,18 +55,11 @@ const CartItem = ({item, fromCheckout}) => {
               <CustomText>Selected Size : {item?.selectedSize}</CustomText>
             ) : (
               // <></>
-             item?.size.map((item1, index) => {
+              item?.size.map((item1, index) => {
                 return (
                   <TouchableOpacity
                     activeOpacity={0.9}
-                    onPress={() => {
-                      dispatch(
-                        setSize({
-                          id: item?.id,
-                          size: item1,
-                        }),
-                      );
-                    }}
+                    onPress={() => {}}
                     style={styles.sizeBox}>
                     <CustomText style={{color: Color.black}}>
                       {item1}
@@ -91,7 +70,7 @@ const CartItem = ({item, fromCheckout}) => {
             )}
           </View>
           {item?.selectedColor ? (
-            <CustomText style={{color: Color.black, textAlign : 'left'}}>
+            <CustomText style={{color: Color.black, textAlign: 'left'}}>
               Selected Color:{' '}
               {
                 <View
@@ -113,14 +92,7 @@ const CartItem = ({item, fromCheckout}) => {
                 return (
                   <TouchableOpacity
                     activeOpacity={0.9}
-                    onPress={() => {
-                      dispatch(
-                        setColor({
-                          id: item?.id,
-                          colors: item1,
-                        }),
-                      );
-                    }}
+                    onPress={() => {}}
                     style={[
                       styles.colorBox,
                       {
@@ -145,7 +117,7 @@ const CartItem = ({item, fromCheckout}) => {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 marginTop: moderateScale(10, 0.3),
-                alignItems : 'center'
+                alignItems: 'center',
               },
             ]}>
             <CustomText style={styles.amount}>
@@ -162,7 +134,7 @@ const CartItem = ({item, fromCheckout}) => {
               Quantity : {item?.qty}
             </CustomText>
               : */}
-            
+
             <View
               style={{
                 marginRight: moderateScale(15, 0.3),
@@ -174,9 +146,7 @@ const CartItem = ({item, fromCheckout}) => {
                 as={Ionicons}
                 color={Color.themeColor}
                 size={moderateScale(25, 0.3)}
-                onPress={() => {
-                  item?.qty < item?.totalQty &&  dispatch(increamentQuantity({id: item?.id}));
-                }}
+                onPress={() => {}}
               />
               <CustomText
                 isBold
@@ -191,12 +161,10 @@ const CartItem = ({item, fromCheckout}) => {
                 as={Entypo}
                 color={Color.themeColor}
                 size={moderateScale(24, 0.3)}
-                onPress={() => {
-                  item?.qty > 1 && dispatch(decrementQuantity({id: item?.id}));
-                }}
+                onPress={() => {}}
               />
             </View>
-{/* } */}
+            {/* } */}
           </View>
         </View>
       </View>
@@ -221,7 +189,7 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(20, 0.3),
     color: Color.black,
     marginLeft: moderateScale(5, 0.3),
-    marginBottom : moderateScale(10,0.3)
+    marginBottom: moderateScale(10, 0.3),
   },
   otherContainer: {
     flexDirection: 'row',

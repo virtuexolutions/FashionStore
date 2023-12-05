@@ -2,12 +2,10 @@ import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
   userData: {},
-  cart:[],
   categories: [],
   categoryProperties: [],
   financeBreakDown: [],
-  notification : false,
- 
+  notification : false, 
   selectedRole : '',
   
 };
@@ -41,88 +39,7 @@ const CommonSlice = createSlice({
     },
 
 
-    AddToCart(state, action) {
-      
-      const itemId = action.payload.id;
      
-        state.cart.push(action.payload);
-
-    
- 
-    },
-
-    RemoveToCart(state, action) {
-      const itemId = action.payload.id;
-      state.cart = state.cart.filter((item, index) => item.id !== itemId);
-    },
-
-    EmptyCart(State,action){
-      State.cart = []
-    },
-
-    
-
-    increamentQuantity(state, action) {
-      const itemId = action.payload.id;
-      const itemAddCart = state.cart.find(item => item.id === itemId);
-
-      if (itemAddCart) {
-        itemAddCart.qty++;
-      }
-    },
-    decrementQuantity(state, action) {
-      const itemId = action.payload.id;
-      const itemAddCart = state.cart.find(item => item.id === itemId);
-
-      if (itemAddCart) {
-        if(itemAddCart.qty>=1){
-          itemAddCart.qty--;
-
-        }
-        else if(itemAddCart==1){
-          state.cart = state.cart.filter((item, index) => item.id !== action.payload.id);
-        }
-      }
-    },
-    setColor(state,action){
-      console.log(action.payload)
-      const itemId = action.payload.id;
-      const item = state.cart.find(item => item.id === itemId);
-       if(item){
-
-         item.selectedColor = action.payload.colors
-       }
-    },
-    setSize(state,action){
-      console.log(action.payload)
-      const itemId = action.payload.id;
-      const item = state.cart.find(item => item.id === itemId);
-       if(item){
-
-         item.selectedSize = action.payload.size
-       }
-    }, 
-    setCotton(state, action){
-      const itemId = action.payload.id;
-      const item = state.cart.find(item => item.id === itemId);
-      if(item){
-        item.cotton += action.payload.val; 
-      }
-    },
-    setLiked(state,action){
-      console.log(action.payload)
-      const itemId = action.payload.id;
-      console.log(itemId)
-      const item = state.cart.find(item => item.id === itemId);
-      if(item){
-        item.like = action.payload.liked
-      }
-
-    }
-
-
-
-    
   },
 });
 

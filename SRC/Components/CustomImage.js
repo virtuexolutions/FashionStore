@@ -5,7 +5,7 @@ const CustomImage = (props) => {
   const {
     resizeMode,
     source,
-    errorImageSource = require(`../Assets/Images/dummyman6.png`),
+    errorImageSource = require(`../Assets/Images/Mask2.png`),
     style,
     onPress,
     onLongPress

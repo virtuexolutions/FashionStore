@@ -11,8 +11,6 @@ import CustomStatusBar from '../Components/CustomStatusBar';
 import Header from '../Components/Header';
 import navigationService from '../navigationService';
 import {useSelector, useDispatch} from 'react-redux';
-import {AddToCart, RemoveToCart} from '../Store/slices/common';
-import CustomButton from '../Components/CustomButton';
 import ProductCard from '../Components/ProductCard';
 import Color from '../Assets/Utilities/Color';
 
@@ -21,18 +19,7 @@ const Dresses = () => {
 
   const dispatch = useDispatch();
 
-  const cartData = useSelector(state => state.commonReducer.cart);
-  console.log( 'the data is ========>> >> ',cartData)
-  const addedItem = item => {
-    console.log('add DATA===>', cartData);
 
-    dispatch(AddToCart(item));
-  };
-
-  const removeItem = item => {
-    console.log('REMOVE DATA', cartData);
-    dispatch(RemoveToCart(item));
-  };
   
   const makeUp = [
     {

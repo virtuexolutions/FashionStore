@@ -1,4 +1,12 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ToastAndroid,
+  Platform,
+  Alert,
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {windowHeight, windowWidth} from '../Utillity/utils';
 import CustomText from '../Components/CustomText';
@@ -27,50 +35,16 @@ import Color from '../Assets/Utilities/Color';
 const DressesDetail = props => {
   const item = props.route.params.item;
   console.log('🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:', item);
-  const cartData = useSelector(state => state.commonReducer.cart);
-  console.log(
-    '🚀 ~ file: DressesDetail.js:26 ~ DressesDetail ~ cartData:',
-    cartData,
-  );
-  const cartitem = cartData?.find((x, index) => x?.id == item?.id);
-  // console.log("🚀 ~ file: DressesDetail.js:23 ~ DressesDetail ~ item:", item)
-  const dispatch = useDispatch();
-  const focused = useIsFocused();
-  const [Selectedcolor, SetSelectedColor] = useState(
-    cartitem ? cartitem?.selectedColor : '',
-  );
-  console.log(
-    '🚀 ~ file: DressesDetail.js:30 ~ DressesDetail ~ Selectedcolor:',
-    Selectedcolor,
-  );
-  const [Selectedsize, setSelectedSize] = useState(
-    cartitem ? cartitem?.selectedSize : '',
-  );
-  console.log(
-    '🚀 ~ file: DressesDetail.js:35 ~ DressesDetail ~ Selectedsize:',
-    Selectedsize,
-  );
-  const [like, setLike] = useState(cartitem ? cartitem.like : item?.like);
-  console.log('🚀 ~ file: DressesDetail.js:39 ~ DressesDetail ~ liked:', like);
+  const [Selectedcolor, SetSelectedColor] = useState('');
+  const [Selectedsize, setSelectedsize] = useState('');
+
+  const [like, setLike] = useState(item?.like);
 
   const [index, setIndex] = useState(1);
-  const [quantity, setQuantity] = useState(
-    cartitem ? cartitem?.qty : item?.qty,
-  );
-  const [cotton, setcotton] = useState(
-    cartitem ? cartitem?.cotton : item?.cotton,
-  );
-  // console.log(
-  //   '🚀 ~ file: DressesDetail.js:32 ~ DressesDetail ~ CartData:',
-  //   cartData,
-  // );
+  const [quantity, setQuantity] = useState(1);
+  const [cotton, setcotton] = useState(1);
 
-  // const [image1, setimage1] = useState(second)
-
-  const addedItem = item => {
-    dispatch(AddToCart(item));
-  };
-
+ 
   const images = [
     require('../Assets/Images/image3.png'),
     require('../Assets/Images/Mask2.png'),
@@ -79,12 +53,7 @@ const DressesDetail = props => {
     require('../Assets/Images/Mask.png'),
   ];
 
-  // console.log('', cartData);
-
-  // console.log("🚀 ~ file: DressesDetail.js:58 ~ DressesDetail ~ cartitem:", cartitem)
-  const [finalItem, setFinalItem] = useState(
-    cartitem != undefined ? cartitem : item,
-  );
+  const [finalItem, setFinalItem] = useState(item);
   const body = {
     Title: item?.Title,
     colors: item?.colors,
@@ -117,7 +86,7 @@ const DressesDetail = props => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.banner}>
           <View style={styles.container}>
-            {index > 0 && item?.images.length > 1 && (
+            {index > 0 && images.length > 1 && (
               <>
                 <View
                   style={{
@@ -131,7 +100,7 @@ const DressesDetail = props => {
                     backgroundColor: 'black',
                   }}>
                   <CustomImage
-                    source={item?.images[index - 1]}
+                    source={images[index - 1]}
                     style={{
                       height: '100%',
                       height: '100%',
@@ -167,18 +136,14 @@ const DressesDetail = props => {
                 backgroundColor: 'black',
               }}>
               <CustomImage
-                source={
-                  item?.images.length == 1
-                    ? item?.images[index - 1]
-                    : item?.images[index]
-                }
+                source={images.length == 1 ? images[index - 1] : images[index]}
                 style={{
                   height: '100%',
                   height: '100%',
                 }}
               />
             </View>
-            {index < item?.images.length - 1 && (
+            {index < images.length - 1 && (
               <>
                 <TouchableOpacity
                   onPress={() => {
@@ -209,7 +174,7 @@ const DressesDetail = props => {
                     backgroundColor: 'black',
                   }}>
                   <CustomImage
-                    source={item?.images[index + 1]}
+                    source={images[index + 1]}
                     style={{
                       height: '100%',
                       height: '100%',
@@ -230,18 +195,18 @@ const DressesDetail = props => {
             }}>
             <CustomText
               isBold
-              numberOfLines={1}
+              // numberOfLines={1}
               style={{
                 color: '#252E2B',
                 fontSize: moderateScale(18, 0.6),
-                width: windowWidth * 0.4,
+                width: windowWidth * 0.6,
                 textAlign: 'left',
                 // backgroundColor:'orange',
               }}>
-              {finalItem?.Title}
+              {finalItem?.title}
             </CustomText>
 
-            <CustomText
+            {/* <CustomText
               style={{
                 color: '#818181',
                 width: windowWidth * 0.38,
@@ -250,15 +215,15 @@ const DressesDetail = props => {
                 // backgroundColor:'red',
               }}
               numberOfLines={1}>
-              {finalItem?.subTitle}
-            </CustomText>
+              {finalItem?.category}
+            </CustomText> */}
 
             <TouchableOpacity
               activeOpacity={0.6}
               style={{paddingRight: 10}}
               onPress={() => {
                 setLike(!like);
-                dispatch(setLiked({id: item?.id, liked: !like}));
+               
               }}>
               {like ? (
                 <Icon
@@ -292,14 +257,23 @@ const DressesDetail = props => {
                 fontSize: 24,
                 width: windowWidth * 0.24,
               }}>
-              ${finalItem?.price}.00
+              ${finalItem?.wholsale_price}.00
             </CustomText>
 
             <View style={styles.conterContainer}>
               <TouchableOpacity
                 onPress={() => {
-                  setQuantity(quantity + 1);
-                  dispatch(increamentQuantity(item));
+                  if (quantity < item?.stock) {
+                    setQuantity(quantity + 1);
+                   
+                  } else {
+                    Platform.OS == 'android'
+                      ? ToastAndroid.show(
+                          'Sorry! You can not add more',
+                          ToastAndroid.SHORT,
+                        )
+                      : Alert.alert('Sorry! You can not add more');
+                  }
                 }}
                 style={styles.icon}>
                 <CustomText
@@ -326,7 +300,7 @@ const DressesDetail = props => {
                   if (quantity > 1) {
                     setQuantity(quantity - 1);
                   }
-                  dispatch(decrementQuantity(item));
+            
                 }}
                 style={styles.icon}>
                 <CustomText
@@ -352,12 +326,12 @@ const DressesDetail = props => {
           </CustomText>
 
           <View style={styles.ColorLine}>
-            {item?.colors.map(color => {
+            {item?.colors?.map(color => {
               return (
                 <TouchableOpacity
                   onPress={() => {
                     SetSelectedColor(color);
-                    dispatch(setColor({id: item?.id, colors: color}));
+            
                   }}
                   style={[styles.colorContainer, {backgroundColor: color}]}>
                   {Selectedcolor == color && (
@@ -384,17 +358,11 @@ const DressesDetail = props => {
           </CustomText>
 
           <View style={styles.ColorLine1}>
-            {item?.size.map(size => {
+            {item?.sizes?.map(size => {
               return (
                 <TouchableOpacity
                   onPress={() => {
                     setSelectedSize(size);
-                    dispatch(
-                      setSize({
-                        id: cartitem ? cartitem?.id : item?.id,
-                        size: size,
-                      }),
-                    );
                   }}
                   style={[
                     styles.size,
@@ -454,7 +422,6 @@ const DressesDetail = props => {
                 }}
                 onPress={() => {
                   setcotton(cotton + 1);
-                  dispatch(setCotton({id: item.id, val: 1}));
                 }}>
                 <CustomText
                   isBold
@@ -480,8 +447,6 @@ const DressesDetail = props => {
                   if (cotton > 1) {
                     setcotton(cotton - 1);
                   }
-                  item?.cotton > 1 &&
-                    dispatch(setCotton({id: item?.id, val: -1}));
                 }}
                 style={{
                   width: windowWidth * 0.06,
@@ -507,16 +472,14 @@ const DressesDetail = props => {
 
       <View style={styles.bottomContainer}>
         <CustomButton
-          disabled={cartitem?.qty > 0 ? true : false}
+          disabled={false}
           isBold
-          onPress={() => addedItem(body)}
+          onPress={() =>{}}
           text={'ADD TO CART'}
           textColor={Color.white}
           width={windowWidth * 0.8}
           height={windowHeight * 0.07}
           fontSize={moderateScale(16, 0.6)}
-          // marginBottom={moderateScale(10,.3)}
-          // marginTop={moderateScale(20, 0.3)}
           bgColor={Color.themeBgColor}
           borderRadius={moderateScale(30, 0.3)}
           isGradient

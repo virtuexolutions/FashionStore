@@ -1,4 +1,10 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {windowHeight, windowWidth} from '../Utillity/utils';
 import {moderateScale, ScaledSheet} from 'react-native-size-matters';
@@ -29,6 +35,10 @@ const HomeScreen = () => {
     const url = 'auth/products';
     setisLoading(true);
     const response = await Get(url, token);
+    console.log(
+      '🚀 ~ file: HomeScreen.js:32 ~ getData ~ response:',
+      response?.data?.data?.data,
+    );
     setisLoading(false);
     if (response != undefined) {
       setProducts(response?.data?.data?.data);
@@ -342,7 +352,6 @@ const HomeScreen = () => {
         </View>
         <View style={styles.categoryContainer}>
           {categories.map((item, index) => {
-           
             return (
               <>
                 <TouchableOpacity
@@ -484,18 +493,24 @@ const HomeScreen = () => {
           </CustomText>
         </View>
 
-        <FlatList
-          showsVerticalScrollIndicator={false}
-          numColumns={2}
-          data={products}
-          contentContainerStyle={{
-            alignSelf: 'center',
-            marginTop: moderateScale(5, 0.3),
-          }}
-          renderItem={({item, index}) => {
-            return <ProductCard item={item} />;
-          }}
-        />
+        {isLoading ? (
+          <View style={{justifyContent:'center', alignItems:'center', height:windowHeight*0.4}}>
+            <ActivityIndicator color={Color.themeColor} size={'large'} />
+          </View>
+        ) : (
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            numColumns={2}
+            data={products}
+            contentContainerStyle={{
+              alignSelf: 'center',
+              marginTop: moderateScale(5, 0.3),
+            }}
+            renderItem={({item, index}) => {
+              return <ProductCard item={item} />;
+            }}
+          />
+        )}
       </ScrollView>
     </>
   );

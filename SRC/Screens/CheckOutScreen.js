@@ -6,65 +6,35 @@ import {
   ToastAndroid,
 } from 'react-native';
 import React from 'react';
-import ScreenBoiler from '../Components/ScreenBoiler';
 import {moderateScale, ScaledSheet} from 'react-native-size-matters';
 import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import Color from '../Assets/Utilities/Color';
 import CartItem from '../Components/CartItem';
-import CustomText from '../Components/CustomText';
 import {useState} from 'react';
-import numeral from 'numeral';
-import {useDispatch, useSelector} from 'react-redux';
-import {Icon} from 'native-base';
 import CustomButton from '../Components/CustomButton';
-import {ActivityIndicator} from 'react-native';
-import {EmptyCart, setWholeCart} from '../Store/slices/common';
 import navigationService from '../navigationService';
-import {useEffect} from 'react';
-import { Get, Post } from '../Axios/AxiosInterceptorFunction';
 import CustomStatusBar from '../Components/CustomStatusBar';
 import Header from '../Components/Header';
-import Feather from 'react-native-vector-icons/Feather'
+import Feather from 'react-native-vector-icons/Feather';
 
 const CheckOutScreen = ({route}) => {
-  const dispatch = useDispatch();
-  const cartData = useSelector(state => state.commonReducer.cart);
-  console.log( 'the data is ========>> >> ',cartData)
   const [finalAmount, setFinalAmount] = useState(0);
   const [productsForCard, setProdctsForCart] = useState([]);
   const subTotal = route?.params?.subTotal;
- 
-
- 
-
-  useEffect(() => {
-    setProdctsForCart([])
-    cartData.map((item, index) => {
-      return setProdctsForCart(prev => [
-        ...prev,
-        {
-          product_id: item?.id,
-          selectedColor: item?.selectedColor,
-          selectedSize: item?.selectedSize,
-          selectedQuantity: item?.qty,
-        },
-      ]);
-    });
-  }, []);
 
   return (
     <>
-     <CustomStatusBar backgroundColor={'#FDFDFD'} barStyle={'dark-content'} />
-    <Header
-      showLeft={true}
-      leftName={'arrow-left'}
-      leftType={Feather}
-      title={'cart'}
-      showRight={true}
-      rightName={'shopping-bag'}
-      rightType={Feather}
-    />
-   
+      <CustomStatusBar backgroundColor={'#FDFDFD'} barStyle={'dark-content'} />
+      <Header
+        showLeft={true}
+        leftName={'arrow-left'}
+        leftType={Feather}
+        title={'cart'}
+        showRight={true}
+        rightName={'shopping-bag'}
+        rightType={Feather}
+      />
+
       <FlatList
         showsVerticalScrollIndicator={false}
         data={cartData}
@@ -81,33 +51,29 @@ const CheckOutScreen = ({route}) => {
           return <CartItem item={item} fromCheckout={true} />;
         }}
         ListFooterComponent={() => {
-          return (<View>
-           
-            <CustomButton
-          isBold
-          onPress={() => {
-            dispatch(EmptyCart())
-            navigationService.navigate('HomeScreen')
-          }}
-          text={'Pay'}
-          textColor={Color.white}
-          width={windowWidth * 0.8}
-          height={windowHeight * 0.07}
-          fontSize={moderateScale(16, 0.6)}
-          // marginBottom={moderateScale(10,.3)}
-          // marginTop={moderateScale(20, 0.3)}
-          bgColor={Color.themeBgColor}
-          borderRadius={moderateScale(30, 0.3)}
-          isGradient
-        />
-        </View>
+          return (
+            <View>
+              <CustomButton
+                isBold
+                onPress={() => {
+                  navigationService.navigate('HomeScreen');
+                }}
+                text={'Pay'}
+                textColor={Color.white}
+                width={windowWidth * 0.8}
+                height={windowHeight * 0.07}
+                fontSize={moderateScale(16, 0.6)}
+                // marginBottom={moderateScale(10,.3)}
+                // marginTop={moderateScale(20, 0.3)}
+                bgColor={Color.themeBgColor}
+                borderRadius={moderateScale(30, 0.3)}
+                isGradient
+              />
+            </View>
           );
         }}
-      /> 
-      </>
-
-
-  
+      />
+    </>
   );
 };
 

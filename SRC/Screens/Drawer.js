@@ -126,32 +126,7 @@ const Drawer = () => {
           ))}
         </View>
 
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: windowWidth * 0.14,
-            height: windowWidth * 0.14,
-            borderRadius: (windowWidth * 0.14) / 1,
-            backgroundColor: Color.white,
-            position: 'absolute',
-            bottom:
-              Platform.OS == 'android'
-                ? moderateScale(40, 0.6)
-                : moderateScale(80, 0.3),
-            left: 20,
-            elevation: 10,
-          }}>
-          <Icon
-            onPress={() => {
-              navigation.goBack();
-            }}
-            name="chevron-left"
-            as={Feather}
-            size={moderateScale(25)}
-            color={Color.black}
-          />
-        </View>
+     
       </LinearGradient>
     </ScreenBoiler>
   );

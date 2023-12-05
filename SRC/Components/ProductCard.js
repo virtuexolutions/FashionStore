@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import React,{useState} from 'react';
+import React, {useState} from 'react';
 import {moderateScale} from 'react-native-size-matters';
 import {windowHeight, windowWidth} from '../Utillity/utils';
 import CustomImage from './CustomImage';
@@ -8,41 +8,23 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import {Icon} from 'native-base';
 import navigationService from '../navigationService';
 import {useDispatch, useSelector} from 'react-redux';
-import {AddToCart, RemoveToCart, setLiked} from '../Store/slices/common';
 import CustomButton from './CustomButton';
 import Color from '../Assets/Utilities/Color';
+import numeral from 'numeral';
 
 const ProductCard = ({item}) => {
   const dispatch = useDispatch();
-  const[like, setLike] = useState(item?.like);
+  const [like, setLike] = useState(item?.like);
 
-  const cartData = useSelector(state => state.commonReducer.cart);
-  // console.log("🚀 ~ file: ProductCard.js:21 ~ ProductCard ~ cartData:", cartData)
-
-  const addedItem = item => {
-    // console.log('add DATA===>', cartData);
-
-    dispatch(AddToCart(item));
-  };
-
-  const removeItem = item => {
-    // console.log('REMOVE DATA', cartData);
-    dispatch(RemoveToCart(item));
-  };
-  const tempitem = cartData?.find((x, index) => x?.id == item?.id);
-  // console.log('QTY+++', tempitem);
   return (
     <View>
       <TouchableOpacity
         onLongPress={() => {
           setLike(!like);
-          // dispatch(setLiked({id : item?.id , liked : !item?.like}))
         }}
         activeOpacity={0.8}
         onPress={() => {
-          if (!tempitem) {
-            addedItem(item);
-          }
+          
         }}
         style={{
           width: windowWidth * 0.45,
@@ -58,18 +40,14 @@ const ProductCard = ({item}) => {
           },
           shadowOpacity: 0.25,
           shadowRadius: 3.84,
-
           elevation: 5,
         }}>
         <TouchableOpacity
           onLongPress={() => {
             setLike(!like);
-            // dispatch(setLiked({id : item?.id , liked : !item?.like}))
           }}
           onPress={() => {
-            if (!tempitem) {
-              addedItem(item);
-            }
+            
           }}
           activeOpacity={0.8}
           style={{
@@ -94,14 +72,15 @@ const ProductCard = ({item}) => {
           <CustomImage
             onLongPress={() => {
               setLike(!like);
-              // dispatch(setLiked({id : item?.id , liked : !item?.like}))
             }}
             onPress={() => {
-              if (!tempitem) {
-                addedItem(item);
-              }
+            
             }}
-            source={item.img}
+            source={
+              item?.image
+                ? {uri: item?.large_image}
+                : require('../Assets/Images/Mask2.png')
+            }
             resizeMode={'cover'}
             style={{
               height: '100%',
@@ -109,15 +88,16 @@ const ProductCard = ({item}) => {
             }}
           />
 
-          {item?.sale && (
+          {item?.discount_price && (
             <View style={styles.sale}>
               <CustomText
                 isBold
                 style={{
-                  color: '#fff',
+                  color: 'black',
                   fontSize: 12,
+                  // backgroundColor:'red'
                 }}>
-                {item.sale}
+                {numeral(item?.discount_price).format('$0')} OFF
               </CustomText>
             </View>
           )}
@@ -125,14 +105,15 @@ const ProductCard = ({item}) => {
 
         <CustomText
           isBold
+          numberOfLines={2}
           style={{
             textAlign: 'left',
             width: windowWidth * 0.35,
-            height: windowHeight * 0.03,
+            // height: windowHeight * 0.03,
             color: '#464342',
-            marginTop: moderateScale(10, 0.3),
+            // marginTop: moderateScale(10, 0.3),
           }}>
-          {item.Title}
+          {item?.title}
         </CustomText>
 
         <CustomText
@@ -142,7 +123,7 @@ const ProductCard = ({item}) => {
             height: windowHeight * 0.03,
             color: '#a2a2a2',
           }}>
-          {item.subTitle}
+          {item?.recommended_use}
         </CustomText>
 
         <CustomText
@@ -151,7 +132,7 @@ const ProductCard = ({item}) => {
             width: windowWidth * 0.35,
             color: Color.themeColor,
           }}>
-          $ {item.price}
+          {numeral(item?.wholsale_price).format('$0,0a')}
         </CustomText>
 
         <CustomText
@@ -171,10 +152,10 @@ const ProductCard = ({item}) => {
         </CustomText>
       </TouchableOpacity>
 
-      {tempitem != undefined && tempitem?.qty > 0 && (
+     
         <CustomButton
           isBold
-          onPress={() => removeItem(item)}
+          onPress={() =>{}}
           text={'Remove Cart'}
           textColor={Color.white}
           width={windowWidth * 0.28}
@@ -185,7 +166,7 @@ const ProductCard = ({item}) => {
           fontSize={14}
           borderRadius={moderateScale(5, 0.3)}
         />
-      )}
+
     </View>
   );
 };
