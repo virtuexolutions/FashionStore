@@ -37,6 +37,7 @@ const DressesDetail = props => {
   console.log('🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:', item);
   const [Selectedcolor, SetSelectedColor] = useState('');
   const [Selectedsize, setSelectedsize] = useState('');
+  const cardData =useSelector(state => state.commonReducer.item)
 
   const [like, setLike] = useState(item?.like);
 
@@ -472,7 +473,7 @@ const DressesDetail = props => {
 
       <View style={styles.bottomContainer}>
         <CustomButton
-          disabled={false}
+          disabled={ cardData.find((data ,index) => data?.id == item?.id) && true}
           isBold
           onPress={() =>{}}
           text={'ADD TO CART'}

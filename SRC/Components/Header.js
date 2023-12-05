@@ -5,6 +5,7 @@ import {
   DrawerActions,
   useIsFocused,
   useNavigation,
+  Text,
 } from '@react-navigation/native';
 import {moderateScale, ScaledSheet} from 'react-native-size-matters';
 import Color from '../Assets/Utilities/Color';
@@ -15,7 +16,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useDispatch, useSelector} from 'react-redux';
 import navigationService from '../navigationService';
-import {Get, Post} from '../Axios/AxiosInterceptorFunction';
+import {Get, Post} from '../Axios/AxiosInterceptorFunction'; 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {setUserData, setUserLogOut} from '../Store/slices/common';
 
@@ -53,6 +54,8 @@ const Header = props => {
   const [searchText, setSearchText] = useState('');
   const user = useSelector(state => state.commonReducer.userData);
   const userRole = useSelector(state => state.commonReducer.selectedRole);
+  const cardData = useSelector(state => state.commonReducer.item)
+  console.log("🚀 ~ file: Header.js:58 ~ Header ~ cardData:", cardData)
 
   useEffect(() => {
     rightName == 'bell' && getNotifications();
@@ -98,7 +101,34 @@ const Header = props => {
       {showRight &&
         (rightName ? (
           <>
+          {
+           cardData.length > 0   &&
+            <View style={{
+            backgroundColor:'red',
+            height:windowHeight*0.02,
+            width:windowHeight*0.02,
+            borderRadius:windowHeight*0.02,
+            position:'absolute',
+            right:5,
+            top:13
+          }}>
+               <CustomText
+                isBold
+                style={{
+                  color: 'white',
+                  fontSize: 12,
+                  // backgroundColor:'red'
+                }}>
+              {cardData.length}
+              </CustomText>
+           
+          </View>
+          
+          }
             <Icon
+            onPress={() => {
+              navigationN.navigate('CheckOutScreen')
+            }}
               name={rightName}
               as={rightType ? rightType : FontAwesome}
               size={moderateScale(22, 0.3)}

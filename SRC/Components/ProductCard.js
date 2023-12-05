@@ -11,8 +11,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import CustomButton from './CustomButton';
 import Color from '../Assets/Utilities/Color';
 import numeral from 'numeral';
+import { AddToCart, RemoveFromCart } from '../Store/slices/common';
 
 const ProductCard = ({item}) => {
+  const cardData = useSelector(state => state.commonReducer.item)
+  console.log("🚀 ~ file: ProductCard.js:18 ~ ProductCard ~ cardData:", cardData)
   const dispatch = useDispatch();
   const [like, setLike] = useState(item?.like);
 
@@ -20,11 +23,12 @@ const ProductCard = ({item}) => {
     <View>
       <TouchableOpacity
         onLongPress={() => {
+         
           setLike(!like);
         }}
         activeOpacity={0.8}
         onPress={() => {
-          
+          dispatch(AddToCart(item))
         }}
         style={{
           width: windowWidth * 0.45,
@@ -153,9 +157,13 @@ const ProductCard = ({item}) => {
       </TouchableOpacity>
 
      
-        <CustomButton
+     {   
+     cardData.find((data ,index) => data?.id == item?.id)  &&
+     <CustomButton
           isBold
-          onPress={() =>{}}
+          onPress={() =>{
+            dispatch(RemoveFromCart(item))
+          }}
           text={'Remove Cart'}
           textColor={Color.white}
           width={windowWidth * 0.28}
@@ -166,7 +174,7 @@ const ProductCard = ({item}) => {
           fontSize={14}
           borderRadius={moderateScale(5, 0.3)}
         />
-
+}
     </View>
   );
 };

@@ -22,14 +22,17 @@ import LinearGradient from 'react-native-linear-gradient';
 import ProductCard from '../Components/ProductCard';
 import navigationService from '../navigationService';
 import {Get} from '../Axios/AxiosInterceptorFunction';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 const HomeScreen = () => {
+  const dispatch =useDispatch()
   const [searchData, setSearchData] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [isLoading, setisLoading] = useState(false);
   const [products, setProducts] = useState([]);
   const token = useSelector(state => state.authReducer.token);
+  const cardData =useSelector(state => state.commonReducer.item)
+
 
   const getData = async () => {
     const url = 'auth/products';

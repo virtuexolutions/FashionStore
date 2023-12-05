@@ -7,6 +7,7 @@ const initialState = {
   financeBreakDown: [],
   notification : false, 
   selectedRole : '',
+  item:[]
   
 };
 
@@ -37,11 +38,18 @@ const CommonSlice = createSlice({
     setSelectedRole(state,action){
       state.selectedRole = action.payload
     },
-
-
+    AddToCart(state,action){
+      console.log("🚀 ~ file: common.js:42 ~ AddToCart ~ action:", action.payload)
+      state.item.push(action.payload)
+    },
+    RemoveFromCart(state,action){
+    state.item =  state.item.filter((item,index) => item?.id != action.payload?.id)
+      // console.log("🚀 ~ file: common.js:47 ~ RemoveFromCart ~ action.payload:", action.payload)
+    }
      
   },
 });
+
 
 export const {
   setUserData,
@@ -54,7 +62,7 @@ export const {
   increamentQuantity,
   decrementQuantity,
   AddToCart,
-  RemoveToCart,
+  RemoveFromCart,
   setColor,
   setSize,
   setCotton,

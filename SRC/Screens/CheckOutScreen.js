@@ -16,8 +16,10 @@ import navigationService from '../navigationService';
 import CustomStatusBar from '../Components/CustomStatusBar';
 import Header from '../Components/Header';
 import Feather from 'react-native-vector-icons/Feather';
+import { useSelector } from 'react-redux';
 
 const CheckOutScreen = ({route}) => {
+  const cardData = useSelector(state => state.commonReducer.item)
   const [finalAmount, setFinalAmount] = useState(0);
   const [productsForCard, setProdctsForCart] = useState([]);
   const subTotal = route?.params?.subTotal;
@@ -37,7 +39,7 @@ const CheckOutScreen = ({route}) => {
 
       <FlatList
         showsVerticalScrollIndicator={false}
-        data={cartData}
+        data={cardData}
         style={{
           height: '90%',
           backgroundColor: 'white',
