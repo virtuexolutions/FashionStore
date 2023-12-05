@@ -13,7 +13,6 @@ import Color from '../Assets/Utilities/Color';
 import numeral from 'numeral';
 
 const ProductCard = ({item}) => {
-  const dispatch = useDispatch();
   const [like, setLike] = useState(item?.like);
 
   return (
