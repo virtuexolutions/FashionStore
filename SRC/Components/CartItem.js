@@ -10,13 +10,12 @@ import {Icon} from 'native-base';
 import {useDispatch, useSelector} from 'react-redux';
 import numeral from 'numeral';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { decrementQuantity, increamentQuantity } from '../Store/slices/common';
+import {RemoveFromCart, decrementQuantity, increamentQuantity} from '../Store/slices/common';
 
 const CartItem = ({item, fromCheckout}) => {
-//  console.log("🚀 ~ file: CartItem.js:15 ~ CartItem ~ item:", item)
-//  const cardData =useSelector(state =>state.commonReducer.item)
- const dispatch =useDispatch()
- 
+  //  console.log("🚀 ~ file: CartItem.js:15 ~ CartItem ~ item:", item)
+   const cardData =useSelector(state =>state.commonReducer.item)
+  const dispatch = useDispatch();
 
   return (
     <View style={styles.cardContainer}>
@@ -26,6 +25,7 @@ const CartItem = ({item, fromCheckout}) => {
       <View
         style={{
           flexDirection: 'row',
+          // backgroundColor:'pink'
         }}>
         <View style={styles.otherContainer}>
           <Icon
@@ -38,7 +38,8 @@ const CartItem = ({item, fromCheckout}) => {
             }}
           />
           <CustomImage
-            source={{uri :item?.img}}
+            source={require('../Assets/Images/Mask2.png')}
+            // source={{uri :item?.img}}
             style={{
               width: windowWidth * 0.3,
               height: windowHeight * 0.15,
@@ -46,6 +47,31 @@ const CartItem = ({item, fromCheckout}) => {
             }}
           />
         </View>
+
+
+        <TouchableOpacity
+        onPress={() => {
+          console.log('=========>itny pyray hoooo')
+          dispatch(RemoveFromCart(item))
+        }
+        }
+          style={{
+            // backgroundColor:'pink',
+            position: 'absolute',
+            right: 5,
+            zIndex:1,
+          }}>
+          <Icon
+          
+            style={{
+              color: Color.red,
+            }}
+            name="trash-outline"
+            as={Ionicons}
+            color={Color.red}
+            size={22}
+          />
+        </TouchableOpacity>
         <View style={styles.other1}>
           <CustomText style={styles.text1}>{item?.title}</CustomText>
           <View
@@ -151,7 +177,7 @@ const CartItem = ({item, fromCheckout}) => {
                 color={Color.themeColor}
                 size={moderateScale(25, 0.3)}
                 onPress={() => {
-                  dispatch(increamentQuantity(item?.id))
+                  dispatch(increamentQuantity(item?.id));
                 }}
               />
               <CustomText
@@ -168,7 +194,7 @@ const CartItem = ({item, fromCheckout}) => {
                 color={Color.themeColor}
                 size={moderateScale(24, 0.3)}
                 onPress={() => {
-                  dispatch(decrementQuantity(item?.id))
+                  dispatch(decrementQuantity(item?.id));
                 }}
               />
             </View>
@@ -186,7 +212,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     minHeight: windowHeight * 0.2,
     width: windowWidth * 0.9,
-    // backgroundColor: 'red',
+    // backgroundColor: 'yellow',
     marginBottom: moderateScale(20, 0.3),
     // flexGrow : 0
     borderBottomWidth: 1,
@@ -207,13 +233,14 @@ const styles = StyleSheet.create({
     marginLeft: moderateScale(5, 0.3),
     flexWrap: 'wrap',
     width: windowWidth * 0.5,
-    // backgroundColor : 'yellow',
+    // backgroundColor : 'green',
     overflow: 'hidden',
   },
   text1: {
     fontSize: moderateScale(16, 0.3),
     color: Color.black,
     width: windowWidth * 0.45,
+    textAlign: 'left',
   },
   text: {
     fontSize: moderateScale(13, 0.3),

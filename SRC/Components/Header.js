@@ -19,6 +19,7 @@ import navigationService from '../navigationService';
 import {Get, Post} from '../Axios/AxiosInterceptorFunction'; 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {setUserData, setUserLogOut} from '../Store/slices/common';
+import CustomImage from './CustomImage';
 
 const Header = props => {
   const focused = useIsFocused();
