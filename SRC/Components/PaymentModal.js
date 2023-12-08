@@ -48,13 +48,13 @@ const PaymentModal = ({isModal, setIsModal}) => {
             width: windowWidth * 0.27,
             alignSelf: 'center',
           }}>
-          <CustomImage
+          {/* <CustomImage
             style={{
               height: '100%',
               width: '100%',
             }}
             source={require('../Assets/Images/Creditcard.png')}
-          />
+          /> */}
         </View>
 
         <View

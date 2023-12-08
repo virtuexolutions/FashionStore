@@ -45,6 +45,9 @@ const CommonSlice = createSlice({
       );
       state.item.push({...action.payload, quantity: 1});
     },
+    EmptyCart(state, action) {
+      state.item = [];
+    },
     RemoveFromCart(state, action) {
       state.item = state.item.filter(
         (item, index) => item?.id != action.payload?.id,

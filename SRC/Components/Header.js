@@ -56,7 +56,7 @@ const Header = props => {
   const user = useSelector(state => state.commonReducer.userData);
   const userRole = useSelector(state => state.commonReducer.selectedRole);
   const cardData = useSelector(state => state.commonReducer.item)
-  console.log("🚀 ~ file: Header.js:58 ~ Header ~ cardData:", cardData)
+  // console.log("🚀 ~ file: Header.js:58 ~ Header ~ cardData:", cardData)
 
   useEffect(() => {
     rightName == 'bell' && getNotifications();
@@ -103,15 +103,16 @@ const Header = props => {
         (rightName ? (
           <>
           {
-           cardData.length > 0   &&
+           cardData?.length > 0   &&
             <View style={{
             backgroundColor:'red',
             height:windowHeight*0.02,
             width:windowHeight*0.02,
-            borderRadius:windowHeight*0.02,
+            borderRadius:(windowHeight*0.02)/2,
             position:'absolute',
-            right:5,
-            top:13
+            zIndex:2,
+            right:6,
+            top:15
           }}>
                <CustomText
                 isBold

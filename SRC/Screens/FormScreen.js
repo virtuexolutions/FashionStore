@@ -1,6 +1,6 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
-import {windowHeight, windowWidth} from '../Utillity/utils';
+import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import CustomText from '../Components/CustomText';
 import {Icon} from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -13,8 +13,29 @@ import Header from '../Components/Header';
 import Feather from 'react-native-vector-icons/Feather';
 import Color from '../Assets/Utilities/Color';
 import PaymentModal from '../Components/PaymentModal';
+import {Post} from '../Axios/AxiosInterceptorFunction';
+import {useDispatch, useSelector} from 'react-redux';
+import { AddToCart, EmptyCart } from '../Store/slices/common';
 
 const FormScreen = () => {
+  const token = useSelector(state => state.authReducer.token);
+  const cartData = useSelector(state => state.commonReducer.item);
+
+  const [totalQuantity, setTotalQuantity] = useState(0)
+  const [totalPrice, setTotalPrice] = useState(0)
+  const calcTotal = () => {
+    let total_quantity = 0;
+    let total_price = 0 ;
+    cartData?.map(item => {
+       total_quantity += item?.quantity;
+       total_price += item?.wholsale_price *item?.quantity
+    });
+    setTotalQuantity(total_quantity)
+    setTotalPrice(total_price)
+    console.log('Total quantity=====',total_quantity, total_price)
+  };
+  
+
   const [name, setName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -22,11 +43,43 @@ const FormScreen = () => {
   const [country, setCountry] = useState('');
   const [address, setAddress] = useState('');
   const [postcode, setPostCode] = useState();
-  const [token, setToken] = useState('');
-  const[isChecked ,setIsChecked] =useState()
-  const [isModal , setIsModal] =useState(false)
-  console.log("🚀 ~ file: FormScreen.js:28 ~ FormScreen ~ isModal:", isModal)
+  const [stripeToken, setStripeToken] = useState('');
+  const [isChecked, setIsChecked] = useState();
+  const [isModal, setIsModal] = useState(false);
+
+  console.log('🚀 ~ file: FormScreen.js:28 ~ FormScreen ~ isModal:', isModal);
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch= useDispatch()
+
+  const PlaceOrder = async () => {
+    
+    calcTotal()
+    const url = 'auth/order';
+    const body = {
+      first_name: name,
+      last_name: lastName,
+      address1: address,
+      address2: address,
+      phone: phone,
+      post_code: postcode,
+      email: email,
+      payment_method: isChecked,
+      country: country,
+      total_quantity: totalQuantity,
+      total_amount: totalPrice,
+      products:cartData
+    };
+    setIsLoading(true);
+    const response = await Post(url, body, apiHeader(token));
+    setIsLoading(false);
+    if (response != undefined) {
+      return console.log(
+        '🚀 ~ file: FormScreen.js:53 ~ PlaceOrder ~ response:',
+        response,
+      );
+      dispatch(EmptyCart())
+    }
+  };
 
   return (
     <>
@@ -35,9 +88,6 @@ const FormScreen = () => {
         leftName={'arrow-left'}
         leftType={Feather}
         title={'checkout'}
-        // showRight={true}
-        // rightName={'shopping-bag'}
-        // rightType={Feather}
       />
 
       <View
@@ -50,34 +100,7 @@ const FormScreen = () => {
         }}>
         <CustomText />
 
-        {/* <View
-      style={{
-        width: windowWidth * 0.7,
-        height: windowHeight * 0.2,
-        alignItems: 'center',
-      }}>
-      <CustomImage
-        source={require('../Assets/Images/logo.png')}
-        resizeMode={'contain'}
-        style={{
-          height: '100%',
-        }}
-      />
-    </View> */}
-
-        {/* <CustomText
-      style={{
-        fontSize: moderateScale(18, 0.6),
-        marginTop: moderateScale(0, 0.3),
-        marginBottom: moderateScale(17, 0.3),
-      }}
-      isBold>
-      Sign Up
-    </CustomText> */}
         <TextInputWithTitle
-          //   iconName="person-outline"
-          //   iconType={Ionicons}
-          //   rightIcon
           titleText={'Your name'}
           placeholder={'Your name'}
           setText={setName}
@@ -94,9 +117,6 @@ const FormScreen = () => {
           borderRadius={moderateScale(20, 0.6)}
         />
         <TextInputWithTitle
-          //   iconName="person-outline"
-          //   iconType={Ionicons}
-          //   rightIcon
           titleText={'Last name'}
           placeholder={'Last name'}
           setText={setLastName}
@@ -113,9 +133,6 @@ const FormScreen = () => {
           borderRadius={moderateScale(20, 0.6)}
         />
         <TextInputWithTitle
-          //   iconName="envelope-o"
-          //   iconType={FontAwesome}
-          //   rightIcon
           titleText={'Your email address'}
           placeholder={'Your email address '}
           setText={setEmail}
@@ -132,9 +149,6 @@ const FormScreen = () => {
           borderRadius={moderateScale(20, 0.6)}
         />
         <TextInputWithTitle
-          //   iconName="envelope-o"
-          //   iconType={FontAwesome}
-          //   rightIcon
           titleText={'Phone'}
           placeholder={'Phone'}
           setText={setPhone}
@@ -151,9 +165,6 @@ const FormScreen = () => {
           borderRadius={moderateScale(20, 0.6)}
         />
         <TextInputWithTitle
-          //   iconName="envelope-o"
-          //   iconType={FontAwesome}
-          //   rightIcon
           titleText={'Country'}
           placeholder={'Country'}
           setText={setCountry}
@@ -170,9 +181,6 @@ const FormScreen = () => {
           borderRadius={moderateScale(20, 0.6)}
         />
         <TextInputWithTitle
-          //   iconName="envelope-o"
-          //   iconType={FontAwesome}
-          //   rightIcon
           titleText={'Address'}
           placeholder={'Address'}
           setText={setAddress}
@@ -189,9 +197,6 @@ const FormScreen = () => {
           borderRadius={moderateScale(20, 0.6)}
         />
         <TextInputWithTitle
-          //   iconName="envelope-o"
-          //   iconType={FontAwesome}
-          //   rightIcon
           titleText={'Post code'}
           placeholder={'Post code'}
           setText={setPostCode}
@@ -208,13 +213,10 @@ const FormScreen = () => {
           borderRadius={moderateScale(20, 0.6)}
         />
         <TextInputWithTitle
-          //   iconName="envelope-o"
-          //   iconType={FontAwesome}
-          //   rightIcon
           titleText={'Token'}
           placeholder={'Token'}
-          setText={setToken}
-          value={token}
+          setText={setStripeToken}
+          value={stripeToken}
           viewHeight={0.06}
           viewWidth={0.8}
           inputWidth={0.7}
@@ -227,26 +229,31 @@ const FormScreen = () => {
           borderRadius={moderateScale(20, 0.6)}
         />
 
-        <View style={{
-            flexDirection:'row',
-            alignItems:'center',
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
             justifyContent: 'space-between',
             // backgroundColor:'yellow',
-            width:windowWidth*0.75,
-            paddingBottom:moderateScale(15,.3)
+            width: windowWidth * 0.75,
+            paddingBottom: moderateScale(15, 0.3),
           }}>
-          <View style={{
-            flexDirection:'row',
-            alignItems:'center',
-            // backgroundColor:'red'
-          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              // backgroundColor:'red'
+            }}>
             <TouchableOpacity
-            onPress={() => {
-                setIsChecked('Cash on delivery')
-            }}
+              onPress={() => {
+                setIsChecked('Cash on delivery');
+              }}
               style={{
                 width: windowHeight * 0.015,
-                backgroundColor: isChecked == 'Cash on delivery' ?  Color.themeColor : Color.mediumGray,
+                backgroundColor:
+                  isChecked == 'Cash on delivery'
+                    ? Color.themeColor
+                    : Color.mediumGray,
                 height: windowHeight * 0.015,
                 borderRadius: (windowHeight * 0.015) / 2,
                 borderColor: Color.mediumGray,
@@ -254,24 +261,28 @@ const FormScreen = () => {
                 // flexDirection:'row'
               }}></TouchableOpacity>
             <CustomText
-            onPress={() => {
-                setIsChecked('Cash on delivery')
-            }}
+              onPress={() => {
+                setIsChecked('Cash on delivery');
+              }}
               style={[{marginLeft: moderateScale(5, 0.3)}, styles.labelText]}>
               Cash on delivery
             </CustomText>
           </View>
-          <View style={{
-            flexDirection:'row',
-            alignItems:'center'
-          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
             <TouchableOpacity
-            onPress={() => {
-                setIsChecked('pay through stripe')
-            }}
+              onPress={() => {
+                setIsChecked('pay through stripe');
+              }}
               style={{
                 width: windowHeight * 0.015,
-                backgroundColor: isChecked == 'pay through stripe' ?  Color.themeColor : Color.mediumGray,
+                backgroundColor:
+                  isChecked == 'pay through stripe'
+                    ? Color.themeColor
+                    : Color.mediumGray,
                 height: windowHeight * 0.015,
                 borderRadius: (windowHeight * 0.015) / 2,
                 borderColor: Color.mediumGray,
@@ -279,12 +290,12 @@ const FormScreen = () => {
                 // flexDirection:'row'
               }}></TouchableOpacity>
             <CustomText
-            onPress={() => {
-                setIsModal(true)
-                setIsChecked('pay through stripe')
-            }}
+              onPress={() => {
+                setIsModal(true);
+                setIsChecked('pay through stripe');
+              }}
               style={[{marginLeft: moderateScale(5, 0.3)}, styles.labelText]}>
-            pay through stripe
+              pay through stripe
             </CustomText>
           </View>
         </View>

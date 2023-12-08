@@ -151,7 +151,7 @@ const CartItem = ({item, fromCheckout}) => {
               },
             ]}>
             <CustomText style={styles.amount}>
-              {numeral(item?.wholsale_price * item?.qty).format('$0,0.00')}
+              {numeral(item?.wholsale_price * item?.quantity).format('$0,0.00')}
             </CustomText>
             {/* {
               fromCheckout ? 

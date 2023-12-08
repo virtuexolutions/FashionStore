@@ -102,9 +102,9 @@ const ProductCard = ({item}) => {
                 style={{
                   color: 'black',
                   fontSize: 12,
-                  // backgroundColor:'red'
+                  backgroundColor:'red'
                 }}>
-                {numeral(item?.discount_price).format('$0')} OFF
+                {numeral(item?.discount_price/100).format('%')} OFF
               </CustomText>
             </View>
           )}
@@ -199,7 +199,8 @@ const styles = StyleSheet.create({
     bottom: moderateScale(10, 0.3),
     right: moderateScale(5, 0.3),
     zIndex: 1,
-    width: windowWidth * 0.2,
-    height: windowHeight * 0.03,
+    padding:moderateScale(7,.6),
+    backgroundColor:'red',
+    borderRadius:moderateScale(10,.6)
   },
 });

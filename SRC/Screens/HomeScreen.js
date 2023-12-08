@@ -23,15 +23,30 @@ import ProductCard from '../Components/ProductCard';
 import navigationService from '../navigationService';
 import {Get} from '../Axios/AxiosInterceptorFunction';
 import {useDispatch, useSelector} from 'react-redux';
+import CategoriesModal from '../Components/CategoriesModal';
 
 const HomeScreen = () => {
   const dispatch =useDispatch()
+  
   const [searchData, setSearchData] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [isLoading, setisLoading] = useState(false);
   const [products, setProducts] = useState([]);
   const token = useSelector(state => state.authReducer.token);
   const cardData =useSelector(state => state.commonReducer.item)
+
+
+  const getCategories = async()=>{
+    const url = ''
+    setisLoading(true)
+    const response = await Get(url, token)
+    setisLoading(false)
+    if(response != undefined){
+
+      console.log("🚀 ~ file: HomeScreen.js:40 ~ getCategories ~ response:", response?.data)
+
+    }
+  }
 
 
   const getData = async () => {
@@ -270,6 +285,7 @@ const HomeScreen = () => {
       ],
     },
   ];
+
   return (
     <>
       <CustomStatusBar backgroundColor={'#FDFDFD'} barStyle={'dark-content'} />
@@ -514,6 +530,7 @@ const HomeScreen = () => {
             }}
           />
         )}
+        <CategoriesModal />
       </ScrollView>
     </>
   );
