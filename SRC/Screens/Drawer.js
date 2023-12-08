@@ -1,4 +1,12 @@
-import {StyleSheet, Text, View, TouchableOpacity, Platform} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Platform,
+  ScrollView,
+  Image,
+} from 'react-native';
 import React, {useState, useRef} from 'react';
 import Color from '../Assets/Utilities/Color';
 import CustomImage from '../Components/CustomImage';
@@ -16,6 +24,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {setUserLogoutAuth} from '../Store/slices/auth';
 import {setUserLogOut} from '../Store/slices/common';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 const Drawer = () => {
   const user = useSelector(state => state.commonReducer.userData);
@@ -42,13 +51,12 @@ const Drawer = () => {
       iconType: AntDesign,
     },
     {
-      name: 'Log out',
+      name: 'My orders',
       onPress: () => {
-        dispatch(setUserLogoutAuth());
-        dispatch(setUserLogOut());
+        navigation.navigate('OrderScreen');
       },
-      iconName: 'logout',
-      iconType: AntDesign,
+      iconName: 'shopping-bag',
+      iconType: Entypo,
     },
   ];
 
@@ -56,24 +64,45 @@ const Drawer = () => {
     <ScreenBoiler
       statusBarBackgroundColor={'white'}
       statusBarContentStyle={'dark-content'}>
-      <LinearGradient
+      {/* <LinearGradient
         style={{
           // width: windowWidth *0.72,
           height: windowHeight,
         }}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}
-        colors={Color.themeBgColor}>
+        colors={['#F89D52', '#FFFFFF']}> */}
         <View
           style={{
-            flexDirection: 'row',
-            marginTop: moderateScale(20, 0.3),
+            // flexDirection: 'row',
+            // marginTop: moderateScale(20, 0.3),
             alignItems: 'center',
-            marginLeft: moderateScale(10, 0.3),
+            // marginLeft: moderateScale(10, 0.3),
+            backgroundColor:'#F89D52',
+            // backgroundColor:Color.themeColor,
+            padding:moderateScale(25,.6)
           }}>
+          <View
+            style={{
+              height: windowHeight * 0.12,
+              width: windowHeight * 0.12,
+              borderRadius: (windowHeight * 0.12) / 2,
+              backgroundColor: 'red',
+              overflow: 'hidden',
+            }}>
+            <Image
+              style={{
+                height: '100%',
+                width: '100%',
+              }}
+              source={require('../Assets/Images/dummyUser1.png')}
+            />
+          </View>
           <View style={{marginLeft: moderateScale(10, 0.3)}}>
             <CustomText
-              style={{fontSize: moderateScale(16, 0.6), color: Color.black}}
+              style={{fontSize: moderateScale(16, 0.6), color: Color.black,
+                // padingVertical:moderateScale(6, 0.6)
+              }}
               isBold>
               {user?.name}
             </CustomText>
@@ -88,46 +117,85 @@ const Drawer = () => {
             </CustomText>
           </View>
         </View>
+        <ScrollView>
+          <View
+            style={{
+              marginLeft: moderateScale(10, 0.3),
+              marginTop: moderateScale(40, 0.3),
+              // backgroundColor : 'red'
+            }}>
+            {data.map((item, index) => (
+              <TouchableOpacity
+                onPress={item?.onPress}
+                style={{
+                  width: windowWidth * 0.5,
+                  borderBottomWidth: 0.5,
+                  borderColor: Color.black,
+                  margin: moderateScale(15, 0.3),
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}>
+                <Icon
+                  name={item.iconName}
+                  as={item.iconType}
+                  style={styles.icon2}
+                  color={Color.black}
+                  size={moderateScale(16, 0.3)}
+                />
+
+                <CustomText
+                  style={{
+                    fontSize: moderateScale(14, 0.6),
+                    color: Color.black,
+                    marginLeft: moderateScale(10, 0.3),
+                  }}>
+                  {item.name}
+                </CustomText>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </ScrollView>
 
         <View
           style={{
             marginLeft: moderateScale(10, 0.3),
             marginTop: moderateScale(40, 0.3),
-            // backgroundColor : 'red'
+            position: 'absolute',
+            bottom: 40,
           }}>
-          {data.map((item, index) => (
-            <TouchableOpacity
-              onPress={item?.onPress}
+          <TouchableOpacity
+            onPress={() => {
+              dispatch(setUserLogoutAuth());
+              dispatch(setUserLogOut());
+            }}
+            style={{
+              width: windowWidth * 0.5,
+              // borderBottomWidth: 0.5,
+              // borderColor: Color.black,
+              margin: moderateScale(15, 0.3),
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+            <Icon
+              name={'logout'}
+              as={AntDesign}
+              style={styles.icon2}
+              color={Color.black}
+              size={moderateScale(16, 0.3)}
+            />
+
+            <CustomText
               style={{
-                width: windowWidth * 0.5,
-                borderBottomWidth: 0.5,
-                borderColor: Color.black,
-                margin: moderateScale(15, 0.3),
-                flexDirection: 'row',
-                alignItems: 'center',
+                //  paddingVertical:moderateScale(5,.3),
+                fontSize: moderateScale(14, 0.6),
+                color: Color.black,
+                marginLeft: moderateScale(10, 0.3),
               }}>
-              <Icon
-                name={item.iconName}
-                as={item.iconType}
-                style={styles.icon2}
-                color={Color.black}
-                size={moderateScale(16, 0.3)}
-              />
-
-              <CustomText
-                style={{
-                  fontSize: moderateScale(14, 0.6),
-                  color: Color.black,
-                  marginLeft: moderateScale(10, 0.3),
-                }}>
-                {item.name}
-              </CustomText>
-            </TouchableOpacity>
-          ))}
+              Log out
+            </CustomText>
+          </TouchableOpacity>
         </View>
-
-     
-      </LinearGradient>
+      {/* </LinearGradient> */}
     </ScreenBoiler>
   );
 };

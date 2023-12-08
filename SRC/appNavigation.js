@@ -28,6 +28,7 @@ import Drawer from './Screens/Drawer';
 import ChangePassword from './Screens/ChangePassword';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import FormScreen from './Screens/FormScreen';
+import OrderScreen from './Screens/OrderScreen';
 
 
 const AppNavigator = () => {
@@ -59,6 +60,7 @@ const AppNavigator = () => {
           screenOptions={{headerShown: false}}>
           <RootNav.Screen name="WelcomeScreen" component={WelcomeScreen} />
           <RootNav.Screen name="FormScreen" component={FormScreen} />
+          <RootNav.Screen name="OrderScreen" component={OrderScreen} />
           <RootNav.Screen name="CheckOutScreen" component={CheckOutScreen} />
           <RootNav.Screen name="DressesDetail" component={DressesDetail} />
           <RootNav.Screen name="Dresses" component={Dresses} />

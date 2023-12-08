@@ -52,224 +52,224 @@ const HomeScreen = () => {
     getData();
   }, []);
 
-  const categories = [
-    {
-      name: 'All',
-      image2: require('../Assets/Images/menu.png'),
-      image: require('../Assets/Images/menu1.png'),
-      onPress: () => {
-        console.log('here');
+    const categories = [
+      {
+        name: 'All',
+        image2: require('../Assets/Images/menu.png'),
+        image: require('../Assets/Images/menu1.png'),
+        onPress: () => {
+          console.log('here');
+        },
       },
-    },
-    {
-      name: 'Dress',
-      image: require('../Assets/Images/dress.png'),
-      image2: require('../Assets/Images/dress1.png'),
-      onPress: () => {
-        console.log('here');
-        navigationService.navigate('Dresses');
+      {
+        name: 'Dress',
+        image: require('../Assets/Images/dress.png'),
+        image2: require('../Assets/Images/dress1.png'),
+        onPress: () => {
+          console.log('here');
+          navigationService.navigate('Dresses');
+        },
       },
-    },
-    {
-      name: 'T-shirt',
-      image: require('../Assets/Images/tshirt.png'),
-      image2: require('../Assets/Images/tshirt1.png'),
-      onPress: () => {
-        console.log('here');
+      {
+        name: 'T-shirt',
+        image: require('../Assets/Images/tshirt.png'),
+        image2: require('../Assets/Images/tshirt1.png'),
+        onPress: () => {
+          console.log('here');
+        },
       },
-    },
-    {
-      name: 'jeans',
-      image: require('../Assets/Images/jeans.png'),
-      image2: require('../Assets/Images/jeans1.png'),
-      onPress: () => {
-        console.log('here');
+      {
+        name: 'jeans',
+        image: require('../Assets/Images/jeans.png'),
+        image2: require('../Assets/Images/jeans1.png'),
+        onPress: () => {
+          console.log('here');
+        },
       },
-    },
-    {
-      name: 'shoes',
-      image: require('../Assets/Images/shoes.png'),
-      image2: require('../Assets/Images/shoes1.png'),
-      onPress: () => {
-        console.log('here');
+      {
+        name: 'shoes',
+        image: require('../Assets/Images/shoes.png'),
+        image2: require('../Assets/Images/shoes1.png'),
+        onPress: () => {
+          console.log('here');
+        },
       },
-    },
-  ];
+    ];
 
-  const specialOffers = [
-    {
-      title: 'black Friday',
-      off: '30%',
-      detail: '*for selection item',
-    },
-    {
-      title: 'New Year Sale',
-      off: '50% ',
-      detail: '*for selection item',
-    },
-  ];
+    const specialOffers = [
+      {
+        title: 'black Friday',
+        off: '30%',
+        detail: '*for selection item',
+      },
+      {
+        title: 'New Year Sale',
+        off: '50% ',
+        detail: '*for selection item',
+      },
+    ];
 
-  const newArrivals = [
-    {
-      id: 1,
-      Title: 'Oversize Dress',
-      subTitle: 'Oversize',
-      price: 14.0,
-      img: require('../Assets/Images/Image.png'),
-      like: true,
-      sale: '30% off',
-      qty: 1,
-      colors: [
-        '#4e86c2',
-        '#2c4973',
-        '#1ABFBC',
-        '#C8CDD2',
-        '#ECECEC',
-        '#313436',
-      ],
-      size: ['XS', 'S', 'M', 'L', 'XL'],
-      cotton: 1,
-      selectedSize: '',
-      selectedColor: '',
-      totalQty: 18,
-      images: [
-        require('../Assets/Images/Mask.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-    },
-    {
-      id: 2,
-      Title: 'Blue Dress',
-      subTitle: 'Slim Fit',
-      price: 15.0,
-      img: require('../Assets/Images/Image.png'),
-      like: false,
-      qty: 1,
-      colors: [
-        '#4e86c2',
-        '#2c4973',
-        '#1ABFBC',
-        '#C8CDD2',
-        '#ECECEC',
-        '#313436',
-      ],
-      size: ['XS', 'S', 'M', 'L', 'XL'],
-      cotton: 1,
-      selectedSize: '',
-      selectedColor: '',
-      totalQty: 18,
-      images: [
-        require('../Assets/Images/Image.png'),
-        require('../Assets/Images/Mask.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-    },
-    {
-      id: 3,
-      Title: 'Elegant Dress',
-      subTitle: 'Slim Fit',
-      price: 4.5,
-      img: require('../Assets/Images/image3.png'),
-      like: true,
-      qty: 1,
-      colors: [
-        '#4e86c2',
-        '#2c4973',
-        '#1ABFBC',
-        '#C8CDD2',
-        '#ECECEC',
-        '#313436',
-      ],
-      size: ['XS', 'S', 'M', 'L', 'XL'],
-      cotton: 1,
-      selectedSize: '',
-      selectedColor: '',
-      totalQty: 18,
-      images: [
-        require('../Assets/Images/Mask.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-    },
-    {
-      id: 4,
-      Title: 'White Dress',
-      subTitle: 'Oversize',
-      price: 6.9,
-      img: require('../Assets/Images/Image.png'),
-      like: true,
-      sale: '30% off',
-      qty: 1,
-      colors: [
-        '#4e86c2',
-        '#2c4973',
-        '#1ABFBC',
-        '#C8CDD2',
-        '#ECECEC',
-        '#313436',
-      ],
-      size: ['XS', 'S', 'M', 'L', 'XL'],
-      cotton: 1,
-      selectedSize: '',
-      selectedColor: '',
-      totalQty: 18,
-      images: [
-        require('../Assets/Images/Mask3.png'),
-        require('../Assets/Images/Image.png'),
-        require('../Assets/Images/Mask.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-    },
-    {
-      id: 5,
-      Title: 'Red Dress',
-      subTitle: 'Oversize',
-      price: 8.94,
-      img: require('../Assets/Images/Image.png'),
-      like: false,
-      qty: 1,
-      colors: [
-        '#4e86c2',
-        '#2c4973',
-        '#1ABFBC',
-        '#C8CDD2',
-        '#ECECEC',
-        '#313436',
-      ],
-      size: ['XS', 'S', 'M', 'L', 'XL'],
-      cotton: 1,
-      selectedSize: '',
-      selectedColor: '',
-      totalQty: 18,
-      images: [require('../Assets/Images/Mask2.png')],
-    },
-    {
-      id: 6,
-      Title: 'Black Dress',
-      subTitle: 'Oversize',
-      price: 18.5,
-      img: require('../Assets/Images/Image.png'),
-      like: true,
-      qty: 1,
-      colors: [
-        '#4e86c2',
-        '#2c4973',
-        '#1ABFBC',
-        '#C8CDD2',
-        '#ECECEC',
-        '#313436',
-      ],
-      size: ['XS', 'S', 'M', 'L', 'XL'],
-      cotton: 1,
-      selectedSize: '',
-      selectedColor: '',
-      totalQty: 18,
-      images: [
-        require('../Assets/Images/Image.png'),
-        require('../Assets/Images/Mask.png'),
-        require('../Assets/Images/Mask2.png'),
-      ],
-    },
-  ];
+    const newArrivals = [
+      {
+        id: 1,
+        Title: 'Oversize Dress',
+        subTitle: 'Oversize',
+        price: 14.0,
+        img: require('../Assets/Images/Image.png'),
+        like: true,
+        sale: '30% off',
+        qty: 1,
+        colors: [
+          '#4e86c2',
+          '#2c4973',
+          '#1ABFBC',
+          '#C8CDD2',
+          '#ECECEC',
+          '#313436',
+        ],
+        size: ['XS', 'S', 'M', 'L', 'XL'],
+        cotton: 1,
+        selectedSize: '',
+        selectedColor: '',
+        totalQty: 18,
+        images: [
+          require('../Assets/Images/Mask.png'),
+          require('../Assets/Images/Mask2.png'),
+        ],
+      },
+      {
+        id: 2,
+        Title: 'Blue Dress',
+        subTitle: 'Slim Fit',
+        price: 15.0,
+        img: require('../Assets/Images/Image.png'),
+        like: false,
+        qty: 1,
+        colors: [
+          '#4e86c2',
+          '#2c4973',
+          '#1ABFBC',
+          '#C8CDD2',
+          '#ECECEC',
+          '#313436',
+        ],
+        size: ['XS', 'S', 'M', 'L', 'XL'],
+        cotton: 1,
+        selectedSize: '',
+        selectedColor: '',
+        totalQty: 18,
+        images: [
+          require('../Assets/Images/Image.png'),
+          require('../Assets/Images/Mask.png'),
+          require('../Assets/Images/Mask2.png'),
+        ],
+      },
+      {
+        id: 3,
+        Title: 'Elegant Dress',
+        subTitle: 'Slim Fit',
+        price: 4.5,
+        img: require('../Assets/Images/image3.png'),
+        like: true,
+        qty: 1,
+        colors: [
+          '#4e86c2',
+          '#2c4973',
+          '#1ABFBC',
+          '#C8CDD2',
+          '#ECECEC',
+          '#313436',
+        ],
+        size: ['XS', 'S', 'M', 'L', 'XL'],
+        cotton: 1,
+        selectedSize: '',
+        selectedColor: '',
+        totalQty: 18,
+        images: [
+          require('../Assets/Images/Mask.png'),
+          require('../Assets/Images/Mask2.png'),
+        ],
+      },
+      {
+        id: 4,
+        Title: 'White Dress',
+        subTitle: 'Oversize',
+        price: 6.9,
+        img: require('../Assets/Images/Image.png'),
+        like: true,
+        sale: '30% off',
+        qty: 1,
+        colors: [
+          '#4e86c2',
+          '#2c4973',
+          '#1ABFBC',
+          '#C8CDD2',
+          '#ECECEC',
+          '#313436',
+        ],
+        size: ['XS', 'S', 'M', 'L', 'XL'],
+        cotton: 1,
+        selectedSize: '',
+        selectedColor: '',
+        totalQty: 18,
+        images: [
+          require('../Assets/Images/Mask3.png'),
+          require('../Assets/Images/Image.png'),
+          require('../Assets/Images/Mask.png'),
+          require('../Assets/Images/Mask2.png'),
+        ],
+      },
+      {
+        id: 5,
+        Title: 'Red Dress',
+        subTitle: 'Oversize',
+        price: 8.94,
+        img: require('../Assets/Images/Image.png'),
+        like: false,
+        qty: 1,
+        colors: [
+          '#4e86c2',
+          '#2c4973',
+          '#1ABFBC',
+          '#C8CDD2',
+          '#ECECEC',
+          '#313436',
+        ],
+        size: ['XS', 'S', 'M', 'L', 'XL'],
+        cotton: 1,
+        selectedSize: '',
+        selectedColor: '',
+        totalQty: 18,
+        images: [require('../Assets/Images/Mask2.png')],
+      },
+      {
+        id: 6,
+        Title: 'Black Dress',
+        subTitle: 'Oversize',
+        price: 18.5,
+        img: require('../Assets/Images/Image.png'),
+        like: true,
+        qty: 1,
+        colors: [
+          '#4e86c2',
+          '#2c4973',
+          '#1ABFBC',
+          '#C8CDD2',
+          '#ECECEC',
+          '#313436',
+        ],
+        size: ['XS', 'S', 'M', 'L', 'XL'],
+        cotton: 1,
+        selectedSize: '',
+        selectedColor: '',
+        totalQty: 18,
+        images: [
+          require('../Assets/Images/Image.png'),
+          require('../Assets/Images/Mask.png'),
+          require('../Assets/Images/Mask2.png'),
+        ],
+      },
+    ];
   return (
     <>
       <CustomStatusBar backgroundColor={'#FDFDFD'} barStyle={'dark-content'} />
@@ -359,7 +359,10 @@ const HomeScreen = () => {
               <>
                 <TouchableOpacity
                   style={{alignItems: 'center', width: windowWidth * 0.16}}
-                  onPress={item?.onPress}>
+                  onPress={() => {
+                    setSelectedCategory(item?.name);
+                    item?.onPress
+                  }}>
                   <LinearGradient
                     style={{
                       height: moderateScale(52, 0.6),

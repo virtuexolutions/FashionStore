@@ -127,9 +127,10 @@ const Header = props => {
           
           }
             <Icon
-            onPress={() => {
+            onPress={() => {{
+              cardData.length > 0 && 
               navigationN.navigate('CheckOutScreen')
-            }}
+            }}}
               name={rightName}
               as={rightType ? rightType : FontAwesome}
               size={moderateScale(22, 0.3)}
