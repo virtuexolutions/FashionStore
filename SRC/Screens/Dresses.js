@@ -15,6 +15,7 @@ import ProductCard from '../Components/ProductCard';
 import Color from '../Assets/Utilities/Color';
 
 const Dresses = () => {
+  const cartData =useSelector(state => state.commonReducer.item)
   const [like, SetLike] = useState(false);
 
   const dispatch = useDispatch();

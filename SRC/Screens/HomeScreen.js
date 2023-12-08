@@ -67,62 +67,62 @@ const HomeScreen = () => {
     getData();
   }, []);
 
-  const categories = [
-    {
-      name: 'All',
-      image2: require('../Assets/Images/menu.png'),
-      image: require('../Assets/Images/menu1.png'),
-      onPress: () => {
-        console.log('here');
+    const categories = [
+      {
+        name: 'All',
+        image2: require('../Assets/Images/menu.png'),
+        image: require('../Assets/Images/menu1.png'),
+        onPress: () => {
+          console.log('here');
+        },
       },
-    },
-    {
-      name: 'Dress',
-      image: require('../Assets/Images/dress.png'),
-      image2: require('../Assets/Images/dress1.png'),
-      onPress: () => {
-        console.log('here');
-        navigationService.navigate('Dresses');
+      {
+        name: 'Dress',
+        image: require('../Assets/Images/dress.png'),
+        image2: require('../Assets/Images/dress1.png'),
+        onPress: () => {
+          console.log('here');
+          navigationService.navigate('Dresses');
+        },
       },
-    },
-    {
-      name: 'T-shirt',
-      image: require('../Assets/Images/tshirt.png'),
-      image2: require('../Assets/Images/tshirt1.png'),
-      onPress: () => {
-        console.log('here');
+      {
+        name: 'T-shirt',
+        image: require('../Assets/Images/tshirt.png'),
+        image2: require('../Assets/Images/tshirt1.png'),
+        onPress: () => {
+          console.log('here');
+        },
       },
-    },
-    {
-      name: 'jeans',
-      image: require('../Assets/Images/jeans.png'),
-      image2: require('../Assets/Images/jeans1.png'),
-      onPress: () => {
-        console.log('here');
+      {
+        name: 'jeans',
+        image: require('../Assets/Images/jeans.png'),
+        image2: require('../Assets/Images/jeans1.png'),
+        onPress: () => {
+          console.log('here');
+        },
       },
-    },
-    {
-      name: 'shoes',
-      image: require('../Assets/Images/shoes.png'),
-      image2: require('../Assets/Images/shoes1.png'),
-      onPress: () => {
-        console.log('here');
+      {
+        name: 'shoes',
+        image: require('../Assets/Images/shoes.png'),
+        image2: require('../Assets/Images/shoes1.png'),
+        onPress: () => {
+          console.log('here');
+        },
       },
-    },
-  ];
+    ];
 
-  const specialOffers = [
-    {
-      title: 'black Friday',
-      off: '30%',
-      detail: '*for selection item',
-    },
-    {
-      title: 'New Year Sale',
-      off: '50% ',
-      detail: '*for selection item',
-    },
-  ];
+    const specialOffers = [
+      {
+        title: 'black Friday',
+        off: '30%',
+        detail: '*for selection item',
+      },
+      {
+        title: 'New Year Sale',
+        off: '50% ',
+        detail: '*for selection item',
+      },
+    ];
 
   const newArrivals = [
     {
@@ -375,7 +375,10 @@ const HomeScreen = () => {
               <>
                 <TouchableOpacity
                   style={{alignItems: 'center', width: windowWidth * 0.16}}
-                  onPress={item?.onPress}>
+                  onPress={() => {
+                    setSelectedCategory(item?.name);
+                    item?.onPress
+                  }}>
                   <LinearGradient
                     style={{
                       height: moderateScale(52, 0.6),
