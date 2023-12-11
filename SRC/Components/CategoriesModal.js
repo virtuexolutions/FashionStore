@@ -29,7 +29,7 @@ const CategoriesModal = ({isVisible, setIsVisible}) => {
   };
 
   useEffect(() => {
-    // getCategories();
+    getCategories();
   }, []);
 
   const data = [
@@ -78,6 +78,7 @@ const CategoriesModal = ({isVisible, setIsVisible}) => {
   return (
     <Modal
       isVisible={isVisible}
+      onBackdropPress={()=> setIsVisible(false)}
       style={{justifyContent: 'center', alignItems: 'center'}}>
       <View style={styles.modalContainer}>
         <View style={{flexDirection: 'row'}}>

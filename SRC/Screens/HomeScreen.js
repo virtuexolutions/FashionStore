@@ -27,37 +27,34 @@ import CategoriesModal from '../Components/CategoriesModal';
 import NoData from '../Components/NoData';
 
 const HomeScreen = () => {
-  const dispatch =useDispatch()
-  
+  const dispatch = useDispatch();
+
   const [searchData, setSearchData] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [isLoading, setisLoading] = useState(false);
   const [products, setProducts] = useState([]);
+  const [categoryModalVisible, setCategoryModalVisible] = useState(false)
   const token = useSelector(state => state.authReducer.token);
-  const cardData =useSelector(state => state.commonReducer.item)
+  const cardData = useSelector(state => state.commonReducer.item);
 
-
-  const getCategories = async()=>{
-    const url = ''
-    setisLoading(true)
-    const response = await Get(url, token)
-    setisLoading(false)
-    if(response != undefined){
-
-      console.log("🚀 ~ file: HomeScreen.js:40 ~ getCategories ~ response:", response?.data)
-
+  const getCategories = async () => {
+    const url = '';
+    setisLoading(true);
+    const response = await Get(url, token);
+    setisLoading(false);
+    if (response != undefined) {
+      console.log(
+        '🚀 ~ file: HomeScreen.js:40 ~ getCategories ~ response:',
+        response?.data,
+      );
     }
-  }
-
+  };
 
   const getData = async () => {
     const url = 'auth/products';
     setisLoading(true);
     const response = await Get(url, token);
-    // console.log(
-    //   '🚀 ~ file: HomeScreen.js:32 ~ getData ~ response:',
-    //   response?.data?.data?.data,
-    // );
+
     setisLoading(false);
     if (response != undefined) {
       setProducts(response?.data?.data?.data);
@@ -68,62 +65,62 @@ const HomeScreen = () => {
     getData();
   }, []);
 
-    const categories = [
-      {
-        name: 'All',
-        image2: require('../Assets/Images/menu.png'),
-        image: require('../Assets/Images/menu1.png'),
-        onPress: () => {
-          console.log('here');
-        },
+  const categories = [
+    {
+      name: 'All',
+      image2: require('../Assets/Images/menu.png'),
+      image: require('../Assets/Images/menu1.png'),
+      onPress: () => {
+        console.log('here');
       },
-      {
-        name: 'Dress',
-        image: require('../Assets/Images/dress.png'),
-        image2: require('../Assets/Images/dress1.png'),
-        onPress: () => {
-          console.log('here');
-          navigationService.navigate('Dresses');
-        },
+    },
+    {
+      name: 'Dress',
+      image: require('../Assets/Images/dress.png'),
+      image2: require('../Assets/Images/dress1.png'),
+      onPress: () => {
+        console.log('here');
+        navigationService.navigate('Dresses');
       },
-      {
-        name: 'T-shirt',
-        image: require('../Assets/Images/tshirt.png'),
-        image2: require('../Assets/Images/tshirt1.png'),
-        onPress: () => {
-          console.log('here');
-        },
+    },
+    {
+      name: 'T-shirt',
+      image: require('../Assets/Images/tshirt.png'),
+      image2: require('../Assets/Images/tshirt1.png'),
+      onPress: () => {
+        console.log('here');
       },
-      {
-        name: 'jeans',
-        image: require('../Assets/Images/jeans.png'),
-        image2: require('../Assets/Images/jeans1.png'),
-        onPress: () => {
-          console.log('here');
-        },
+    },
+    {
+      name: 'jeans',
+      image: require('../Assets/Images/jeans.png'),
+      image2: require('../Assets/Images/jeans1.png'),
+      onPress: () => {
+        console.log('here');
       },
-      {
-        name: 'shoes',
-        image: require('../Assets/Images/shoes.png'),
-        image2: require('../Assets/Images/shoes1.png'),
-        onPress: () => {
-          console.log('here');
-        },
+    },
+    {
+      name: 'shoes',
+      image: require('../Assets/Images/shoes.png'),
+      image2: require('../Assets/Images/shoes1.png'),
+      onPress: () => {
+        console.log('here');
       },
-    ];
+    },
+  ];
 
-    const specialOffers = [
-      {
-        title: 'black Friday',
-        off: '30%',
-        detail: '*for selection item',
-      },
-      {
-        title: 'New Year Sale',
-        off: '50% ',
-        detail: '*for selection item',
-      },
-    ];
+  const specialOffers = [
+    {
+      title: 'black Friday',
+      off: '30%',
+      detail: '*for selection item',
+    },
+    {
+      title: 'New Year Sale',
+      off: '50% ',
+      detail: '*for selection item',
+    },
+  ];
 
   const newArrivals = [
     {
@@ -307,9 +304,12 @@ const HomeScreen = () => {
           width: windowWidth,
           alignSelf: 'center',
           backgroundColor: '#FDFDFD',
+        
         }}
         contentContainerStyle={{
           paddingHorizontal: moderateScale(10, 0.6),
+          // justifyContent:'center', 
+          // alignItems:'center'
         }}>
         <CustomText
           style={{
@@ -378,7 +378,7 @@ const HomeScreen = () => {
                   style={{alignItems: 'center', width: windowWidth * 0.16}}
                   onPress={() => {
                     setSelectedCategory(item?.name);
-                    item?.onPress
+                    item?.onPress;
                   }}>
                   <LinearGradient
                     style={{
@@ -517,24 +517,29 @@ const HomeScreen = () => {
         </View>
 
         {isLoading ? (
-          <View style={{justifyContent:'center', alignItems:'center', height:windowHeight*0.4}}>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: windowHeight * 0.4,
+            }}>
             <ActivityIndicator color={Color.themeColor} size={'large'} />
           </View>
         ) : (
           <FlatList
-          ListEmptyComponent={() => {
-            return (
-              <NoData
-                style={{
-                  width: windowWidth * 0.95,
-                  height: windowHeight * 0.4,
-                  alignItems: 'center', 
-                  justifyContent:'center',
-                  // backgroundColor:'red'
-                }}
-              />
-            );
-          }}
+            ListEmptyComponent={() => {
+              return (
+                <NoData
+                  style={{
+                    width: windowWidth * 0.95,
+                    height: windowHeight * 0.4,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    // backgroundColor:'red'
+                  }}
+                />
+              );
+            }}
             showsVerticalScrollIndicator={false}
             numColumns={2}
             // data={[]}
@@ -548,7 +553,7 @@ const HomeScreen = () => {
             }}
           />
         )}
-        <CategoriesModal />
+        <CategoriesModal isVisible={categoryModalVisible} setIsVisible={setCategoryModalVisible}/>
       </ScrollView>
     </>
   );

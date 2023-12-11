@@ -26,10 +26,7 @@ import {AddToCart, EmptyCart} from '../Store/slices/common';
 const FormScreen = () => {
   const token = useSelector(state => state.authReducer.token);
   const cartData = useSelector(state => state.commonReducer.item);
-  console.log(
-    '🚀 ~ file: FormScreen.js:29 ~ FormScreen ~ cartData:',
-    cartData[1]?.varation,
-  );
+ 
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const calcTotal = () => {
@@ -68,14 +65,14 @@ const FormScreen = () => {
         ...prev,
         {
           id: item?.id,
-          size_id: item?.size_id,
           price: item?.wholsale_price,
           quantity: item?.quantity,
-          size_id: item?.size_id,
+          size_id: item?.size_id?.id,
         },
       ]);
     });
-    const url = 'auth/order';
+    
+   const url = 'auth/order';
     const body = {
       first_name: name,
       last_name: lastName,
@@ -95,6 +92,7 @@ const FormScreen = () => {
       total_amount: totalPrice,
       products: newData,
     };
+    console.log("🚀 ~ file: FormScreen.js:98 ~ PlaceOrder ~ body:", body)
 
     setIsLoading(true);
     const response = await Post(url, body, apiHeader(token));
