@@ -17,8 +17,11 @@ import CustomStatusBar from '../Components/CustomStatusBar';
 import Header from '../Components/Header';
 import Feather from 'react-native-vector-icons/Feather';
 import { useSelector } from 'react-redux';
+import { Toast } from 'native-base';
+// import { selectedProductSize } from '../Store/slices/common';
 
 const CheckOutScreen = ({route}) => {
+  const selectedProductSize =useSelector(state => state.commonReducer.item)
   const cardData = useSelector(state => state.commonReducer.item)
   const [finalAmount, setFinalAmount] = useState(0);
   const [productsForCard, setProdctsForCart] = useState([]);
@@ -57,9 +60,21 @@ const CheckOutScreen = ({route}) => {
             <View>
               <CustomButton
                 isBold
-                onPress={() => {
+               onPress={() => {
+                const temp = cardData.find((item ,index) => !item?.size_id )
+                if(!temp){
                   navigationService.navigate('FormScreen');
-                }}
+                  setProdctsForCart()
+                }
+                else{
+                  Platform.OS == 'android'
+                  ? ToastAndroid.show(
+                      ' Please Select size',
+                      ToastAndroid.SHORT,
+                    )
+                  : Alert.alert('Please Select size')
+                }
+               }}
                 text={'Proceed'}
                 textColor={Color.white}
                 width={windowWidth * 0.8}

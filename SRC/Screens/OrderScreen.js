@@ -6,7 +6,7 @@ import {
   ToastAndroid,
   Image,
 } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {moderateScale, ScaledSheet} from 'react-native-size-matters';
 import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import Color from '../Assets/Utilities/Color';
@@ -20,14 +20,34 @@ import Feather from 'react-native-vector-icons/Feather';
 import {useSelector} from 'react-redux';
 import CustomText from '../Components/CustomText';
 import OrderCard from '../Components/OrderCard';
+import { Get } from '../Axios/AxiosInterceptorFunction';
+import NoData from '../Components/NoData';
 
-const CheckOutScreen = ({route}) => {
+const OrderScreen = ({route}) => {
+  const token = useSelector(state => state.authReducer.token)
+  console.log("🚀 ~ file: OrderScreen.js:27 ~ OrderScreen ~ token:", token)
   const cardData = useSelector(state => state.commonReducer.item);
   const [finalAmount, setFinalAmount] = useState(0);
   const [productsForCard, setProdctsForCart] = useState([]);
   const subTotal = route?.params?.subTotal;
   const [underline, setUnderline] = useState(false);
+  const [orders ,setOrders] =useState('')
+  const [isLoading ,setIsLoading] =useState(false)
 
+  console.log('alert ============>')
+  const getOrder = async ()  => {
+  const url ='auth/order/list'
+  setIsLoading(true)
+  const response =await Get(url,token)
+  setIsLoading(false)
+  if(response != undefined){
+    console.log("🚀 ~ file: OrderScreen.js:36 ~ getOrder ~ response:", response?.data?.data[2])
+    setOrders(response?.data?.data)
+
+  }
+
+
+  }
   const dummyarray = [
     {
       orderId: 454643,
@@ -166,6 +186,14 @@ const CheckOutScreen = ({route}) => {
     },
   ];
 
+
+
+  useEffect(() => {
+  
+    getOrder()
+  }, [])
+  
+
   return (
     <>
       <CustomStatusBar backgroundColor={'#FDFDFD'} barStyle={'dark-content'} />
@@ -230,7 +258,7 @@ const CheckOutScreen = ({route}) => {
           );
         }}
         showsVerticalScrollIndicator={false}
-        data={dummyarray}
+        data={orders}
         style={{
           height: '90%',
           backgroundColor: 'white',
@@ -248,7 +276,7 @@ const CheckOutScreen = ({route}) => {
   );
 };
 
-export default CheckOutScreen;
+export default OrderScreen;
 
 const styles = ScaledSheet.create({
   text1: {
