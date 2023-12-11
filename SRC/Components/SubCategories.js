@@ -3,18 +3,30 @@ import React from 'react';
 import Color from '../Assets/Utilities/Color';
 import {moderateScale} from 'react-native-size-matters';
 import {windowWidth} from '../Utillity/utils';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import CustomImage from './CustomImage';
 
-const SubCategories = ({selectedCategory, setSelectedCategory, item}) => {
+const SubCategories = ({
+  selectedCategory,
+  setSelectedCategory,
+  item,
+  setIsVisible,
+}) => {
+  console.log(
+    '🚀 ~ file: SubCategories.js:10 ~ SubCategories ~ selectedCategory:',
+    item,
+  );
   return (
     <TouchableOpacity
-      onPress={() => setSelectedCategory(item?.name)}
+      onPress={() => {
+        setSelectedCategory(item?.title);
+        item?.child_categories?.length == 0 && setIsVisible(false);
+      }}
       style={[
         styles.container,
         {
           borderLeftColor:
-            selectedCategory == item?.name ? Color.themeColor : Color?.white,
+            selectedCategory == item?.title ? Color.themeColor : Color?.white,
           borderLeftWidth: moderateScale(2, 0.6),
         },
       ]}>
@@ -22,16 +34,17 @@ const SubCategories = ({selectedCategory, setSelectedCategory, item}) => {
         style={{
           width: windowWidth * 0.12,
           height: windowWidth * 0.12,
-
           backgroundColor: Color.lightGrey,
           overflow: 'hidden',
-          //   backgroundColor: 'red',
           borderRadius: (windowWidth * 0.12) / 2,
         }}>
         <CustomImage
           resizeMode="contain"
-          onPress={() => setSelectedCategory(item?.name)}
-          source={item?.image}
+          onPress={() => {
+            setSelectedCategory(item?.title);
+            item?.child_categories?.length == 0 && setIsVisible(false)
+          }}
+          source={require('../Assets/Images/dress.png')}
           style={{width: '100%', height: '100%'}}
         />
       </View>
@@ -40,10 +53,12 @@ const SubCategories = ({selectedCategory, setSelectedCategory, item}) => {
           styles.text,
           {
             color:
-              selectedCategory == item?.name ? Color?.themeColor : Color?.black,
+              selectedCategory == item?.title
+                ? Color?.themeColor
+                : Color?.black,
           },
         ]}>
-        {item?.name}
+        {item?.title}
       </Text>
     </TouchableOpacity>
   );
@@ -63,6 +78,7 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: moderateScale(10, 0.6),
     paddingHorizontal: moderateScale(10, 0.6),
+    width: windowWidth * 0.3,
     // backgroundColor: 'purple',
     justifyContent: 'center',
     alignItems: 'center',

@@ -4,32 +4,36 @@ import Modal from 'react-native-modal';
 import CustomImage from './CustomImage';
 import {windowHeight, windowWidth} from '../Utillity/utils';
 import {moderateScale} from 'react-native-size-matters';
-import {Get} from '../Axios/AxiosInterceptorFunction';
+import {Get, Post} from '../Axios/AxiosInterceptorFunction';
 import {useSelector} from 'react-redux';
 import Color from '../Assets/Utilities/Color';
 import SubCategories from './SubCategories';
+import CustomText from './CustomText';
 
-const CategoriesModal = ({isVisible, setIsVisible}) => {
+const CategoriesModal = ({isVisible, setIsVisible, categoryData}) => {
   const token = useSelector(state => state.authReducer.token);
-  const [selectedCategory, setSelectedCategory] = useState('Electronics');
+  const [selectedCategory, setSelectedCategory] = useState(
+    categoryData?.sub_categories,
+  );
+  const [selectedSubCat, setSelectedSubCat] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [categories, setCategories] = useState([]);
 
-  const getCategories = async () => {
-    const url = 'auth/category/list';
+  useEffect(() => {
+    setSelectedCategory(categoryData?.sub_categories[0]?.title);
+  }, [categoryData]);
+
+  const getProducts = async () => {
+    const url = '';
     setIsLoading(true);
     const response = await Get(url, token);
     setIsLoading(false);
+
     if (response != undefined) {
-      console.log(
-        '🚀 ~ file: CategoriesModal.js:19 ~ getCategories ~ response:',
-        response?.data,
-      );
     }
   };
 
   useEffect(() => {
-    getCategories();
+    // getCategories();
   }, []);
 
   const data = [
@@ -78,16 +82,21 @@ const CategoriesModal = ({isVisible, setIsVisible}) => {
   return (
     <Modal
       isVisible={isVisible}
-      onBackdropPress={()=> setIsVisible(false)}
-      style={{justifyContent: 'center', alignItems: 'center'}}>
+      onBackdropPress={() => setIsVisible(false)}
+      style={{}}>
       <View style={styles.modalContainer}>
-        <View style={{flexDirection: 'row'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}>
           <FlatList
-            data={data}
+            data={categoryData?.sub_categories}
             renderItem={({item, index}) => {
               return (
                 <SubCategories
                   item={item}
+                  setIsVisible={setIsVisible}
                   setSelectedCategory={setSelectedCategory}
                   selectedCategory={selectedCategory}
                 />
@@ -95,13 +104,30 @@ const CategoriesModal = ({isVisible, setIsVisible}) => {
             }}
           />
           <FlatList
-            data={data?.find(item => item?.name == selectedCategory)?.sub}
-            numColumns={2}
+            contentContainerStyle={{
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            showsVerticalScrollIndicator={false}
+            data={
+              categoryData?.sub_categories?.find(
+                item => item?.title == selectedCategory,
+              )?.child_categories
+            }
             renderItem={({item, index}) => {
               return (
-                <TouchableOpacity style={styles.container}>
-                  <Text style={styles.text}>{item?.name}</Text>
-                </TouchableOpacity>
+                <>
+                  <TouchableOpacity
+                    style={styles.container}
+                    onPress={() => {
+                      setSelectedSubCat(item?.title);
+                      setIsVisible(false);
+                    }}>
+                    <CustomText style={styles.text} isBold>
+                      {item?.title}
+                    </CustomText>
+                  </TouchableOpacity>
+                </>
               );
             }}
           />
@@ -119,22 +145,23 @@ const styles = StyleSheet.create({
     borderRadius: moderateScale(10, 0.6),
     paddingHorizontal: moderateScale(10, 0.6),
     paddingVertical: moderateScale(10, 0.6),
+    width: windowWidth * 0.9,
+    height: windowHeight * 0.6,
   },
   text: {
-    // marginTop: moderateScale(5, 0.3),
-    color: 'white',
+    color: 'black',
     fontSize: moderateScale(15, 0.6),
     textAlign: 'center',
   },
   container: {
     paddingVertical: moderateScale(8, 0.6),
-    paddingHorizontal: moderateScale(8, 0.6),
     justifyContent: 'center',
+    width: windowWidth * 0.5,
     alignItems: 'center',
+    borderColor: Color.lightGrey,
+    borderWidth: 2,
     borderRadius: moderateScale(15, 0.6),
     marginVertical: moderateScale(5, 0.3),
-    backgroundColor: Color.themeColor,
-    marginHorizontal: moderateScale(5, 0.3),
   },
   image: {
     width: '100%',

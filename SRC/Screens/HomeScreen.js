@@ -33,20 +33,23 @@ const HomeScreen = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [isLoading, setisLoading] = useState(false);
   const [products, setProducts] = useState([]);
-  const [categoryModalVisible, setCategoryModalVisible] = useState(false)
+  const [categoryModalVisible, setCategoryModalVisible] = useState(false);
+  const [categoriesData, setCategoriesData] = useState([]);
+  console.log("🚀 ~ file: HomeScreen.js:38 ~ HomeScreen ~ categoriesData:", categoriesData)
   const token = useSelector(state => state.authReducer.token);
   const cardData = useSelector(state => state.commonReducer.item);
 
   const getCategories = async () => {
-    const url = '';
+    const url = 'auth/category/list';
     setisLoading(true);
     const response = await Get(url, token);
     setisLoading(false);
     if (response != undefined) {
       console.log(
-        '🚀 ~ file: HomeScreen.js:40 ~ getCategories ~ response:',
-        response?.data,
+        '🚀 ~ file: CategoriesModal.js:19 ~ getCategories ~ response:',
+        response?.data?.data[4],
       );
+      setCategoriesData(response?.data?.data);
     }
   };
 
@@ -62,22 +65,25 @@ const HomeScreen = () => {
   };
 
   useEffect(() => {
+    getCategories();
     getData();
   }, []);
+
+  const iconArray = []
 
   const categories = [
     {
       name: 'All',
-      image2: require('../Assets/Images/menu.png'),
-      image: require('../Assets/Images/menu1.png'),
+      image2: require('../Assets/Images/perfume1.png'),
+      image: require('../Assets/Images/perfume.png'),
       onPress: () => {
         console.log('here');
       },
     },
     {
       name: 'Dress',
-      image: require('../Assets/Images/dress.png'),
-      image2: require('../Assets/Images/dress1.png'),
+      image: require('../Assets/Images/face-cream.png'),
+      image2: require('../Assets/Images/face-cream1.png'),
       onPress: () => {
         console.log('here');
         navigationService.navigate('Dresses');
@@ -85,24 +91,40 @@ const HomeScreen = () => {
     },
     {
       name: 'T-shirt',
-      image: require('../Assets/Images/tshirt.png'),
-      image2: require('../Assets/Images/tshirt1.png'),
+      image: require('../Assets/Images/makeup.png'),
+      image2: require('../Assets/Images/makeup1.png'),
       onPress: () => {
         console.log('here');
       },
     },
     {
       name: 'jeans',
-      image: require('../Assets/Images/jeans.png'),
-      image2: require('../Assets/Images/jeans1.png'),
+      image: require('../Assets/Images/hair-care.png'),
+      image2: require('../Assets/Images/hair-care1.png'),
       onPress: () => {
         console.log('here');
       },
     },
     {
       name: 'shoes',
-      image: require('../Assets/Images/shoes.png'),
-      image2: require('../Assets/Images/shoes1.png'),
+      image: require('../Assets/Images/spa.png'),
+      image2: require('../Assets/Images/spa1.png'),
+      onPress: () => {
+        console.log('here');
+      },
+    },
+    {
+      name: 'shoes',
+      image: require('../Assets/Images/candles.png'),
+      image2: require('../Assets/Images/candles1.png'),
+      onPress: () => {
+        console.log('here');
+      },
+    },
+    {
+      name: 'shoes',
+      image: require('../Assets/Images/surprise.png'),
+      image2: require('../Assets/Images/surprise1.png'),
       onPress: () => {
         console.log('here');
       },
@@ -304,11 +326,10 @@ const HomeScreen = () => {
           width: windowWidth,
           alignSelf: 'center',
           backgroundColor: '#FDFDFD',
-        
         }}
         contentContainerStyle={{
           paddingHorizontal: moderateScale(10, 0.6),
-          // justifyContent:'center', 
+          // justifyContent:'center',
           // alignItems:'center'
         }}>
         <CustomText
@@ -339,6 +360,7 @@ const HomeScreen = () => {
           placeHolder={'What Do You need ?'}
           setData={setSearchData}
           rightIcon
+          setCategoryModal={setCategoryModalVisible}
         />
 
         <View
@@ -370,8 +392,65 @@ const HomeScreen = () => {
             See all
           </CustomText>
         </View>
-        <View style={styles.categoryContainer}>
-          {categories.map((item, index) => {
+        <FlatList
+          data={categoriesData}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{paddingVertical:moderateScale(10,.6)}}
+          renderItem={({item, index}) => {
+            console.log('here is iamge',index)
+            return (
+              <>
+                <TouchableOpacity
+                  style={{alignItems: 'center', width: windowWidth * 0.16, marginHorizontal:moderateScale(3,.3)}}
+                  onPress={() => {
+                    setSelectedCategory(item?.title);
+                    categories[index]?.onPress;
+                    item?.sub_categories.length > 0  && setCategoryModalVisible(true)
+                  }}>
+                  <LinearGradient
+                    style={{
+                      height: moderateScale(52, 0.6),
+                      width: moderateScale(52, 0.6),
+                      borderRadius: moderateScale(10, 0.6),
+                      marginHorizontal: moderateScale(10, 0.6),
+                      padding:moderateScale(5,.6),
+                      // backgroundColor: 'purple',
+                      // alignItems: 'center',
+                      // justifyContent: 'center',
+                    }}
+                    colors={
+                      selectedCategory == item?.title
+                        ? Color.themeBgColor
+                        : ['#F4F4F4', '#F4F4F4']
+                    }>
+                    <CustomImage
+                      source={
+                        selectedCategory == item?.title
+                          ? categories[index]?.image
+                          : categories[index]?.image2
+                      }
+                      style={{width:'100%', height:'100%',}}
+                      // style={{}}
+                      // resizeMode={'cover'}
+                      onPress={() => {
+                        setSelectedCategory(item?.title);
+                        categories[index]?.onPress
+                        item?.sub_categories.length > 0  && setCategoryModalVisible(true)
+                      }}
+                    />
+                  </LinearGradient>
+                  <CustomText
+                    style={{ color: 'black'}}>
+                    {item?.title}
+                  </CustomText>
+                </TouchableOpacity>
+              </>
+            );
+          }}
+        />
+        {/* <View style={styles.categoryContainer}>
+          {categoriesData.map((item, index) => {
             return (
               <>
                 <TouchableOpacity
@@ -385,6 +464,8 @@ const HomeScreen = () => {
                       height: moderateScale(52, 0.6),
                       width: moderateScale(52, 0.6),
                       borderRadius: moderateScale(10, 0.6),
+                      marginHorizontal: moderateScale(10, 0.6),
+                      backgroundColor: 'purple',
                       alignItems: 'center',
                       justifyContent: 'center',
                     }}
@@ -409,13 +490,13 @@ const HomeScreen = () => {
                   </LinearGradient>
                   <CustomText
                     style={{width: windowWidth * 0.14, color: 'black'}}>
-                    {item?.name}
+                    {item?.title}
                   </CustomText>
                 </TouchableOpacity>
               </>
             );
           })}
-        </View>
+        </View> */}
         <View
           style={{
             height: windowHeight * 0.16,
@@ -553,7 +634,11 @@ const HomeScreen = () => {
             }}
           />
         )}
-        <CategoriesModal isVisible={categoryModalVisible} setIsVisible={setCategoryModalVisible}/>
+        <CategoriesModal
+          isVisible={categoryModalVisible}
+          setIsVisible={setCategoryModalVisible}
+          categoryData={categoriesData?.find(item=> item?.title == selectedCategory)}
+        />
       </ScrollView>
     </>
   );
@@ -564,7 +649,8 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   categoryContainer: {
     height: windowHeight * 0.09,
-    width: windowWidth * 0.95,
+    backgroundColor: 'green',
+    // width: windowWidth * 0.95,
     marginTop: moderateScale(20, 0.3),
     flexDirection: 'row',
     justifyContent: 'space-between',
