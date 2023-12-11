@@ -34,7 +34,44 @@ const CheckOutScreen = ({route}) => {
       date: '12-nov-23',
       time: '12:55pm',
       status: 'completed',
-      image: require('../Assets/Images/image3.png'),
+      item: [
+        {
+          image: require('../Assets/Images/image3.png'),
+          qty: 2,
+          price: 40,
+          title: 'ABC',
+        },
+        {
+          image: require('../Assets/Images/image3.png'),
+          qty: 5,
+          price: 20,
+          title: 'ABC',
+        },
+        {
+          image: require('../Assets/Images/Image2.png'),
+          qty: 2,
+          price: 50,
+          title: 'ABC',
+        },
+        {
+          image: require('../Assets/Images/image3.png'),
+          qty: 1,
+          price: 40,
+          title: 'ABC',
+        },
+        {
+          image: require('../Assets/Images/Image2.png'),
+          qty: 2,
+          price: 50,
+          title: 'ABC',
+        },
+        {
+          image: require('../Assets/Images/image3.png'),
+          qty: 1,
+          price: 40,
+          title: 'ABC',
+        },
+      ],
       price: 360,
     },
     {
@@ -42,15 +79,89 @@ const CheckOutScreen = ({route}) => {
       date: '12-nov-23',
       time: '12:55pm',
       status: 'cancelled',
-      image: require('../Assets/Images/Image2.png'),
       price: 360,
+      item: [
+        {
+          image: require('../Assets/Images/image3.png'),
+          qty: 2,
+          price: 40,
+          title: 'ABC',
+        },
+        {
+          image: require('../Assets/Images/image3.png'),
+          qty: 5,
+          price: 20,
+          title: 'ABC',
+        },
+        {
+          image: require('../Assets/Images/Image2.png'),
+          qty: 2,
+          price: 50,
+          title: 'ABC',
+        },
+        {
+          image: require('../Assets/Images/image3.png'),
+          qty: 1,
+          price: 40,
+          title: 'ABC',
+        },
+        {
+          image: require('../Assets/Images/Image2.png'),
+          qty: 2,
+          price: 50,
+          title: 'ABC',
+        },
+        {
+          image: require('../Assets/Images/image3.png'),
+          qty: 1,
+          price: 40,
+          title: 'ABC',
+        },
+      ],
     },
     {
       orderId: 454643,
       date: '12-nov-23',
       time: '12:55pm',
       status: 'completed',
-      image: require('../Assets/Images/Image.png'),
+      item: [
+        {
+          image: require('../Assets/Images/image3.png'),
+          qty: 2,
+          price: 40,
+          title: 'ABC',
+        },
+        {
+          image: require('../Assets/Images/image3.png'),
+          qty: 5,
+          price: 20,
+          title: 'ABC',
+        },
+        {
+          image: require('../Assets/Images/Image2.png'),
+          qty: 2,
+          price: 50,
+          title: 'ABC',
+        },
+        {
+          image: require('../Assets/Images/Image2.png'),
+          qty: 2,
+          price: 50,
+          title: 'ABC',
+        },
+        {
+          image: require('../Assets/Images/image3.png'),
+          qty: 1,
+          price: 40,
+          title: 'ABC',
+        },
+        {
+          image: require('../Assets/Images/image3.png'),
+          qty: 1,
+          price: 40,
+          title: 'ABC',
+        },
+      ],
       price: 360,
     },
   ];
@@ -107,6 +218,17 @@ const CheckOutScreen = ({route}) => {
       {/* <OrderCard /> */}
 
       <FlatList
+        ListEmptyComponent={() => {
+          return (
+            <NoData
+              style={{
+                width: windowWidth * 0.95,
+                height: windowHeight * 0.18,
+                alignItems: 'center',
+              }}
+            />
+          );
+        }}
         showsVerticalScrollIndicator={false}
         data={dummyarray}
         style={{
@@ -119,7 +241,7 @@ const CheckOutScreen = ({route}) => {
           paddingBottom: moderateScale(20, 0.3),
         }}
         renderItem={({item, index}) => {
-          return <OrderCard />;
+          return <OrderCard data={item}/>;
         }}
       />
     </>

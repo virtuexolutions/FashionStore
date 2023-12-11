@@ -1,35 +1,84 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import CustomButton from './CustomButton';
 import CustomText from './CustomText';
 import {Image} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
 import {windowHeight, windowWidth} from '../Utillity/utils';
+import { useNavigation } from '@react-navigation/native';
 
-const OrderCard = () => {
+const OrderCard = ({data}) => {
+  const  navigation =useNavigation()
   return (
     <View style={styles.container}>
       <View style={styles.textRow}>
-        <CustomText style={styles.text2}>OrderId :</CustomText>
-        <CustomText style={styles.text2}>4012565</CustomText>
-        <CustomText style={styles.text2}>30-dec-23 12:55 pm</CustomText>
-        <CustomText style={styles.text2}>status</CustomText>
-      </View>
-      <View style={styles.imageView}>
-        <Image
+        <View
           style={{
-            height: '100%',
-            width: '100%',
-          }}
-          source={require('../Assets/Images/image3.png')}
-        />
+            // backgroundColor: 'red',
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}>
+          <CustomText style={styles.text2}>OrderId : </CustomText>
+          <CustomText style={styles.text2}>4012565</CustomText>
+        </View>
+        <View style={{justifyContent: 'center', flexDirection: 'row'}}>
+          <CustomText style={styles.text2}>30-dec-23 </CustomText>
+          <CustomText style={styles.text2}>12:55 pm</CustomText>
+        </View>
+        <CustomText
+          style={[
+            styles.text2,
+            {color: data?.status == 'completed' ? 'green' : 'red'},
+          ]}>
+          {data?.status}
+        </CustomText>
       </View>
+      <FlatList
+        data={data?.item.slice(0, 5)}
+        horizontal
+        renderItem={({item, index}) => {
+          console.log('🚀 ~ file: OrderCard.js:38 ~ OrderCard ~ index:', index);
+          return (
+            <>
+              {index == 4 && (
+                <View
+                  style={[
+                    styles.imageView,
+                    {
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    },
+                  ]}>
+                  <Text
+                    style={{backgroundColor: Color.lightGray, color: 'black' ,
+                    fontSize:moderateScale(15,.3)
+                    }}>
+                    {data?.item?.length - 4}+
+                  </Text>
+                </View>
+              )}
+              <View style={styles.imageView}>
+                <Image
+                  style={{
+                    height: '100%',
+                    width: '100%',
+                  }}
+                  source={item?.image}
+                />
+              </View>
+            </>
+          );
+        }}
+      />
+
       <View style={styles.buttonRow}>
         <CustomText style={styles.text1}>Rs 360</CustomText>
         <CustomButton
           // disabled={ cardData.find((data ,index) => data?.id == item?.id) && true}
           isBold
-          onPress={() => {}}
+          onPress={() => { 
+            navigation.navigate('OrderDetails')
+          }}
           text={'Order Details'}
           textColor={Color.white}
           width={windowWidth * 0.29}
@@ -51,6 +100,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderBottomWidth: 1,
     borderColor: Color.mediumGray,
+    justifyContent: 'space-between',
   },
   text1: {
     fontSize: moderateScale(14, 0.3),
@@ -63,7 +113,7 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(14, 0.3),
     color: Color.black,
     // width: windowWidth * 0.2
-    padding: moderateScale(9, 0.6),
+    paddingVertical: moderateScale(9, 0.6),
     textAlign: 'left',
     fontSize: moderateScale(12, 0.3),
   },
@@ -75,6 +125,7 @@ const styles = StyleSheet.create({
     height: windowHeight * 0.1,
     width: windowWidth * 0.15,
     overflow: 'hidden',
+    marginHorizontal: moderateScale(6, 0.3),
     borderRadius: moderateScale(5, 0.3),
     marginTop: moderateScale(10, 0.3),
   },
@@ -86,5 +137,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: moderateScale(10, 0.3),
     borderWidth: 1,
     borderColor: Color.mediumGray,
+    marginBottom: moderateScale(15, 0.3),
   },
 });
