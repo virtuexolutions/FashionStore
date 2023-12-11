@@ -468,7 +468,8 @@ const DressesDetail = props => {
         <CustomButton
           disabled={ cardData.find((data ,index) => data?.id == item?.id) && true}
           isBold
-          onPress={() =>{}}
+          onPress={() =>{
+          }}
           text={'ADD TO CART'}
           textColor={Color.white}
           width={windowWidth * 0.8}

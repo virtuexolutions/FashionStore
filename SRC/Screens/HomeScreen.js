@@ -24,6 +24,7 @@ import navigationService from '../navigationService';
 import {Get} from '../Axios/AxiosInterceptorFunction';
 import {useDispatch, useSelector} from 'react-redux';
 import CategoriesModal from '../Components/CategoriesModal';
+import NoData from '../Components/NoData';
 
 const HomeScreen = () => {
   const dispatch =useDispatch()
@@ -521,8 +522,22 @@ const HomeScreen = () => {
           </View>
         ) : (
           <FlatList
+          ListEmptyComponent={() => {
+            return (
+              <NoData
+                style={{
+                  width: windowWidth * 0.95,
+                  height: windowHeight * 0.4,
+                  alignItems: 'center', 
+                  justifyContent:'center',
+                  // backgroundColor:'red'
+                }}
+              />
+            );
+          }}
             showsVerticalScrollIndicator={false}
             numColumns={2}
+            // data={[]}
             data={products}
             contentContainerStyle={{
               alignSelf: 'center',
