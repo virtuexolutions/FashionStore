@@ -101,15 +101,7 @@ const OrderDetails = () => {
         </CustomText>
         {dummyarray?.map((item, index) => (
           <View
-            style={{
-              flexDirection: 'row',
-              backgroundColor: Color.lightGrey,
-              marginHorizontal: moderateScale(10, 0.3),
-              paddingVertical: moderateScale(10, 0.6),
-              paddingHorizontal: moderateScale(10, 0.6),
-              borderRadius: moderateScale(10, 0.3),
-              marginBottom: moderateScale(10, 0.3),
-            }}>
+            style={styles.view}>
             <View
               style={{
                 height: windowHeight * 0.06,
@@ -174,24 +166,12 @@ const OrderDetails = () => {
           </View>
         ))}
         <CustomText
-          style={{
-            fontSize: moderateScale(18, 0.6),
-            color: Color.black,
-            textAlign: 'left',
-            paddingHorizontal: moderateScale(15, 0.3),
-            paddingVertical: moderateScale(10, 0.3),
-          }}
+          style={styles.heading}
           isBold>
           order details
         </CustomText>
         <View
-          style={{
-            backgroundColor: Color.lightGrey,
-            marginHorizontal: moderateScale(10, 0.3),
-            paddingVertical: moderateScale(15, 0.3),
-            borderRadius: moderateScale(10, 0.6),
-            marginBottom: moderateScale(20, 0.3),
-          }}>
+          style={styles.firstRow}>
           <View style={styles.row}>
             <CustomText style={styles.text2}>OrderId</CustomText>
             <CustomText style={styles.text2}>12:55 pm</CustomText>
@@ -251,6 +231,15 @@ const OrderDetails = () => {
 export default OrderDetails;
 
 const styles = ScaledSheet.create({
+  view:{
+    flexDirection: 'row',
+    backgroundColor: Color.lightGrey,
+    marginHorizontal: moderateScale(10, 0.3),
+    paddingVertical: moderateScale(10, 0.6),
+    paddingHorizontal: moderateScale(10, 0.6),
+    borderRadius: moderateScale(10, 0.3),
+    marginBottom: moderateScale(10, 0.3),
+  },
   row: {
     justifyContent: 'space-between',
     flexDirection: 'row',
@@ -264,4 +253,20 @@ const styles = ScaledSheet.create({
     justifyContent: 'space-between',
     backgroundColor: 'red',
   },
+  firstRow:
+    {
+      backgroundColor: Color.lightGrey,
+      marginHorizontal: moderateScale(10, 0.3),
+      paddingVertical: moderateScale(15, 0.3),
+      borderRadius: moderateScale(10, 0.6),
+      marginBottom: moderateScale(20, 0.3),
+    },
+    heading:{
+      fontSize: moderateScale(18, 0.6),
+      color: Color.black,
+      textAlign: 'left',
+      paddingHorizontal: moderateScale(15, 0.3),
+      paddingVertical: moderateScale(10, 0.3),
+    },
+  
 });

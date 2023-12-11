@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   View,
   ActivityIndicator,
+  ToastAndroid,
 } from 'react-native';
 import React, {useState} from 'react';
 import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
@@ -22,6 +23,7 @@ import PaymentModal from '../Components/PaymentModal';
 import {Post} from '../Axios/AxiosInterceptorFunction';
 import {useDispatch, useSelector} from 'react-redux';
 import {AddToCart, EmptyCart} from '../Store/slices/common';
+import { Platform } from 'react-native';
 
 const FormScreen = () => {
   const token = useSelector(state => state.authReducer.token);
@@ -47,7 +49,7 @@ const FormScreen = () => {
   const [phone, setPhone] = useState('');
   const [country, setCountry] = useState('');
   const [address, setAddress] = useState('');
-  const [postcode, setPostCode] = useState();
+  const [postcode, setPostCode] = useState('');
   const [stripeToken, setStripeToken] = useState('');
   const [isChecked, setIsChecked] = useState();
   const [isModal, setIsModal] = useState(false);
@@ -76,23 +78,28 @@ const FormScreen = () => {
     const body = {
       first_name: name,
       last_name: lastName,
+      email: email,
+      phone: phone,
+      country: country,
       address1: address,
       address2: address,
-      phone: phone,
       post_code: postcode,
-      email: email,
       payment_method:
         isChecked == 'Cash on delivery'
           ? 'cod'
           : isChecked == 'pay through stripe'
           ? 'stripe'
           : '',
-      country: country,
       total_quantity: totalQuantity,
       total_amount: totalPrice,
       products: newData,
     };
-    console.log("🚀 ~ file: FormScreen.js:98 ~ PlaceOrder ~ body:", body)
+    for(let key in body){
+      if(body[key] == ''){
+        return Platform.OS == 'android'
+        ? ToastAndroid.show(`${key} requried`,ToastAndroid.SHORT)
+        :alert(`${key}is requried`)
+    }
 
     setIsLoading(true);
     const response = await Post(url, body, apiHeader(token));
@@ -104,7 +111,7 @@ const FormScreen = () => {
       );
       dispatch(EmptyCart());
     }
-  };
+  }};
 
   return (
     <>
@@ -187,6 +194,7 @@ const FormScreen = () => {
           color={'#ABB1C0'}
           placeholderColor={'#ABB1C0'}
           borderRadius={moderateScale(20, 0.6)}
+         keyboardType={'numeric'}
         />
         <TextInputWithTitle
           titleText={'Country'}
@@ -221,6 +229,7 @@ const FormScreen = () => {
           borderRadius={moderateScale(20, 0.6)}
         />
         <TextInputWithTitle
+          keyboardType={'numeric'}
           titleText={'Post code'}
           placeholder={'Post code'}
           setText={setPostCode}
