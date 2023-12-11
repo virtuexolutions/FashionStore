@@ -24,8 +24,10 @@ import {Post} from '../Axios/AxiosInterceptorFunction';
 import {useDispatch, useSelector} from 'react-redux';
 import {AddToCart, EmptyCart} from '../Store/slices/common';
 import { Platform } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const FormScreen = () => {
+  const navigation =useNavigation()
   const token = useSelector(state => state.authReducer.token);
   const cartData = useSelector(state => state.commonReducer.item);
  
@@ -105,7 +107,7 @@ const FormScreen = () => {
     const response = await Post(url, body, apiHeader(token));
     setIsLoading(false);
     if (response != undefined) {
-      return console.log(
+     console.log(
         '🚀 ~ file: FormScreen.js:53 ~ PlaceOrder ~ response:',
         response?.data,
       );
@@ -349,6 +351,7 @@ const FormScreen = () => {
           borderRadius={moderateScale(30, 0.3)}
           onPress={() => {
             PlaceOrder();
+            navigation.navigate('HomeScreen')
           }}
           isGradient
         />

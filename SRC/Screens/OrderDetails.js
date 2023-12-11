@@ -22,53 +22,56 @@ import {useSelector} from 'react-redux';
 import CustomText from '../Components/CustomText';
 import OrderCard from '../Components/OrderCard';
 import {Text} from 'react-native';
+import moment from 'moment';
 
-const OrderDetails = () => {
+const OrderDetails = (props) => {
+  const data = props?.route?.params?.data
+    console.log("🚀 ~ file: OrderDetails.js:28 ~ OrderDetails ~ data:", data?.item_info)
     const cartData =useSelector(state => state.commonReducer.item)
-  const dummyarray = [
-    {
-      id: 1,
-      name: 'thing',
-      image: require('../Assets/Images/image3.png'),
-      price: 16,
-    },
-    {
-      id: 2,
-      name: 'lays',
-      image: require('../Assets/Images/image3.png'),
-      price: 56,
-    },
-    {
-      id: 3,
-      name: 'chips',
-      image: require('../Assets/Images/image3.png'),
-      price: 300,
-    },
-    {
-      id: 4,
-      name: 'chocalate',
-      image: require('../Assets/Images/image3.png'),
-      price: 160,
-    },
-    {
-      id: 5,
-      name: 'milk',
-      image: require('../Assets/Images/image3.png'),
-      price: 150,
-    },
-    {
-      id: 6,
-      name: 'clips',
-      image: require('../Assets/Images/image3.png'),
-      price: 126,
-    },
-    {
-      id: 7,
-      name: 'banana',
-      image: require('../Assets/Images/image3.png'),
-      price: 126,
-    },
-  ];
+  // const dummyarray = [
+  //   {
+  //     id: 1,
+  //     name: 'thing',
+  //     image: require('../Assets/Images/image3.png'),
+  //     price: 16,
+  //   },
+  //   {
+  //     id: 2,
+  //     name: 'lays',
+  //     image: require('../Assets/Images/image3.png'),
+  //     price: 56,
+  //   },
+  //   {
+  //     id: 3,
+  //     name: 'chips',
+  //     image: require('../Assets/Images/image3.png'),
+  //     price: 300,
+  //   },
+  //   {
+  //     id: 4,
+  //     name: 'chocalate',
+  //     image: require('../Assets/Images/image3.png'),
+  //     price: 160,
+  //   },
+  //   {
+  //     id: 5,
+  //     name: 'milk',
+  //     image: require('../Assets/Images/image3.png'),
+  //     price: 150,
+  //   },
+  //   {
+  //     id: 6,
+  //     name: 'clips',
+  //     image: require('../Assets/Images/image3.png'),
+  //     price: 126,
+  //   },
+  //   {
+  //     id: 7,
+  //     name: 'banana',
+  //     image: require('../Assets/Images/image3.png'),
+  //     price: 126,
+  //   },
+  // ];
   return (
     <>
       <Header
@@ -99,7 +102,7 @@ const OrderDetails = () => {
           isBold>
           item
         </CustomText>
-        {dummyarray?.map((item, index) => (
+        {data?.item_info?.map((item, index) => (
           <View
             style={styles.view}>
             <View
@@ -159,7 +162,7 @@ const OrderDetails = () => {
                     //   paddingHorizontal: moderateScale(15, 0.3),
                     paddingVertical: moderateScale(10, 0.3),
                   }}>
-                x2
+                x{item?.quantity}
                 </CustomText>
               </View>
             </View>
@@ -174,15 +177,15 @@ const OrderDetails = () => {
           style={styles.firstRow}>
           <View style={styles.row}>
             <CustomText style={styles.text2}>OrderId</CustomText>
-            <CustomText style={styles.text2}>12:55 pm</CustomText>
+            <CustomText style={styles.text2}>{data?.order_number}</CustomText>
           </View>
           <View style={styles.row}>
             <CustomText style={styles.text2}>order time</CustomText>
-            <CustomText style={styles.text2}>12:55 pm</CustomText>
+            <CustomText style={styles.text2}>{moment(data?.updated_at).format('LT') }</CustomText>
           </View>
           <View style={styles.row}>
             <CustomText style={styles.text2}>payment methode</CustomText>
-            <CustomText style={styles.text2}>12:55 pm</CustomText>
+            <CustomText style={styles.text2}>{data?.payment_method}</CustomText>
           </View>
           <View
             style={[
@@ -201,17 +204,17 @@ const OrderDetails = () => {
                   width: windowWidth * 0.35,
                 },
               ]}>
-              fjhsdjhfkjhdasfkhadshfjkdshfjkhzvafvafas{' '}
+              {data?.address1}
             </CustomText>
           </View>
 
           <View style={styles.row}>
             <CustomText style={styles.text2}>Total</CustomText>
-            <CustomText style={styles.text2}>125</CustomText>
+            <CustomText style={styles.text2}>{data?.total_amount}</CustomText>
           </View>
           <View style={styles.row}>
             <CustomText style={styles.text2}>subTotal</CustomText>
-            <CustomText style={styles.text2}>12</CustomText>
+            <CustomText style={styles.text2}>{data?.sub_total}</CustomText>
           </View>
           <View style={styles.row}>
             <CustomText style={styles.text2}>discount</CustomText>
@@ -219,7 +222,7 @@ const OrderDetails = () => {
           </View>
           <View style={styles.row}>
             <CustomText style={styles.text2}>Total</CustomText>
-            <CustomText style={styles.text2}>500</CustomText>
+            <CustomText style={styles.text2}>{data?.total_amount}</CustomText>
           </View>
         </View>
         {/* <Text>Thello</Text> */}

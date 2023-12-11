@@ -6,6 +6,7 @@ import {Image} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
 import {windowHeight, windowWidth} from '../Utillity/utils';
 import { useNavigation } from '@react-navigation/native';
+import moment from 'moment';
 
 const OrderCard = ({data}) => {
   const  navigation =useNavigation()
@@ -19,11 +20,11 @@ const OrderCard = ({data}) => {
             justifyContent: 'center',
           }}>
           <CustomText style={styles.text2}>OrderId : </CustomText>
-          <CustomText style={styles.text2}>4012565</CustomText>
+          <CustomText style={styles.text2}>{data?.order_number}</CustomText>
         </View>
         <View style={{justifyContent: 'center', flexDirection: 'row'}}>
-          <CustomText style={styles.text2}>30-dec-23 </CustomText>
-          <CustomText style={styles.text2}>12:55 pm</CustomText>
+          <CustomText style={styles.text2}>{moment(data?.created_at).format('lll')} </CustomText>
+          {/* <CustomText style={styles.text2}>12:55 pm</CustomText> */}
         </View>
         <CustomText
           style={[
@@ -34,10 +35,10 @@ const OrderCard = ({data}) => {
         </CustomText>
       </View>
       <FlatList
-        data={data?.item.slice(0, 5)}
+        data={data?.item?.slice(0, 5)}
         horizontal
         renderItem={({item, index}) => {
-          console.log('🚀 ~ file: OrderCard.js:38 ~ OrderCard ~ index:', index);
+          // console.log('🚀 ~ file: OrderCard.js:38 ~ OrderCard ~ index:', index);
           return (
             <>
               {index == 4 && (
@@ -63,7 +64,7 @@ const OrderCard = ({data}) => {
                     height: '100%',
                     width: '100%',
                   }}
-                  source={item?.image}
+                  source={{uri : item?.item_info?.image}}
                 />
               </View>
             </>
@@ -77,7 +78,7 @@ const OrderCard = ({data}) => {
           // disabled={ cardData.find((data ,index) => data?.id == item?.id) && true}
           isBold
           onPress={() => { 
-            navigation.navigate('OrderDetails')
+            navigation.navigate('OrderDetails' , {data :data})
           }}
           text={'Order Details'}
           textColor={Color.white}
