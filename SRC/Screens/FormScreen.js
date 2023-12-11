@@ -1,4 +1,10 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ActivityIndicator,
+} from 'react-native';
 import React, {useState} from 'react';
 import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import CustomText from '../Components/CustomText';
@@ -15,26 +21,28 @@ import Color from '../Assets/Utilities/Color';
 import PaymentModal from '../Components/PaymentModal';
 import {Post} from '../Axios/AxiosInterceptorFunction';
 import {useDispatch, useSelector} from 'react-redux';
-import { AddToCart, EmptyCart } from '../Store/slices/common';
+import {AddToCart, EmptyCart} from '../Store/slices/common';
 
 const FormScreen = () => {
   const token = useSelector(state => state.authReducer.token);
   const cartData = useSelector(state => state.commonReducer.item);
-
-  const [totalQuantity, setTotalQuantity] = useState(0)
-  const [totalPrice, setTotalPrice] = useState(0)
+  console.log(
+    '🚀 ~ file: FormScreen.js:29 ~ FormScreen ~ cartData:',
+    cartData[1]?.varation,
+  );
+  const [totalQuantity, setTotalQuantity] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
   const calcTotal = () => {
     let total_quantity = 0;
-    let total_price = 0 ;
+    let total_price = 0;
     cartData?.map(item => {
-       total_quantity += item?.quantity;
-       total_price += item?.wholsale_price *item?.quantity
+      total_quantity += item?.quantity;
+      total_price += item?.wholsale_price * item?.quantity;
     });
-    setTotalQuantity(total_quantity)
-    setTotalPrice(total_price)
-    console.log('Total quantity=====',total_quantity, total_price)
+    setTotalQuantity(total_quantity);
+    setTotalPrice(total_price);
+    console.log('Total quantity=====', total_quantity, total_price);
   };
-  
 
   const [name, setName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -46,14 +54,27 @@ const FormScreen = () => {
   const [stripeToken, setStripeToken] = useState('');
   const [isChecked, setIsChecked] = useState();
   const [isModal, setIsModal] = useState(false);
+  const [newData, setnewData] = useState([]);
+  console.log('🚀 ~ file: FormScreen.js:56 ~ FormScreen ~ newData:', newData);
 
   console.log('🚀 ~ file: FormScreen.js:28 ~ FormScreen ~ isModal:', isModal);
   const [isLoading, setIsLoading] = useState(false);
-  const dispatch= useDispatch()
+  const dispatch = useDispatch();
 
   const PlaceOrder = async () => {
-    
-    calcTotal()
+    calcTotal();
+    cartData?.map(item => {
+      return setnewData(prev => [
+        ...prev,
+        {
+          id: item?.id,
+          size_id: item?.size_id,
+          price: item?.wholsale_price,
+          quantity: item?.quantity,
+          size_id: item?.size_id,
+        },
+      ]);
+    });
     const url = 'auth/order';
     const body = {
       first_name: name,
@@ -63,21 +84,27 @@ const FormScreen = () => {
       phone: phone,
       post_code: postcode,
       email: email,
-      payment_method: isChecked,
+      payment_method:
+        isChecked == 'Cash on delivery'
+          ? 'cod'
+          : isChecked == 'pay through stripe'
+          ? 'stripe'
+          : '',
       country: country,
       total_quantity: totalQuantity,
       total_amount: totalPrice,
-      products:cartData
+      products: newData,
     };
+
     setIsLoading(true);
     const response = await Post(url, body, apiHeader(token));
     setIsLoading(false);
     if (response != undefined) {
       return console.log(
         '🚀 ~ file: FormScreen.js:53 ~ PlaceOrder ~ response:',
-        response,
+        response?.data,
       );
-      dispatch(EmptyCart())
+      dispatch(EmptyCart());
     }
   };
 
@@ -99,7 +126,6 @@ const FormScreen = () => {
           backgroundColor: '#FEFDFC',
         }}>
         <CustomText />
-
         <TextInputWithTitle
           titleText={'Your name'}
           placeholder={'Your name'}
@@ -212,23 +238,6 @@ const FormScreen = () => {
           placeholderColor={'#ABB1C0'}
           borderRadius={moderateScale(20, 0.6)}
         />
-        <TextInputWithTitle
-          titleText={'Token'}
-          placeholder={'Token'}
-          setText={setStripeToken}
-          value={stripeToken}
-          viewHeight={0.06}
-          viewWidth={0.8}
-          inputWidth={0.7}
-          border={1}
-          borderColor={'#0F02022E'}
-          backgroundColor={'white'}
-          marginBottom={moderateScale(20, 0.3)}
-          color={'#ABB1C0'}
-          placeholderColor={'#ABB1C0'}
-          borderRadius={moderateScale(20, 0.6)}
-        />
-
         <View
           style={{
             flexDirection: 'row',
@@ -299,7 +308,24 @@ const FormScreen = () => {
             </CustomText>
           </View>
         </View>
-
+        {/* {isChecked == 'pay through stripe' && (
+          <TextInputWithTitle
+            titleText={'Token'}
+            placeholder={'Token'}
+            setText={setStripeToken}
+            value={stripeToken}
+            viewHeight={0.06}
+            viewWidth={0.8}
+            inputWidth={0.7}
+            border={1}
+            borderColor={'#0F02022E'}
+            backgroundColor={'white'}
+            marginBottom={moderateScale(20, 0.3)}
+            color={'#ABB1C0'}
+            placeholderColor={'#ABB1C0'}
+            borderRadius={moderateScale(20, 0.6)}
+          />
+        )} */}
         <CustomButton
           text={
             isLoading ? (
@@ -315,11 +341,15 @@ const FormScreen = () => {
           bgColor={Color.themeBgColor}
           borderRadius={moderateScale(30, 0.3)}
           onPress={() => {
-            // register();
+            PlaceOrder();
           }}
           isGradient
         />
-        <PaymentModal isModal={isModal} setIsModal={setIsModal} />
+        <PaymentModal
+          isModal={isModal}
+          setIsModal={setIsModal}
+          setToken={setStripeToken}
+        />
       </View>
     </>
   );

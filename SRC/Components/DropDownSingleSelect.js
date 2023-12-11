@@ -28,6 +28,7 @@ const DropDownSingleSelect = ({
   myJobs,
   Colors,
   dropdownStyle,
+  fontSize
 }) => {
   const [data , setData] = useState([])
 
@@ -97,6 +98,7 @@ const DropDownSingleSelect = ({
           }),
           ...(backgroundColor && {
             backgroundColor: backgroundColor,
+
           }),
           ...(!iconName && {
             width: width,
@@ -105,9 +107,10 @@ const DropDownSingleSelect = ({
         buttonTextStyle={{
           ...styles.dropDownBtnText,
           ...(item !== '' && {color: Colors ? Colors : Color.themeBlack}),
+          ...(fontSize && {fontSize: fontSize }),
           ...(backgroundColor && {
             color: `${Color.white}`,
-            fontSize: moderateScale(18, 0.3),
+            fontSize: moderateScale(14, 0.3),
           }),
         }}
         dropdownStyle={{
@@ -122,7 +125,7 @@ const DropDownSingleSelect = ({
         }}
         rowStyle={{...styles.dropDownRow}}
         rowTextStyle={{
-          ...styles.dropDownRowText,
+          ...styles.dropDownRowText,fontSize:fontSize ? fontSize : moderateScale(14,.6)
         }}
         selectedRowStyle={{
           backgroundColor: Color.splashBGMiddle,
@@ -161,13 +164,15 @@ const DropDownSingleSelect = ({
 const styles = ScaledSheet.create({
   dropDownBtn: {
     backgroundColor: Color.white,
-    height: height * 0.07,
+    height: height * 0.05,
     borderRadius: moderateScale(25, 0.3),
+    borderColor:Color.veryLightGray,
+    borderWidth:1,
   },
   main: {
     position: 'relative',
     backgroundColor: Color.themeInputText,
-    height: height * 0.06,
+    height: height * 0.05,
     borderBottomWidth: moderateScale(1, 0.3),
     borderColor: 'lightgrey',
     marginTop: moderateScale(6, 0.3),
@@ -180,7 +185,7 @@ const styles = ScaledSheet.create({
     // backgroundColor: "red",
     width: width * 0.75,
     // marginLeft: 38,
-    fontSize: moderateScale(15, 0.3),
+    fontSize: moderateScale(14, 0.3),
     color: Color.themeLightGray,
     textAlign: 'left',
     textTransform: 'capitalize',
@@ -190,7 +195,7 @@ const styles = ScaledSheet.create({
   },
   dropDownRowText: {
     width: width * 0.75,
-    fontSize: moderateScale(16, 0.3),
+    fontSize: moderateScale(14, 0.3),
     color: 'black',
     textAlign: 'left',
     textTransform: 'capitalize',

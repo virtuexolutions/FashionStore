@@ -53,10 +53,10 @@ const HomeScreen = () => {
     const url = 'auth/products';
     setisLoading(true);
     const response = await Get(url, token);
-    console.log(
-      '🚀 ~ file: HomeScreen.js:32 ~ getData ~ response:',
-      response?.data?.data?.data,
-    );
+    // console.log(
+    //   '🚀 ~ file: HomeScreen.js:32 ~ getData ~ response:',
+    //   response?.data?.data?.data,
+    // );
     setisLoading(false);
     if (response != undefined) {
       setProducts(response?.data?.data?.data);

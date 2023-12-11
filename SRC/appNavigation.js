@@ -29,6 +29,7 @@ import ChangePassword from './Screens/ChangePassword';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import FormScreen from './Screens/FormScreen';
 import OrderScreen from './Screens/OrderScreen';
+import Profile from './Screens/Profile';
 
 
 const AppNavigator = () => {
@@ -102,6 +103,7 @@ export const MyDrawer = () => {
         headerShown: false,
       }}>
       <DrawerNavigation.Screen name="HomeScreen" component={HomeScreen} />    
+      <DrawerNavigation.Screen name="Profile" component={Profile} />    
       <DrawerNavigation.Screen name="ChangePassword" component={ChangePassword} />
     </DrawerNavigation.Navigator>
   );

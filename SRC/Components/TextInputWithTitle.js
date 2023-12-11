@@ -26,7 +26,10 @@ const TextInputWithTitle = props => {
     {props?.title &&
 
       <CustomText style={{
-        color : Color.white,
+        color : Color.black,
+        // backgroundColor:'red',
+        textAlign:'left',
+        marginBottom:moderateScale(5,.3),
         fontSize : moderateScale(12,0.3),
         marginBottom : moderateScale(5,0.3),
         width : windowWidth * props.viewWidth,
@@ -227,7 +230,7 @@ const styles = ScaledSheet.create({
     // textTransform: 'capitalize',
   },
   inputBox: {
-    paddingLeft: moderateScale(8, 0.6),
+    // paddingLeft: moderateScale(8, 0.6),
     borderRadius: 8,
     fontSize: moderateScale(12, 0.3),
     // textTransform: 'capitalize',

@@ -39,10 +39,7 @@ const CommonSlice = createSlice({
       state.selectedRole = action.payload;
     },
     AddToCart(state, action) {
-      console.log(
-        '🚀 ~ file: common.js:42 ~ AddToCart ~ action:',
-        action.payload,
-      );
+     
       state.item.push({...action.payload, quantity: 1});
     },
     EmptyCart(state, action) {
@@ -52,7 +49,6 @@ const CommonSlice = createSlice({
       state.item = state.item.filter(
         (item, index) => item?.id != action.payload?.id,
       );
-      // console.log("🚀 ~ file: common.js:47 ~ RemoveFromCart ~ action.payload:", action.payload)
     },
     increamentQuantity(state, action) {
       const increment = state.item.findIndex(
@@ -74,6 +70,13 @@ const CommonSlice = createSlice({
         }
       }
     },
+    selectedProductSize(state, action){
+      let item = state.item.find(item=> item?.id == action.payload.id)
+      if(item){
+        console.log('Item===============>>>>', action.payload.item)
+        item.size_id = action.payload.item
+      }
+    }
   },
 });
 
@@ -92,6 +95,7 @@ export const {
   setColor,
   setSize,
   setCotton,
+  selectedProductSize,
   setLiked,
   EmptyCart,
 } = CommonSlice.actions;

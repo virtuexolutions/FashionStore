@@ -18,27 +18,31 @@ import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import CustomButton from '../Components/CustomButton';
 
-
 import CustomStatusBar from '../Components/CustomStatusBar';
 import Header from '../Components/Header';
 import {useIsFocused} from '@react-navigation/native';
 import Color from '../Assets/Utilities/Color';
-import { useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import DropDownSingleSelect from '../Components/DropDownSingleSelect';
+import {AddToCart, decrementQuantity, increamentQuantity} from '../Store/slices/common';
 
 const DressesDetail = props => {
   const item = props.route.params.item;
-  // console.log('🚀 ~ file: DressesDetail.js:28 ~ DressesDetail ~ item:', item);
+  const cartData = useSelector(state => state.commonReducer.item);
+  console.log("🚀 ~ file: DressesDetail.js:32 ~ DressesDetail ~ cartData:", cartData)
+  const inCart = cartData?.find(data=> data?.id == item?.id)
+  const dispatch = useDispatch();
   const [Selectedcolor, SetSelectedColor] = useState('');
-  const [Selectedsize, setSelectedsize] = useState('');
-  const cardData =useSelector(state => state.commonReducer.item)
-
+  const [selectedSize, setSelectedSize] = useState(inCart?.size_id ? inCart?.size_id?.size: '');
+  const [selectedItem, setSelectedItem] = useState(inCart?.size_id ? inCart?.size_id : {});
+  const cardData = useSelector(state => state.commonReducer.item);
+  const [sizeArray, setSizeArray] = useState(
+    item?.varation?.map(item => item?.size),
+  );
   const [like, setLike] = useState(item?.like);
-
   const [index, setIndex] = useState(1);
   const [quantity, setQuantity] = useState(1);
   const [cotton, setcotton] = useState(1);
-
- 
   const images = [
     require('../Assets/Images/image3.png'),
     require('../Assets/Images/Mask2.png'),
@@ -60,10 +64,14 @@ const DressesDetail = props => {
     sale: item?.sale,
     size: item?.size,
     subTitle: item?.subTitle,
-    selectedSize: Selectedsize,
+    selectedSize: selectedSize,
     selectedColor: Selectedcolor,
     totalQty: item?.totalQty,
   };
+
+  useEffect(() => {
+    setSelectedItem(item?.varation?.find(item => item?.size == selectedSize));
+  }, [selectedSize]);
 
   return (
     <>
@@ -77,7 +85,12 @@ const DressesDetail = props => {
         rightName={'shopping-bag'}
         rightType={Feather}
       />
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          justifyContent: 'center',
+          paddingBottom: moderateScale(60, 0.6),
+        }}>
         <View style={styles.banner}>
           <View style={styles.container}>
             {index > 0 && images.length > 1 && (
@@ -183,13 +196,13 @@ const DressesDetail = props => {
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
-              padding: moderateScale(10, 0.6),
+              width: windowWidth * 0.95,
               alignItems: 'center',
-              // backgroundColor:'purple',
+              paddingHorizontal: moderateScale(10, 0.6),
+              paddingVertical: moderateScale(10, 0.6),
             }}>
             <CustomText
               isBold
-              // numberOfLines={1}
               style={{
                 color: '#252E2B',
                 fontSize: moderateScale(18, 0.6),
@@ -214,10 +227,8 @@ const DressesDetail = props => {
 
             <TouchableOpacity
               activeOpacity={0.6}
-              style={{paddingRight: 10}}
               onPress={() => {
                 setLike(!like);
-               
               }}>
               {like ? (
                 <Icon
@@ -241,25 +252,30 @@ const DressesDetail = props => {
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
-              padding: moderateScale(5, 0.6),
+              paddingHorizontal: moderateScale(10, 0.6),
               alignItems: 'center',
+              width: windowWidth * 0.95,
             }}>
             <CustomText
               isBold
               style={{
+                textAlign: 'left',
                 color: Color.themeColor,
                 fontSize: 24,
                 width: windowWidth * 0.24,
               }}>
-              ${finalItem?.wholsale_price}.00
+              $
+              {selectedItem && Object.keys(selectedItem).length > 0
+                ? selectedItem?.price
+                : item?.wholsale_price}
             </CustomText>
 
             <View style={styles.conterContainer}>
               <TouchableOpacity
                 onPress={() => {
                   if (quantity < item?.stock) {
+                    dispatch(increamentQuantity(item?.id))
                     setQuantity(quantity + 1);
-                   
                   } else {
                     Platform.OS == 'android'
                       ? ToastAndroid.show(
@@ -293,8 +309,8 @@ const DressesDetail = props => {
                 onPress={() => {
                   if (quantity > 1) {
                     setQuantity(quantity - 1);
+                    dispatch(decrementQuantity(item?.id))
                   }
-            
                 }}
                 style={styles.icon}>
                 <CustomText
@@ -309,23 +325,27 @@ const DressesDetail = props => {
             </View>
           </View>
 
-          <CustomText
+          {/* <CustomText
             isBold
             style={{
               color: '#201E1D',
               fontSize: moderateScale(14, 0.6),
               width: windowWidth * 0.17,
+              backgroundColor:'red',
+              width:windowWidth*0.95,
+              textAlign:'left',
+              paddingHorizontal:moderateScale(10,.6),
+              paddingVertical:moderateScale(5,.6),
             }}>
             Color
-          </CustomText>
+          </CustomText> */}
 
-          <View style={styles.ColorLine}>
+          {/* <View style={styles.ColorLine}>
             {item?.colors?.map(color => {
               return (
                 <TouchableOpacity
                   onPress={() => {
                     SetSelectedColor(color);
-            
                   }}
                   style={[styles.colorContainer, {backgroundColor: color}]}>
                   {Selectedcolor == color && (
@@ -339,20 +359,63 @@ const DressesDetail = props => {
                 </TouchableOpacity>
               );
             })}
-          </View>
+          </View> */}
 
           <CustomText
             isBold
             style={{
-              fontSize: moderateScale(14, 0.6),
               color: '#201E1D',
+              fontSize: moderateScale(14, 0.6),
               width: windowWidth * 0.17,
+              // backgroundColor:'red',
+              width: windowWidth * 0.95,
+              textAlign: 'left',
+              paddingHorizontal: moderateScale(10, 0.6),
+              paddingTop: moderateScale(10, 0.6),
             }}>
             Size
           </CustomText>
 
+          <DropDownSingleSelect
+            array={sizeArray}
+            item={selectedSize}
+            setItem={setSelectedSize}
+            width={windowWidth * 0.9}
+            dropDownHeight={windowHeight * 0.06}
+            dropdownStyle={{
+              width: windowWidth * 0.9,
+              borderBottomWidth: 0,
+            }}
+          />
+          <CustomText
+            isBold
+            style={{
+              color: '#201E1D',
+              fontSize: moderateScale(14, 0.6),
+              width: windowWidth * 0.17,
+              // backgroundColor:'red',
+              width: windowWidth * 0.95,
+              textAlign: 'left',
+              paddingHorizontal: moderateScale(10, 0.6),
+              paddingTop: moderateScale(10, 0.6),
+            }}>
+            Description
+          </CustomText>
+          <CustomText
+            style={{
+              color: '#201E1D',
+              fontSize: moderateScale(13, 0.6),
+              width: windowWidth * 0.95,
+              textAlign: 'left',
+              paddingHorizontal: moderateScale(10, 0.6),
+              paddingVertical: moderateScale(10, 0.6),
+            }}>
+            {item?.description}
+          </CustomText>
+
+          {/* 
           <View style={styles.ColorLine1}>
-            {item?.sizes?.map(size => {
+            {item?.varation?.map(size => {
               return (
                 <TouchableOpacity
                   onPress={() => {
@@ -362,12 +425,12 @@ const DressesDetail = props => {
                     styles.size,
                     {
                       backgroundColor:
-                        Selectedsize == size ? Color.themeColor : '#F4F5F6',
+                        selectedSize == size ? Color.themeColor : '#F4F5F6',
                     },
                   ]}>
                   <CustomText
                     style={{
-                      color: Selectedsize == size ? 'white' : '#8e9194',
+                      color: selectedSize == size ? 'white' : '#8e9194',
                       fontSize: moderateScale(14, 0.6),
                       textTransform: 'uppercase',
                     }}>
@@ -376,17 +439,17 @@ const DressesDetail = props => {
                 </TouchableOpacity>
               );
             })}
-          </View>
+          </View> */}
 
-          <CustomText
+          {/* <CustomText
             style={{
               fontSize: moderateScale(12, 0.6),
               color: '#8e9194',
               width: windowWidth * 0.28,
             }}>
             Composition
-          </CustomText>
-
+          </CustomText> */}
+          {/* 
           <View
             style={{
               flexDirection: 'row',
@@ -460,15 +523,19 @@ const DressesDetail = props => {
                 </CustomText>
               </TouchableOpacity>
             </View>
-          </View>
+          </View> */}
         </View>
       </ScrollView>
 
       <View style={styles.bottomContainer}>
         <CustomButton
-          disabled={ cardData.find((data ,index) => data?.id == item?.id) && true}
+          disabled={
+            cardData.find((data, index) => data?.id == item?.id) && true
+          }
           isBold
-          onPress={() =>{}}
+          onPress={() => {
+            dispatch(AddToCart({...item,quantity:quantity , size_id:selectedItem}));
+          }}
           text={'ADD TO CART'}
           textColor={Color.white}
           width={windowWidth * 0.8}
@@ -524,10 +591,11 @@ const styles = StyleSheet.create({
     backgroundColor: Color.themeColor,
     alignItems: 'center',
     justifyContent: 'center',
+    marginHorizontal: moderateScale(5, 0.3),
   },
   banner: {
     width: windowWidth * 0.95,
-    height: windowHeight * 0.77,
+    // height: windowHeight * 0.77,
     backgroundColor: '#ffffff',
     alignSelf: 'center',
     overflow: 'hidden',
@@ -535,23 +603,19 @@ const styles = StyleSheet.create({
     marginTop: moderateScale(10, 0.3),
     shadowColor: '#0000000A',
     shadowOffset: {width: 0, height: 2},
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   conterContainer: {
-    width: windowWidth * 0.27,
+    paddingVertical: moderateScale(5, 0.6),
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    padding: moderateScale(10, 0.6),
-    // backgroundColor:'black'
   },
 
   ColorLine: {
     flexDirection: 'row',
-    // justifyContent: 'space-evenly',
-    // alignItems: 'center',
-    // flexWrap:'no-wrap',
-    // width: windowWidth * 0.8,
     marginTop: moderateScale(15, 0.3),
     marginBottom: moderateScale(15, 0.3),
   },

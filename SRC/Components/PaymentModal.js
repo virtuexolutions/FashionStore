@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import Modal from 'react-native-modal';
-import {CardField} from '@stripe/stripe-react-native';
+import {CardField, createToken} from '@stripe/stripe-react-native';
 import {moderateScale} from 'react-native-size-matters';
 import {windowHeight, windowWidth} from '../Utillity/utils';
 import Color from '../Assets/Utilities/Color';
@@ -9,7 +9,20 @@ import CustomText from './CustomText';
 import CustomButton from './CustomButton';
 import CustomImage from './CustomImage';
 
-const PaymentModal = ({isModal, setIsModal}) => {
+const PaymentModal = ({isModal, setIsModal, setToken}) => {
+  const stripePaymentFunction = ()=> {
+    createToken({
+      type: 'Card',
+    })
+      .then(token => {
+        console.log('token= ', token);
+        setToken(token?.token?.id)
+        setIsModal(false)
+      })
+      .catch(error => {
+        console.log('error= ', error);
+      });
+  }
   return (
     <Modal
       isVisible={isModal}
@@ -48,13 +61,13 @@ const PaymentModal = ({isModal, setIsModal}) => {
             width: windowWidth * 0.27,
             alignSelf: 'center',
           }}>
-          {/* <CustomImage
+          <CustomImage
             style={{
               height: '100%',
               width: '100%',
             }}
             source={require('../Assets/Images/Creditcard.png')}
-          /> */}
+          />
         </View>
 
         <View
@@ -120,14 +133,13 @@ const PaymentModal = ({isModal, setIsModal}) => {
           />
           <CustomButton
             isBold
-            text={'payment'}
+            text={'Confirm'}
             textColor={Color.white}
-            // bg={Color.mediumGray}
             width={windowWidth * 0.22}
             height={windowHeight * 0.05}
-            // marginTop={moderateScale(10,      0.3)}
             onPress={() => {
-              setIsModal(false)
+              stripePaymentFunction()
+              // setIsModal(false)
             }}
             bgColor={Color.themeColor}
             // isGradient

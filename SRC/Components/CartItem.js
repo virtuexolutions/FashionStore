@@ -1,5 +1,5 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {windowHeight, windowWidth} from '../Utillity/utils';
 import CustomText from './CustomText';
 import {moderateScale} from 'react-native-size-matters';
@@ -10,22 +10,44 @@ import {Icon} from 'native-base';
 import {useDispatch, useSelector} from 'react-redux';
 import numeral from 'numeral';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {RemoveFromCart, decrementQuantity, increamentQuantity} from '../Store/slices/common';
+import {
+  RemoveFromCart,
+  decrementQuantity,
+  increamentQuantity,
+  selectedProductSize,
+} from '../Store/slices/common';
+import DropDownSingleSelect from './DropDownSingleSelect';
 
 const CartItem = ({item, fromCheckout}) => {
-  //  console.log("🚀 ~ file: CartItem.js:15 ~ CartItem ~ item:", item)
-   const cardData =useSelector(state =>state.commonReducer.item)
+
+  const cardData = useSelector(state => state.commonReducer.item);
+  console.log("🚀 ~ file: CartItem.js:24 ~ CartItem ~ cardData:", cardData)
   const dispatch = useDispatch();
+  const [selectedSize, setSelectedSize] = useState('');
+  console.log(
+    '🚀 ~ file: CartItem.js:26 ~ CartItem ~ selectedSize:',
+    selectedSize,
+  );
+  const [sizeArray, setSizeArray] = useState(
+    item?.varation?.map(item => item?.size),
+  );
+
+  useEffect(() => {
+    if (selectedSize != '') {
+      dispatch(
+        selectedProductSize({
+          id: item?.id,
+          item: item?.varation?.find(data => data?.size == selectedSize),
+        }),
+      );
+    }
+  }, [selectedSize]);
 
   return (
     <View style={styles.cardContainer}>
-      {/* <CustomText isBold style={styles.name}>
-        Sleeve Hoodie
-      </CustomText> */}
       <View
         style={{
           flexDirection: 'row',
-          // backgroundColor:'pink'
         }}>
         <View style={styles.otherContainer}>
           <Icon
@@ -39,7 +61,6 @@ const CartItem = ({item, fromCheckout}) => {
           />
           <CustomImage
             source={require('../Assets/Images/Mask2.png')}
-            // source={{uri :item?.img}}
             style={{
               width: windowWidth * 0.3,
               height: windowHeight * 0.15,
@@ -48,21 +69,16 @@ const CartItem = ({item, fromCheckout}) => {
           />
         </View>
 
-
         <TouchableOpacity
-        onPress={() => {
-          console.log('=========>itny pyray hoooo')
-          dispatch(RemoveFromCart(item))
-        }
-        }
+          onPress={() => {
+            dispatch(RemoveFromCart(item));
+          }}
           style={{
-            // backgroundColor:'pink',
             position: 'absolute',
             right: 5,
-            zIndex:1,
+            zIndex: 1,
           }}>
           <Icon
-          
             style={{
               color: Color.red,
             }}
@@ -73,97 +89,46 @@ const CartItem = ({item, fromCheckout}) => {
           />
         </TouchableOpacity>
         <View style={styles.other1}>
-          <CustomText style={styles.text1}>{item?.title}</CustomText>
+          <CustomText numberOfLines={2} style={styles.text1}>
+            {item?.title}
+          </CustomText>
           <View
             style={{
               flexDirection: 'row',
               flexWrap: 'wrap',
               width: windowWidth * 0.45,
-              marginTop: moderateScale(5, 0.3),
             }}>
-            {item?.selectedSize != '' ? (
-              <CustomText>Selected Size : {item?.size}</CustomText>
+            {item?.size_id ? (
+              <CustomText style={{textAlign:'left', color:'black', fontSize:moderateScale(12,.6)}}>{item?.size_id?.size}</CustomText>
             ) : (
-              // <></>
-              item?.size?.map((item1, index) => {
-                return (
-                  <TouchableOpacity
-                    activeOpacity={0.9}
-                    onPress={() => {}}
-                    style={styles.sizeBox}>
-                    <CustomText style={{color: Color.black}}>
-                      {item1}
-                    </CustomText>
-                  </TouchableOpacity>
-                );
-              })
+              <DropDownSingleSelect
+                array={sizeArray}
+                item={selectedSize}
+                setItem={setSelectedSize}
+                width={windowWidth * 0.5}
+                dropDownHeight={windowHeight * 0.06}
+                dropdownStyle={{
+                  fontSize: moderateScale(10, 0.6),
+                  width: windowWidth * 0.9,
+                  borderBottomWidth: 0,
+                }}
+                fontSize={moderateScale(10, 0.6)}
+              />
             )}
           </View>
-          {item?.selectedColor ? (
-            <CustomText style={{color: Color.black, textAlign: 'left'}}>
-              Selected Color:{' '}
-              {
-                <View
-                  style={[
-                    styles.colorBox,
-                    {backgroundColor: item?.selectedColor.toLowerCase()},
-                  ]}></View>
-              }
-            </CustomText>
-          ) : (
-            <View
-              style={{
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                width: windowWidth * 0.45,
-                marginTop: moderateScale(5, 0.3),
-              }}>
-              {item?.colors?.map((item1, index) => {
-                return (
-                  <TouchableOpacity
-                    activeOpacity={0.9}
-                    onPress={() => {}}
-                    style={[
-                      styles.colorBox,
-                      {
-                        backgroundColor: item1.toLowerCase(),
-                        borderWidth: 2,
-                        borderColor: item1?.toLowerCase(),
-                      },
-                      item?.selectedColor &&
-                        item?.selectedColor.toLowerCase() ==
-                          item1.toLowerCase() && {
-                          borderColor: item?.selectedColor?.toLowerCase(),
-                        },
-                    ]}></TouchableOpacity>
-                );
-              })}
-            </View>
-          )}
+
           <View
             style={[
               styles.other1,
               {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                marginTop: moderateScale(10, 0.3),
                 alignItems: 'center',
               },
             ]}>
             <CustomText style={styles.amount}>
               {numeral(item?.wholsale_price * item?.quantity).format('$0,0.00')}
             </CustomText>
-            {/* {
-              fromCheckout ? 
-              <CustomText
-              isBold
-              style={{
-                marginHorizontal: moderateScale(5, 0.3),
-                fontSize: moderateScale(12, 0.3),
-              }}>
-              Quantity : {item?.qty}
-            </CustomText>
-              : */}
 
             <View
               style={{
@@ -198,7 +163,6 @@ const CartItem = ({item, fromCheckout}) => {
                 }}
               />
             </View>
-            {/* } */}
           </View>
         </View>
       </View>
