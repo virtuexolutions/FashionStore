@@ -25,6 +25,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AddToCart, EmptyCart} from '../Store/slices/common';
 import { Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import navigationService from '../navigationService';
 
 const FormScreen = () => {
   const navigation =useNavigation()
@@ -37,8 +38,9 @@ const FormScreen = () => {
     let total_quantity = 0;
     let total_price = 0;
     cartData?.map(item => {
+      console.log('Item=============>>>>', item?.size_id?.price)
       total_quantity += item?.quantity;
-      total_price += item?.wholsale_price * item?.quantity;
+      total_price += item?.size_id?.price * item?.quantity;
     });
     setTotalQuantity(total_quantity);
     setTotalPrice(total_price);
@@ -69,7 +71,7 @@ const FormScreen = () => {
         ...prev,
         {
           id: item?.id,
-          price: item?.wholsale_price,
+          price: item?.size_id?.price,
           quantity: item?.quantity,
           size_id: item?.size_id?.id,
         },
@@ -107,11 +109,13 @@ const FormScreen = () => {
     const response = await Post(url, body, apiHeader(token));
     setIsLoading(false);
     if (response != undefined) {
-     console.log(
-        '🚀 ~ file: FormScreen.js:53 ~ PlaceOrder ~ response:',
-        response?.data,
-      );
+     setnewData([])
+      // return console.log(
+      //   '🚀 ~ file: FormScreen.js:53 ~ PlaceOrder ~ response:',
+      //   response?.data,
+      // );
       dispatch(EmptyCart());
+      navigationService.navigate('HomeScreen')
     }
   }};
 
@@ -351,7 +355,7 @@ const FormScreen = () => {
           borderRadius={moderateScale(30, 0.3)}
           onPress={() => {
             PlaceOrder();
-            navigation.navigate('HomeScreen')
+            // navigation.navigate('HomeScreen')
           }}
           isGradient
         />
