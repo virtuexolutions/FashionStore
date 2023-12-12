@@ -32,33 +32,45 @@ import Feather from 'react-native-vector-icons/Feather';
 import {Post} from '../Axios/AxiosInterceptorFunction';
 import {setUserData} from '../Store/slices/common';
 import LinearGradient from 'react-native-linear-gradient';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 const Profile = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const token = useSelector(state => state.authReducer.token);
-  const orderData = useSelector(state => state.commonReducer.order);
-  const bookings = useSelector(state => state.commonReducer.bookings);
   const userData = useSelector(state => state.commonReducer.userData);
   console.log('🚀 ~ file: Profile.js:50 ~ Profile ~ userData:', userData);
   const [username, setUserName] = useState(
     userData?.name ? userData?.name : '',
   );
+  const [address, setAddress] = useState(
+    userData?.address ? userData?.address : '',
+  );
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState(userData?.email ? userData?.email : '');
   const [phone, setPhone] = useState(userData?.phone ? userData?.phone : '');
-  const [selectedTab, setSelectedTab] = useState('Products');
+  const [postCode, setPostCode] = useState(
+    userData?.postal_code ? userData?.postal_code : '',
+  );
+  const [country, setCountry] = useState(
+    userData?.country ? userData?.country : '',
+  );
+
   const [imagePicker, setImagePicker] = useState(false);
   const [image, setImage] = useState({});
   console.log('🚀 ~ file: Profile.js:60 ~ Profile ~ image:', image);
-  const [newData, setNewData] = useState(
-    selectedTab == 'Products' ? orderData : bookings,
-  );
+
   const [isLoading, setIsLoading] = useState(false);
 
   const updateProfile = async () => {
-    const url = 'auth/profile';
-    const body = {name: username, phone: phone, email: email};
+    const url = 'auth/profile/update';
+    const body = {
+      name: username,
+      postal_code: postCode,
+      country:country,
+      address: address,
+    };
+    // console.log("🚀 ~ file: Profile.js:74 ~ updateProfile ~ body:", body)
     const formData = new FormData();
     if (Object.keys(image).length > 0) {
       formData.append('photo', image);
@@ -83,6 +95,7 @@ const Profile = () => {
 
     setIsLoading(true);
     const response = await Post(url, formData, apiHeader(token));
+   console.log("🚀 ~ file: Profile.js:98 ~ updateProfile ~ response:", response)
     setIsLoading(false);
     if (response != undefined) {
       console.log(
@@ -93,10 +106,6 @@ const Profile = () => {
       dispatch(setUserData(response?.data?.user_info));
     }
   };
-
-  useEffect(() => {
-    setNewData(selectedTab == 'Products' ? orderData : bookings);
-  }, [selectedTab]);
 
   return (
     <>
@@ -177,6 +186,8 @@ const Profile = () => {
           style={{
             backgroundColor: Color.white,
             width: windowWidth,
+            // backgroundColor: 'red',
+            // minHeight: windowHeight,
             marginTop: moderateScale(-30, 0.3),
             borderTopLeftRadius: moderateScale(30, 0.3),
             borderTopRightRadius: moderateScale(30, 0.3),
@@ -208,6 +219,27 @@ const Profile = () => {
               placeholderColor={Color.veryLightGray}
               elevation
             />
+            <TextInputWithTitle
+              title={'Address'}
+              iconName={'home'}
+              iconType={SimpleLineIcons}
+              LeftIcon={true}
+              titleText={'Address'}
+              placeholder={'Address'}
+              setText={setAddress}
+              value={address}
+              viewHeight={0.06}
+              viewWidth={0.75}
+              inputWidth={0.75}
+              border={1}
+              backgroundColor={Color.white}
+              borderColor={Color.black}
+              //   marginTop={moderateScale(5, 0.3)}
+              // marginBottom={moderateScale(10, 0.3)}
+              color={Color.black}
+              placeholderColor={Color.veryLightGray}
+              elevation
+            />
 
             <TextInputWithTitle
               title={'Email'}
@@ -227,6 +259,7 @@ const Profile = () => {
               color={Color.black}
               placeholderColor={Color.veryLightGray}
               elevation
+              disable={true}
             />
 
             <TextInputWithTitle
@@ -249,21 +282,73 @@ const Profile = () => {
               color={Color.black}
               placeholderColor={Color.veryLightGray}
               elevation
+              disable={true}
+            />
+            <TextInputWithTitle
+              title={'postal Code'}
+              iconName={'address'}
+              iconType={Entypo}
+              LeftIcon={true}
+              titleText={'post Code'}
+              placeholder={'postal Code'}
+              setText={setPostCode}
+              value={postCode}
+              viewHeight={0.06}
+              viewWidth={0.75}
+              inputWidth={0.75}
+              border={1}
+              borderColor={Color.black}
+              marginBottom={moderateScale(10, 0.3)}
+              backgroundColor={Color.white}
+              //   marginTop={moderateScale(10, 0.3)}
+              color={Color.black}
+              placeholderColor={Color.veryLightGray}
+              elevation
+              // disable={true}
+            />
+            <TextInputWithTitle
+              title={'Country'}
+              iconName={'globe'}
+              iconType={Entypo}
+              LeftIcon={true}
+              titleText={'Country'}
+              placeholder={'Country'}
+              setText={setCountry}
+              value={country}
+              viewHeight={0.06}
+              viewWidth={0.75}
+              inputWidth={0.75}
+              border={1}
+              borderColor={Color.black}
+              marginBottom={moderateScale(10, 0.3)}
+              backgroundColor={Color.white}
+              //   marginTop={moderateScale(10, 0.3)}
+              color={Color.black}
+              placeholderColor={Color.veryLightGray}
+              elevation
+              // disable={true}
             />
 
             <CustomButton
               isBold
               onPress={() => {
-                dispatch(RemoveFromCart(item));
+                updateProfile();
+                // dispatch(RemoveFromCart(item));
               }}
-              text={isLoading ? <ActivityIndicator color={Color.white} size={'small'}/>:'Update'}
+              text={
+                isLoading ? (
+                  <ActivityIndicator color={Color.white} size={'small'} />
+                ) : (
+                  'Update'
+                )
+              }
               textColor={Color.white}
               width={windowWidth * 0.3}
               marginTop={10}
               marginBottom={10}
               height={windowHeight * 0.05}
               bgColor={Color.themeColor}
-              fontSize={moderateScale(14,.6)}
+              fontSize={moderateScale(14, 0.6)}
               borderRadius={moderateScale(5, 0.3)}
             />
           </View>

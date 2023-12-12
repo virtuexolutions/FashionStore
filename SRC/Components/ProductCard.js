@@ -82,7 +82,9 @@ const ProductCard = ({item}) => {
             onLongPress={() => {
               setLike(!like);
             }}
-            onPress={() => {}}
+            onPress={() => {
+              dispatch(AddToCart(item))
+            }}
             source={
               item?.image
                 ? {uri: item?.large_image}

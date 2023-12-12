@@ -91,7 +91,7 @@ const Drawer = () => {
               height: '100%',
               width: '100%',
             }}
-            source={require('../Assets/Images/dummyUser1.png')}
+            source={{uri :user?.photo}}
           />
         </View>
         <View style={{marginLeft: moderateScale(10, 0.3)}}>

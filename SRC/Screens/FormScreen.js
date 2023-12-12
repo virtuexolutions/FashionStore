@@ -31,6 +31,8 @@ const FormScreen = () => {
   const navigation =useNavigation()
   const token = useSelector(state => state.authReducer.token);
   const cartData = useSelector(state => state.commonReducer.item);
+  const userdata =useSelector(state => state.commonReducer.userData)
+  console.log("🚀 ~ file: FormScreen.js:35 ~ FormScreen ~ userdata:", userdata)
  
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -115,7 +117,7 @@ const FormScreen = () => {
       //   response?.data,
       // );
       dispatch(EmptyCart());
-      navigationService.navigate('HomeScreen')
+      // navigationService.navigate('HomeScreen')
     }
   }};
 
