@@ -35,7 +35,7 @@ const OrderCard = ({data}) => {
         </CustomText>
       </View>
       <FlatList
-        data={data?.item?.slice(0, 5)}
+        data={data?.item_info?.slice(0, 5)}
         horizontal
         renderItem={({item, index}) => {
           // console.log('🚀 ~ file: OrderCard.js:38 ~ OrderCard ~ index:', index);
@@ -64,7 +64,8 @@ const OrderCard = ({data}) => {
                     height: '100%',
                     width: '100%',
                   }}
-                  source={{uri : item?.item_info?.image}}
+                  source={require('../Assets/Images/image3.png')}
+                  // source={{uri : item?.item_info?.image}}
                 />
               </View>
             </>
@@ -73,7 +74,7 @@ const OrderCard = ({data}) => {
       />
 
       <View style={styles.buttonRow}>
-        <CustomText style={styles.text1}>Rs 360</CustomText>
+        <CustomText style={styles.text1}>{data?.total_amount}</CustomText>
         <CustomButton
           // disabled={ cardData.find((data ,index) => data?.id == item?.id) && true}
           isBold
