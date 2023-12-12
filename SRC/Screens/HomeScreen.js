@@ -30,12 +30,12 @@ const HomeScreen = () => {
   const dispatch = useDispatch();
 
   const [searchData, setSearchData] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
   const [isLoading, setisLoading] = useState(false);
   const [products, setProducts] = useState([]);
   const [categoryModalVisible, setCategoryModalVisible] = useState(false);
   const [categoriesData, setCategoriesData] = useState([]);
-  console.log("🚀 ~ file: HomeScreen.js:38 ~ HomeScreen ~ categoriesData:", categoriesData)
+  const [selectedCategory, setSelectedCategory] = useState(categoriesData);
+  console.log("🚀 ~ file: HomeScreen.js:38 ~ HomeScreen ~ categoriesData:", selectedCategory)
   const token = useSelector(state => state.authReducer.token);
   const cardData = useSelector(state => state.commonReducer.item);
 
@@ -69,8 +69,7 @@ const HomeScreen = () => {
     getData();
   }, []);
 
-  const iconArray = []
-
+ 
   const categories = [
     {
       name: 'All',
