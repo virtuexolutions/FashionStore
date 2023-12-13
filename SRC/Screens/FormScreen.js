@@ -32,14 +32,8 @@ const FormScreen = () => {
   const navigation =useNavigation()
   const token = useSelector(state => state.authReducer.token);
   const cartData = useSelector(state => state.commonReducer.item);
-<<<<<<< HEAD
   const userdata =useSelector(state => state.commonReducer.userData)
   console.log("🚀 ~ file: FormScreen.js:35 ~ FormScreen ~ userdata:", userdata)
-=======
-  const userdata  = useSelector(state => state.commonReducer.userData);
-  console.log("🚀 ~ file: FormScreen.js:36 ~ FormScreen ~ userdata:", userdata)
-
->>>>>>> origin/meerab
  
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
