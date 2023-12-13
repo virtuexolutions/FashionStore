@@ -15,6 +15,7 @@ import numeral from 'numeral';
 import {AddToCart, RemoveFromCart} from '../Store/slices/common';
 
 const ProductCard = ({item}) => {
+  console.log("🚀 ~ file: ProductCard.js:18 ~ ProductCard ~ item:", item)
   const cardData = useSelector(state => state.commonReducer.item);
   // console.log("🚀 ~ file: ProductCard.js:18 ~ ProductCard ~ cardData:", cardData)
   const dispatch = useDispatch();

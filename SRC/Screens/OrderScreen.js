@@ -6,7 +6,7 @@ import {
   ToastAndroid,
   Image,
 } from 'react-native';
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import {moderateScale, ScaledSheet} from 'react-native-size-matters';
 import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import Color from '../Assets/Utilities/Color';
@@ -20,179 +20,177 @@ import Feather from 'react-native-vector-icons/Feather';
 import {useSelector} from 'react-redux';
 import CustomText from '../Components/CustomText';
 import OrderCard from '../Components/OrderCard';
-import { Get } from '../Axios/AxiosInterceptorFunction';
+import {Get} from '../Axios/AxiosInterceptorFunction';
 import NoData from '../Components/NoData';
 
 const OrderScreen = ({route}) => {
-  const token = useSelector(state => state.authReducer.token)
-  console.log("🚀 ~ file: OrderScreen.js:27 ~ OrderScreen ~ token:", token)
+  const token = useSelector(state => state.authReducer.token);
+  console.log('🚀 ~ file: OrderScreen.js:27 ~ OrderScreen ~ token  :', token);
   const cardData = useSelector(state => state.commonReducer.item);
   const [finalAmount, setFinalAmount] = useState(0);
   const [productsForCard, setProdctsForCart] = useState([]);
   const subTotal = route?.params?.subTotal;
   const [underline, setUnderline] = useState(false);
-  const [orders ,setOrders] =useState('')
-  const [isLoading ,setIsLoading] =useState(false)
+  const [orders, setOrders] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  console.log('alert ============>')
-  const getOrder = async ()  => {
-  const url ='auth/order/list'
-  setIsLoading(true)
-  const response =await Get(url,token)
-  setIsLoading(false)
-  if(response != undefined){
-    console.log("🚀 ~ file: OrderScreen.js:36 ~ getOrder ~ response:", response?.data?.data[2])
-    setOrders(response?.data?.data)
+  // console.log('alert ============>')
 
-  }
-
-
-  }
-  const dummyarray = [
-    {
-      orderId: 454643,
-      date: '12-nov-23',
-      time: '12:55pm',
-      status: 'completed',
-      item: [
-        {
-          image: require('../Assets/Images/image3.png'),
-          qty: 2,
-          price: 40,
-          title: 'ABC',
-        },
-        {
-          image: require('../Assets/Images/image3.png'),
-          qty: 5,
-          price: 20,
-          title: 'ABC',
-        },
-        {
-          image: require('../Assets/Images/Image2.png'),
-          qty: 2,
-          price: 50,
-          title: 'ABC',
-        },
-        {
-          image: require('../Assets/Images/image3.png'),
-          qty: 1,
-          price: 40,
-          title: 'ABC',
-        },
-        {
-          image: require('../Assets/Images/Image2.png'),
-          qty: 2,
-          price: 50,
-          title: 'ABC',
-        },
-        {
-          image: require('../Assets/Images/image3.png'),
-          qty: 1,
-          price: 40,
-          title: 'ABC',
-        },
-      ],
-      price: 360,
-    },
-    {
-      orderId: 454643,
-      date: '12-nov-23',
-      time: '12:55pm',
-      status: 'cancelled',
-      price: 360,
-      item: [
-        {
-          image: require('../Assets/Images/image3.png'),
-          qty: 2,
-          price: 40,
-          title: 'ABC',
-        },
-        {
-          image: require('../Assets/Images/image3.png'),
-          qty: 5,
-          price: 20,
-          title: 'ABC',
-        },
-        {
-          image: require('../Assets/Images/Image2.png'),
-          qty: 2,
-          price: 50,
-          title: 'ABC',
-        },
-        {
-          image: require('../Assets/Images/image3.png'),
-          qty: 1,
-          price: 40,
-          title: 'ABC',
-        },
-        {
-          image: require('../Assets/Images/Image2.png'),
-          qty: 2,
-          price: 50,
-          title: 'ABC',
-        },
-        {
-          image: require('../Assets/Images/image3.png'),
-          qty: 1,
-          price: 40,
-          title: 'ABC',
-        },
-      ],
-    },
-    {
-      orderId: 454643,
-      date: '12-nov-23',
-      time: '12:55pm',
-      status: 'completed',
-      item: [
-        {
-          image: require('../Assets/Images/image3.png'),
-          qty: 2,
-          price: 40,
-          title: 'ABC',
-        },
-        {
-          image: require('../Assets/Images/image3.png'),
-          qty: 5,
-          price: 20,
-          title: 'ABC',
-        },
-        {
-          image: require('../Assets/Images/Image2.png'),
-          qty: 2,
-          price: 50,
-          title: 'ABC',
-        },
-        {
-          image: require('../Assets/Images/Image2.png'),
-          qty: 2,
-          price: 50,
-          title: 'ABC',
-        },
-        {
-          image: require('../Assets/Images/image3.png'),
-          qty: 1,
-          price: 40,
-          title: 'ABC',
-        },
-        {
-          image: require('../Assets/Images/image3.png'),
-          qty: 1,
-          price: 40,
-          title: 'ABC',
-        },
-      ],
-      price: 360,
-    },
-  ];
-
-
+  const getOrder = async () => {
+    const url = 'auth/order/list';
+    setIsLoading(true);
+    const response = await Get(url, token);
+    setIsLoading(false);
+    if (response != undefined) {
+       console.log(
+        '🚀 ~ file: OrderScreen.js:36 ~ getOrder ~ response:',
+        response?.data,
+      );
+      setOrders(response?.data?.order_info);
+    }
+  };
 
   useEffect(() => {
-  
-    getOrder()
-  }, [])
-  
+    getOrder();
+  }, []);
+
+  // const dummyarray = [
+  //   {
+  //     orderId: 454643,
+  //     date: '12-nov-23',
+  //     time: '12:55pm',
+  //     status: 'completed',
+  //     item: [
+  //       {
+  //         image: require('../Assets/Images/image3.png'),
+  //         qty: 2,
+  //         price: 40,
+  //         title: 'ABC',
+  //       },
+  //       {
+  //         image: require('../Assets/Images/image3.png'),
+  //         qty: 5,
+  //         price: 20,
+  //         title: 'ABC',
+  //       },
+  //       {
+  //         image: require('../Assets/Images/Image2.png'),
+  //         qty: 2,
+  //         price: 50,
+  //         title: 'ABC',
+  //       },
+  //       {
+  //         image: require('../Assets/Images/image3.png'),
+  //         qty: 1,
+  //         price: 40,
+  //         title: 'ABC',
+  //       },
+  //       {
+  //         image: require('../Assets/Images/Image2.png'),
+  //         qty: 2,
+  //         price: 50,
+  //         title: 'ABC',
+  //       },
+  //       {
+  //         image: require('../Assets/Images/image3.png'),
+  //         qty: 1,
+  //         price: 40,
+  //         title: 'ABC',
+  //       },
+  //     ],
+  //     price: 360,
+  //   },
+  //   {
+  //     orderId: 454643,
+  //     date: '12-nov-23',
+  //     time: '12:55pm',
+  //     status: 'cancelled',
+  //     price: 360,
+  //     item: [
+  //       {
+  //         image: require('../Assets/Images/image3.png'),
+  //         qty: 2,
+  //         price: 40,
+  //         title: 'ABC',
+  //       },
+  //       {
+  //         image: require('../Assets/Images/image3.png'),
+  //         qty: 5,
+  //         price: 20,
+  //         title: 'ABC',
+  //       },
+  //       {
+  //         image: require('../Assets/Images/Image2.png'),
+  //         qty: 2,
+  //         price: 50,
+  //         title: 'ABC',
+  //       },
+  //       {
+  //         image: require('../Assets/Images/image3.png'),
+  //         qty: 1,
+  //         price: 40,
+  //         title: 'ABC',
+  //       },
+  //       {
+  //         image: require('../Assets/Images/Image2.png'),
+  //         qty: 2,
+  //         price: 50,
+  //         title: 'ABC',
+  //       },
+  //       {
+  //         image: require('../Assets/Images/image3.png'),
+  //         qty: 1,
+  //         price: 40,
+  //         title: 'ABC',
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     orderId: 454643,
+  //     date: '12-nov-23',
+  //     time: '12:55pm',
+  //     status: 'completed',
+  //     item: [
+  //       {
+  //         image: require('../Assets/Images/image3.png'),
+  //         qty: 2,
+  //         price: 40,
+  //         title: 'ABC',
+  //       },
+  //       {
+  //         image: require('../Assets/Images/image3.png'),
+  //         qty: 5,
+  //         price: 20,
+  //         title: 'ABC',
+  //       },
+  //       {
+  //         image: require('../Assets/Images/Image2.png'),
+  //         qty: 2,
+  //         price: 50,
+  //         title: 'ABC',
+  //       },
+  //       {
+  //         image: require('../Assets/Images/Image2.png'),
+  //         qty: 2,
+  //         price: 50,
+  //         title: 'ABC',
+  //       },
+  //       {
+  //         image: require('../Assets/Images/image3.png'),
+  //         qty: 1,
+  //         price: 40,
+  //         title: 'ABC',
+  //       },
+  //       {
+  //         image: require('../Assets/Images/image3.png'),
+  //         qty: 1,
+  //         price: 40,
+  //         title: 'ABC',
+  //       },
+  //     ],
+  //     price: 360,
+  //   },
+  // ];
 
   return (
     <>
@@ -207,14 +205,7 @@ const OrderScreen = ({route}) => {
         //   rightType={Feather}
       />
 
-      <View
-        style={{
-          flexDirection: 'row',
-          // backgroundColor:'red',
-          width: windowWidth * 0.5,
-          paddingHorizontal: moderateScale(25, 0.6),
-          paddingVertical: moderateScale(15, 0.6),
-        }}>
+      <View style={styles.rowview}>
         <TouchableOpacity onPress={() => setUnderline('Current')}>
           <CustomText
             style={[
@@ -248,13 +239,21 @@ const OrderScreen = ({route}) => {
       <FlatList
         ListEmptyComponent={() => {
           return (
-            <NoData
+            <View
               style={{
-                width: windowWidth * 0.95,
-                height: windowHeight * 0.18,
-                alignItems: 'center',
-              }}
-            />
+                justifyContent: 'center',
+                // backgroundColor:'red',
+                height: windowHeight * 0.7,
+              }}>
+              <NoData
+                style={{
+                  width: windowWidth * 0.95,
+                  height: windowHeight * 0.28,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              />
+            </View>
           );
         }}
         showsVerticalScrollIndicator={false}
@@ -269,7 +268,7 @@ const OrderScreen = ({route}) => {
           paddingBottom: moderateScale(20, 0.3),
         }}
         renderItem={({item, index}) => {
-          return <OrderCard data={item}/>;
+          return <OrderCard data={item} />;
         }}
       />
     </>
@@ -279,6 +278,13 @@ const OrderScreen = ({route}) => {
 export default OrderScreen;
 
 const styles = ScaledSheet.create({
+  rowview: {
+    flexDirection: 'row',
+    // backgroundColor:'red',
+    width: windowWidth * 0.5,
+    paddingHorizontal: moderateScale(25, 0.6),
+    paddingVertical: moderateScale(15, 0.6),
+  },
   text1: {
     fontSize: moderateScale(14, 0.3),
     color: Color.black,

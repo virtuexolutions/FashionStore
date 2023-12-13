@@ -19,11 +19,9 @@ import {
 import DropDownSingleSelect from './DropDownSingleSelect';
 
 const CartItem = ({item, fromCheckout}) => {
-
-  const cardData = useSelector(state => state.commonReducer.item);
-  console.log("🚀 ~ file: CartItem.js:24 ~ CartItem ~ cardData:", cardData)
+console.log("🚀 ~ file: CartItem.js:22 ~ CartItem ~ item:", item , item?.size_id?.size)
   const dispatch = useDispatch();
-  const [selectedSize, setSelectedSize] = useState('');
+  const [selectedSize, setSelectedSize] = useState(Object.keys(item?.size_id).length > 0 ? item?.size_id?.size : '');
   console.log(
     '🚀 ~ file: CartItem.js:26 ~ CartItem ~ selectedSize:',
     selectedSize,
@@ -98,11 +96,12 @@ const CartItem = ({item, fromCheckout}) => {
               flexWrap: 'wrap',
               width: windowWidth * 0.45,
             }}>
-            {item?.size_id ? (
+            {/* {item?.size_id ? (
               <CustomText style={{textAlign:'left', color:'black', fontSize:moderateScale(12,.6)}}>{item?.size_id?.size}</CustomText>
-            ) : (
+            ) : ( */}
               <DropDownSingleSelect
-                array={sizeArray}
+              placeholder={selectedSize ? selectedSize : 'Select Any Size'}
+                array={ sizeArray}
                 item={selectedSize}
                 setItem={setSelectedSize}
                 width={windowWidth * 0.5}
@@ -114,7 +113,7 @@ const CartItem = ({item, fromCheckout}) => {
                 }}
                 fontSize={moderateScale(10, 0.6)}
               />
-            )}
+            {/* )} */}
           </View>
 
           <View
@@ -127,7 +126,7 @@ const CartItem = ({item, fromCheckout}) => {
               },
             ]}>
             <CustomText style={styles.amount}>
-              {numeral(item?.wholsale_price * item?.quantity).format('$0,0.00')}
+              {numeral(item?.size_id?.price * item?.quantity).format('$0,0.00')}
             </CustomText>
 
             <View

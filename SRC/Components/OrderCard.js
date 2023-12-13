@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 
 const OrderCard = ({data}) => {
+  console.log("🚀 ~ file: OrderCard.js:12 ~ OrderCard ~ data:", data)
   const  navigation =useNavigation()
   return (
     <View style={styles.container}>

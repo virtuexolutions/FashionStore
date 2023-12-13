@@ -5,6 +5,7 @@ import {
   View,
   ActivityIndicator,
   ToastAndroid,
+  ScrollView,
 } from 'react-native';
 import React, {useState} from 'react';
 import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
@@ -31,6 +32,9 @@ const FormScreen = () => {
   const navigation =useNavigation()
   const token = useSelector(state => state.authReducer.token);
   const cartData = useSelector(state => state.commonReducer.item);
+  const userdata  = useSelector(state => state.commonReducer.userData);
+  console.log("🚀 ~ file: FormScreen.js:36 ~ FormScreen ~ userdata:", userdata)
+
  
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -47,15 +51,15 @@ const FormScreen = () => {
     console.log('Total quantity=====', total_quantity, total_price);
   };
 
-  const [name, setName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [country, setCountry] = useState('');
-  const [address, setAddress] = useState('');
-  const [postcode, setPostCode] = useState('');
+  const [name, setName] = useState(userdata?.name);
+  const [lastName, setLastName] = useState(userdata?.name);
+  const [email, setEmail] = useState(userdata?.email);
+  const [phone, setPhone] = useState(userdata?.contact);
+  const [country, setCountry] = useState(userdata?.country);
+  const [address, setAddress] = useState(userdata?.address);
+  const [postcode, setPostCode] = useState(userdata?.postCode);
   const [stripeToken, setStripeToken] = useState('');
-  const [isChecked, setIsChecked] = useState();
+  const [isChecked, setIsChecked] = useState('');
   const [isModal, setIsModal] = useState(false);
   const [newData, setnewData] = useState([]);
   console.log('🚀 ~ file: FormScreen.js:56 ~ FormScreen ~ newData:', newData);
@@ -79,6 +83,7 @@ const FormScreen = () => {
     });
     
    const url = 'auth/order';
+  //  return  console.log("🚀 ~ file: FormScreen.js:82 ~ PlaceOrder ~ url:", url)
     const body = {
       first_name: name,
       last_name: lastName,
@@ -98,26 +103,34 @@ const FormScreen = () => {
       total_amount: totalPrice,
       products: newData,
     };
-    for(let key in body){
+   for(let key in body){
       if(body[key] == ''){
         return Platform.OS == 'android'
-        ? ToastAndroid.show(`${key} requried`,ToastAndroid.SHORT)
-        :alert(`${key}is requried`)
+        ? ToastAndroid.show(`requried field is empty`,ToastAndroid.SHORT)
+        :alert(`requried field is empty`)
     }
-
+  }
+    if(isChecked == ''){
+      return Platform.OS == 'android'
+      ? ToastAndroid.show(`Payment method not selected`,ToastAndroid.SHORT)
+      :alert(`Payment method not selected`)
+  
+    }
     setIsLoading(true);
     const response = await Post(url, body, apiHeader(token));
     setIsLoading(false);
     if (response != undefined) {
+     console.log('dadafasrfafara' ,response?.data)
      setnewData([])
       // return console.log(
       //   '🚀 ~ file: FormScreen.js:53 ~ PlaceOrder ~ response:',
       //   response?.data,
       // );
+
       dispatch(EmptyCart());
       navigationService.navigate('HomeScreen')
     }
-  }};
+  };
 
   return (
     <>
@@ -128,14 +141,15 @@ const FormScreen = () => {
         title={'checkout'}
       />
 
-      <View
+      <ScrollView
         style={{
-          height: windowHeight,
-          width: windowWidth,
-          alignItems: 'center',
-          //   paddingTop: windowHeight * 0.1,
           backgroundColor: '#FEFDFC',
-        }}>
+        }}
+        contentContainerStyle={{
+          alignItems: 'center',
+          minHeight: windowHeight,
+        }}
+        >
         <CustomText />
         <TextInputWithTitle
           titleText={'Your name'}
@@ -353,10 +367,13 @@ const FormScreen = () => {
           fontSize={moderateScale(16, 0.6)}
           bgColor={Color.themeBgColor}
           borderRadius={moderateScale(30, 0.3)}
-          onPress={() => {
-            PlaceOrder();
-            // navigation.navigate('HomeScreen')
-          }}
+        onPress={() => {
+         
+       
+            PlaceOrder()
+
+      
+        }}
           isGradient
         />
         <PaymentModal
@@ -364,7 +381,7 @@ const FormScreen = () => {
           setIsModal={setIsModal}
           setToken={setStripeToken}
         />
-      </View>
+      </ScrollView>
     </>
   );
 };

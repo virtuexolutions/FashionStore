@@ -30,7 +30,7 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import {Post} from '../Axios/AxiosInterceptorFunction';
-import {setUserData} from '../Store/slices/common';
+import {RemoveFromCart, setUserData} from '../Store/slices/common';
 import LinearGradient from 'react-native-linear-gradient';
 
 const Profile = () => {
@@ -254,7 +254,7 @@ const Profile = () => {
             <CustomButton
               isBold
               onPress={() => {
-                dispatch(RemoveFromCart(item));
+                
               }}
               text={isLoading ? <ActivityIndicator color={Color.white} size={'small'}/>:'Update'}
               textColor={Color.white}

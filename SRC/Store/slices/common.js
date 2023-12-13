@@ -40,7 +40,7 @@ const CommonSlice = createSlice({
     },
     AddToCart(state, action) {
      
-      state.item.push({...action.payload, quantity: 1});
+      state.item.push({...action.payload, quantity: 1 , size_id : {} });
     },
     EmptyCart(state, action) {
       state.item = [];
@@ -75,6 +75,7 @@ const CommonSlice = createSlice({
       if(item){
         console.log('Item===============>>>>', action.payload.item)
         item.size_id = action.payload.item
+        
       }
     }
   },
