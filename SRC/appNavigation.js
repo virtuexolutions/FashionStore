@@ -11,13 +11,6 @@ import ResetPassword from './Screens/ResetPassword';
 import Signup from './Screens/Signup';
 import ResetInstruction from './Screens/ResetInstructions';
 import HomeScreen from './Screens/HomeScreen';
-// import MyAccounts from './Screens/MyAccounts';
-// import ChangePassword from './Screens/ChangePassword';
-// import Support from './Screens/Support';
-// import FriendRequest from './Screens/FriendRequest';
-// import SeeAllScreen from './Screens/SeeAllScreen';
-// import SelectedChat from './Screens/SelectedChat';
-import Dresses from './Screens/Dresses';
 import EnterPhone from './Screens/EnterPhone';
 import VerifyNumber from './Screens/VerifyNumber';
 import GetStarted from './Screens/GetStarted';
@@ -27,10 +20,11 @@ import CheckOutScreen from './Screens/CheckOutScreen';
 import Drawer from './Screens/Drawer';
 import ChangePassword from './Screens/ChangePassword';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import FormScreen from './Screens/FormScreen';
+import PlaceOrderScreen from './Screens/PlaceOrderScreen';
 import OrderScreen from './Screens/OrderScreen';
 import Profile from './Screens/Profile';
 import OrderDetails from './Screens/OrderDetails';
+import SeeAllScreen from './Screens/SeeAllScreen';
 
 
 const AppNavigator = () => {
@@ -52,7 +46,6 @@ const AppNavigator = () => {
         ? 'MyDrawer'
         : walkThrough == true ?
         'GetStarted' : 
-        
         'WelcomeScreen';
 
     return (
@@ -61,12 +54,12 @@ const AppNavigator = () => {
           initialRouteName={firstScreen}
           screenOptions={{headerShown: false}}>
           <RootNav.Screen name="WelcomeScreen" component={WelcomeScreen} />
-          <RootNav.Screen name="FormScreen" component={FormScreen} />
+          <RootNav.Screen name="FormScreen" component={PlaceOrderScreen} />
           <RootNav.Screen name="OrderScreen" component={OrderScreen} />
           <RootNav.Screen name="OrderDetails" component={OrderDetails} />
           <RootNav.Screen name="CheckOutScreen" component={CheckOutScreen} />
           <RootNav.Screen name="DressesDetail" component={DressesDetail} />
-          <RootNav.Screen name="Dresses" component={Dresses} />
+          <RootNav.Screen name="SeeAllScreen" component={SeeAllScreen} />
           <RootNav.Screen name="GetStarted" component={GetStarted} />
           <RootNav.Screen name="ResetInstruction" component={ResetInstruction} />
           <RootNav.Screen name="MyDrawer" component={MyDrawer} />

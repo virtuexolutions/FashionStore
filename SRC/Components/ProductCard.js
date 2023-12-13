@@ -15,9 +15,7 @@ import numeral from 'numeral';
 import {AddToCart, RemoveFromCart} from '../Store/slices/common';
 
 const ProductCard = ({item}) => {
-  console.log("🚀 ~ file: ProductCard.js:18 ~ ProductCard ~ item:", item)
   const cardData = useSelector(state => state.commonReducer.item);
-  // console.log("🚀 ~ file: ProductCard.js:18 ~ ProductCard ~ cardData:", cardData)
   const dispatch = useDispatch();
   const [like, setLike] = useState(item?.like);
 
@@ -119,9 +117,7 @@ const ProductCard = ({item}) => {
           style={{
             textAlign: 'left',
             width: windowWidth * 0.35,
-            // height: windowHeight * 0.03,
             color: '#464342',
-            // marginTop: moderateScale(10, 0.3),
           }}>
           {item?.title}
         </CustomText>

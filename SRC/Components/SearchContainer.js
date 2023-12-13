@@ -12,7 +12,7 @@ import { GestureHandlerRootView, TextInput } from "react-native-gesture-handler"
 import { windowHeight, windowWidth } from "../Utillity/utils";
 // import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 
-const SearchContainer = ({ width, text, input, onPress, data, setData , style , places , inputStyle , placeHolder, rightIcon, setCategoryModal }) => {
+const SearchContainer = ({ width, text, input, onPress, data, setData , style , places , inputStyle , placeHolder, rightIcon }) => {
   return (
     <GestureHandlerRootView>
     <TouchableOpacity onPress={onPress} activeOpacity={0.9}>
@@ -97,7 +97,7 @@ const SearchContainer = ({ width, text, input, onPress, data, setData , style , 
               as={Ionicons}
               size={moderateScale(20,0.3)}
               color={Color.themeColor}
-              onPress={()=>{setCategoryModal(prev=> !prev)}}
+         
               />
 
             </>

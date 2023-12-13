@@ -10,13 +10,9 @@ import {
 import React, {useState} from 'react';
 import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import CustomText from '../Components/CustomText';
-import {Icon} from 'native-base';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import TextInputWithTitle from '../Components/TextInputWithTitle';
 import {moderateScale} from 'react-native-size-matters';
 import CustomImage from '../Components/CustomImage';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import CustomButton from '../Components/CustomButton';
 import Header from '../Components/Header';
 import Feather from 'react-native-vector-icons/Feather';
 import Color from '../Assets/Utilities/Color';
@@ -24,36 +20,27 @@ import PaymentModal from '../Components/PaymentModal';
 import {Post} from '../Axios/AxiosInterceptorFunction';
 import {useDispatch, useSelector} from 'react-redux';
 import {AddToCart, EmptyCart} from '../Store/slices/common';
-import { Platform } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import navigationService from '../navigationService';
 
-const FormScreen = () => {
-  const navigation =useNavigation()
+const PlaceOrderScreen = () => {
+  const navigation = useNavigation();
   const token = useSelector(state => state.authReducer.token);
   const cartData = useSelector(state => state.commonReducer.item);
-<<<<<<< HEAD
-  const userdata =useSelector(state => state.commonReducer.userData)
-  console.log("🚀 ~ file: FormScreen.js:35 ~ FormScreen ~ userdata:", userdata)
-=======
-  const userdata  = useSelector(state => state.commonReducer.userData);
-  console.log("🚀 ~ file: FormScreen.js:36 ~ FormScreen ~ userdata:", userdata)
+  const userdata = useSelector(state => state.commonReducer.userData);
+  console.log('🚀 ~ file: FormScreen.js:35 ~ FormScreen ~ userdata:', userdata);
 
->>>>>>> origin/meerab
- 
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const calcTotal = () => {
     let total_quantity = 0;
     let total_price = 0;
     cartData?.map(item => {
-      console.log('Item=============>>>>', item?.size_id?.price)
       total_quantity += item?.quantity;
       total_price += item?.size_id?.price * item?.quantity;
     });
     setTotalQuantity(total_quantity);
     setTotalPrice(total_price);
-    console.log('Total quantity=====', total_quantity, total_price);
   };
 
   const [name, setName] = useState(userdata?.name);
@@ -66,29 +53,14 @@ const FormScreen = () => {
   const [stripeToken, setStripeToken] = useState('');
   const [isChecked, setIsChecked] = useState('');
   const [isModal, setIsModal] = useState(false);
-  const [newData, setnewData] = useState([]);
-  console.log('🚀 ~ file: FormScreen.js:56 ~ FormScreen ~ newData:', newData);
 
-  console.log('🚀 ~ file: FormScreen.js:28 ~ FormScreen ~ isModal:', isModal);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
   const PlaceOrder = async () => {
     calcTotal();
-    cartData?.map(item => {
-      return setnewData(prev => [
-        ...prev,
-        {
-          id: item?.id,
-          price: item?.size_id?.price,
-          quantity: item?.quantity,
-          size_id: item?.size_id?.id,
-        },
-      ]);
-    });
-    
-   const url = 'auth/order';
-  //  return  console.log("🚀 ~ file: FormScreen.js:82 ~ PlaceOrder ~ url:", url)
+
+    const url = 'auth/order';
     const body = {
       first_name: name,
       last_name: lastName,
@@ -106,34 +78,47 @@ const FormScreen = () => {
           : '',
       total_quantity: totalQuantity,
       total_amount: totalPrice,
-      products: newData,
+      products: cartData?.map(item => {
+        return {
+          id: item?.id,
+          price: item?.size_id?.price,
+          quantity: item?.quantity,
+          size_id: item?.size_id?.id,
+        };
+      }),
     };
-   for(let key in body){
-      if(body[key] == ''){
+    
+    for (let key in body) {
+      if (body[key] == '') {
         return Platform.OS == 'android'
-        ? ToastAndroid.show(`requried field is empty`,ToastAndroid.SHORT)
-        :alert(`requried field is empty`)
+          ? ToastAndroid.show(`requried field is empty`, ToastAndroid.SHORT)
+          : alert(`requried field is empty`);
+      }
     }
-  }
-    if(isChecked == ''){
+
+    if (isNaN(postcode)) {
       return Platform.OS == 'android'
-      ? ToastAndroid.show(`Payment method not selected`,ToastAndroid.SHORT)
-      :alert(`Payment method not selected`)
-  
+      ? ToastAndroid.show(`Please insert a correct post code`, ToastAndroid.SHORT)
+      : alert(`Please insert a correct post code`);
+    }
+
+    if (isNaN(phone)) {
+      return Platform.OS == 'android'
+      ? ToastAndroid.show(`Please insert a correct phone number`, ToastAndroid.SHORT)
+      : alert(`Please insert a correct phone number`);
+    }
+
+    if (isChecked == '') {
+      return Platform.OS == 'android'
+        ? ToastAndroid.show(`Payment method not selected`, ToastAndroid.SHORT)
+        : alert(`Payment method not selected`);
     }
     setIsLoading(true);
     const response = await Post(url, body, apiHeader(token));
     setIsLoading(false);
     if (response != undefined) {
-     console.log('dadafasrfafara' ,response?.data)
-     setnewData([])
-      // return console.log(
-      //   '🚀 ~ file: FormScreen.js:53 ~ PlaceOrder ~ response:',
-      //   response?.data,
-      // );
-
+      console.log('dadafasrfafara', response?.data);
       dispatch(EmptyCart());
-      // navigationService.navigate('HomeScreen')
     }
   };
 
@@ -153,8 +138,7 @@ const FormScreen = () => {
         contentContainerStyle={{
           alignItems: 'center',
           minHeight: windowHeight,
-        }}
-        >
+        }}>
         <CustomText />
         <TextInputWithTitle
           titleText={'Your name'}
@@ -219,7 +203,7 @@ const FormScreen = () => {
           color={'#ABB1C0'}
           placeholderColor={'#ABB1C0'}
           borderRadius={moderateScale(20, 0.6)}
-         keyboardType={'numeric'}
+          keyboardType={'numeric'}
         />
         <TextInputWithTitle
           titleText={'Country'}
@@ -283,7 +267,6 @@ const FormScreen = () => {
             style={{
               flexDirection: 'row',
               alignItems: 'center',
-              // backgroundColor:'red'
             }}>
             <TouchableOpacity
               onPress={() => {
@@ -299,7 +282,6 @@ const FormScreen = () => {
                 borderRadius: (windowHeight * 0.015) / 2,
                 borderColor: Color.mediumGray,
                 borderWidth: 2,
-                // flexDirection:'row'
               }}></TouchableOpacity>
             <CustomText
               onPress={() => {
@@ -328,7 +310,6 @@ const FormScreen = () => {
                 borderRadius: (windowHeight * 0.015) / 2,
                 borderColor: Color.mediumGray,
                 borderWidth: 2,
-                // flexDirection:'row'
               }}></TouchableOpacity>
             <CustomText
               onPress={() => {
@@ -340,24 +321,6 @@ const FormScreen = () => {
             </CustomText>
           </View>
         </View>
-        {/* {isChecked == 'pay through stripe' && (
-          <TextInputWithTitle
-            titleText={'Token'}
-            placeholder={'Token'}
-            setText={setStripeToken}
-            value={stripeToken}
-            viewHeight={0.06}
-            viewWidth={0.8}
-            inputWidth={0.7}
-            border={1}
-            borderColor={'#0F02022E'}
-            backgroundColor={'white'}
-            marginBottom={moderateScale(20, 0.3)}
-            color={'#ABB1C0'}
-            placeholderColor={'#ABB1C0'}
-            borderRadius={moderateScale(20, 0.6)}
-          />
-        )} */}
         <CustomButton
           text={
             isLoading ? (
@@ -372,13 +335,9 @@ const FormScreen = () => {
           fontSize={moderateScale(16, 0.6)}
           bgColor={Color.themeBgColor}
           borderRadius={moderateScale(30, 0.3)}
-        onPress={() => {
-         
-       
-            PlaceOrder()
-
-      
-        }}
+          onPress={() => {
+            PlaceOrder();
+          }}
           isGradient
         />
         <PaymentModal
@@ -391,7 +350,7 @@ const FormScreen = () => {
   );
 };
 
-export default FormScreen;
+export default PlaceOrderScreen;
 
 const styles = StyleSheet.create({
   bottomImage: {

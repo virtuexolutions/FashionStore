@@ -73,7 +73,6 @@ const CommonSlice = createSlice({
     selectedProductSize(state, action){
       let item = state.item.find(item=> item?.id == action.payload.id)
       if(item){
-        console.log('Item===============>>>>', action.payload.item)
         item.size_id = action.payload.item
         
       }

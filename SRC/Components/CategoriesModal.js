@@ -10,7 +10,7 @@ import Color from '../Assets/Utilities/Color';
 import SubCategories from './SubCategories';
 import CustomText from './CustomText';
 
-const CategoriesModal = ({isVisible, setIsVisible, categoryData}) => {
+const CategoriesModal = ({isVisible, setIsVisible, categoryData,  setCategoryId}) => {
   const token = useSelector(state => state.authReducer.token);
   const [selectedCategory, setSelectedCategory] = useState(
     categoryData?.sub_categories,
@@ -22,19 +22,9 @@ const CategoriesModal = ({isVisible, setIsVisible, categoryData}) => {
     setSelectedCategory(categoryData?.sub_categories[0]?.title);
   }, [categoryData]);
 
-  const getProducts = async () => {
-    const url = '';
-    setIsLoading(true);
-    const response = await Get(url, token);
-    setIsLoading(false);
 
-    if (response != undefined) {
-    }
-  };
 
-  useEffect(() => {
-    // getCategories();
-  }, []);
+ 
 
   const data = [
     {
@@ -95,6 +85,7 @@ const CategoriesModal = ({isVisible, setIsVisible, categoryData}) => {
             renderItem={({item, index}) => {
               return (
                 <SubCategories
+                setCategoryId={setCategoryId}
                   item={item}
                   setIsVisible={setIsVisible}
                   setSelectedCategory={setSelectedCategory}
@@ -120,6 +111,7 @@ const CategoriesModal = ({isVisible, setIsVisible, categoryData}) => {
                   <TouchableOpacity
                     style={styles.container}
                     onPress={() => {
+                      setCategoryId(item?.id)
                       setSelectedSubCat(item?.title);
                       setIsVisible(false);
                     }}>

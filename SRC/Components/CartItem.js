@@ -22,10 +22,6 @@ const CartItem = ({item, fromCheckout}) => {
 console.log("🚀 ~ file: CartItem.js:22 ~ CartItem ~ item:", item , item?.size_id?.size)
   const dispatch = useDispatch();
   const [selectedSize, setSelectedSize] = useState(Object.keys(item?.size_id).length > 0 ? item?.size_id?.size : '');
-  console.log(
-    '🚀 ~ file: CartItem.js:26 ~ CartItem ~ selectedSize:',
-    selectedSize,
-  );
   const [sizeArray, setSizeArray] = useState(
     item?.varation?.map(item => item?.size),
   );
@@ -96,9 +92,7 @@ console.log("🚀 ~ file: CartItem.js:22 ~ CartItem ~ item:", item , item?.size_
               flexWrap: 'wrap',
               width: windowWidth * 0.45,
             }}>
-            {/* {item?.size_id ? (
-              <CustomText style={{textAlign:'left', color:'black', fontSize:moderateScale(12,.6)}}>{item?.size_id?.size}</CustomText>
-            ) : ( */}
+           
               <DropDownSingleSelect
               placeholder={selectedSize ? selectedSize : 'Select Any Size'}
                 array={ sizeArray}
@@ -113,7 +107,7 @@ console.log("🚀 ~ file: CartItem.js:22 ~ CartItem ~ item:", item , item?.size_
                 }}
                 fontSize={moderateScale(10, 0.6)}
               />
-            {/* )} */}
+           
           </View>
 
           <View
@@ -175,9 +169,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     minHeight: windowHeight * 0.2,
     width: windowWidth * 0.9,
-    // backgroundColor: 'yellow',
     marginBottom: moderateScale(20, 0.3),
-    // flexGrow : 0
     borderBottomWidth: 1,
     borderColor: Color.veryLightGray,
     paddingBottom: moderateScale(10, 0.3),
@@ -196,7 +188,6 @@ const styles = StyleSheet.create({
     marginLeft: moderateScale(5, 0.3),
     flexWrap: 'wrap',
     width: windowWidth * 0.5,
-    // backgroundColor : 'green',
     overflow: 'hidden',
   },
   text1: {
@@ -218,14 +209,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Color.themeLightGray,
     marginRight: moderateScale(5, 0.3),
-    // backgroundColor :'red',
-    // width : 20 , height : 20
   },
   colorBox: {
     width: moderateScale(20, 0.3),
     height: moderateScale(20, 0.3),
     borderRadius: moderateScale(10, 0.3),
-    // marginRight: moderateScale(5, 0.3),
   },
   amount: {
     fontSize: moderateScale(18, 0.3),

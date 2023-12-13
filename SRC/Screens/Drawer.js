@@ -28,7 +28,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 
 const Drawer = () => {
   const user = useSelector(state => state.commonReducer.userData);
-  // console.log("🚀 ~ file: Drawer.js:22 ~ Drawer ~ user:", user)
+  console.log("🚀 ~ file: Drawer.js:22 ~ Drawer ~ user:", user)
   const navigation = useNavigation();
   const dispatch = useDispatch();
 

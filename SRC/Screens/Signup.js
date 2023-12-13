@@ -29,10 +29,8 @@ import Entypo from 'react-native-vector-icons/Entypo'
 import Feather from 'react-native-vector-icons/Feather'
 
 const Signup = () => {
-  const token = useSelector(state => state.authReducer.token);
+
   const dispatch = useDispatch();
-
-
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setpassword] = useState('');
@@ -57,14 +55,14 @@ const Signup = () => {
 
 
   const register = async () => {
-    const formData = new FormData()
+
     const url = 'register';
     const body = {
       name: name,
       email: email,
       password: password,
       c_password: c_password,
-      address : address ,
+      address : address,
       contact : contact,
       country : country?.name,
       postal_code : postalCode

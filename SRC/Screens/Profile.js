@@ -142,16 +142,14 @@ const Profile = () => {
           <View
             style={{
               width: windowWidth * 0.3,
-              //   height: windowHeight * 0.3,
               alignItems: 'center',
-              //   backgroundColor:'orange',
             }}>
             <View style={styles.Profile1}>
               <CustomImage
                 resizeMode={'cover'}
                 source={
-                  image?.uri
-                    ? {uri: image?.uri}
+                  userData?.photo
+                    ? {uri: userData?.photo}
                     : userData?.photo
                     ? {uri: userData?.photo}
                     : require('../Assets/Images/logo.png')

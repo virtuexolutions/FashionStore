@@ -11,6 +11,7 @@ const SubCategories = ({
   setSelectedCategory,
   item,
   setIsVisible,
+  setCategoryId
 }) => {
   console.log(
     '🚀 ~ file: SubCategories.js:10 ~ SubCategories ~ selectedCategory:',
@@ -19,6 +20,7 @@ const SubCategories = ({
   return (
     <TouchableOpacity
       onPress={() => {
+        setCategoryId(item?.id)
         setSelectedCategory(item?.title);
         item?.child_categories?.length == 0 && setIsVisible(false);
       }}
@@ -41,6 +43,7 @@ const SubCategories = ({
         <CustomImage
           resizeMode="contain"
           onPress={() => {
+            setCategoryId(item?.id)
             setSelectedCategory(item?.title);
             item?.child_categories?.length == 0 && setIsVisible(false)
           }}

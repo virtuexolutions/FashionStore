@@ -22,22 +22,6 @@ import {setUserData, setUserLogOut} from '../Store/slices/common';
 import CustomImage from './CustomImage';
 
 const Header = props => {
-  const focused = useIsFocused();
-  const token = useSelector(state => state.authReducer.token);
-  // console.log('🚀 ~ file: Header.js:42 ~ Header ~ token:', token);
-  const [isLoveNotesVisible, setLoveNotesVisible] = useState(false);
-  const notification = useSelector(state => state.commonReducer.notification);
-  const navigationN = useNavigation();
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [drawerModal, setDrawerModal] = useState(false);
-  // const [switchEnabled, setSwitchEnabled] = useState(false);
-  const [isSpotLightVisible, setSpotLightVisible] = useState(false);
-  const [discreteModal, setDiscreteModal] = useState(false);
-
-  const [isVisible, setIsVisible] = useState(false);
-  const [isBoostModalvisible, setBoostModalvisible] = useState(false);
-  const [notificationData, setNotificationData] = useState([]);
-
   const {
     title,
     textStyle,
@@ -51,12 +35,11 @@ const Header = props => {
     alignRight,
     rightType,
   } = props;
+  const focused = useIsFocused();
+  const navigationN = useNavigation();
+ 
 
-  const [searchText, setSearchText] = useState('');
-  const user = useSelector(state => state.commonReducer.userData);
-  const userRole = useSelector(state => state.commonReducer.selectedRole);
   const cardData = useSelector(state => state.commonReducer.item)
-  // console.log("🚀 ~ file: Header.js:58 ~ Header ~ cardData:", cardData)
 
   useEffect(() => {
     rightName == 'bell' && getNotifications();
@@ -84,7 +67,6 @@ const Header = props => {
           onPress={
             leftName == 'menu'
               ? () => {
-                  // setDrawerModal(true);
                   navigationN.toggleDrawer();
                 }
               : leftPress
