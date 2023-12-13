@@ -33,20 +33,26 @@ import {
 
 const DressesDetail = props => {
   const focused = useIsFocused();
-  const item = props.route.params.item;
+  const item = props.route.params.item;    
+  // console.log(
+  //   '🚀 ~ file: DressesDetail.js:37 ~ DressesDetail ~ item:',
+  //   item,
+  // );
+  // console.log(
+  //   '🚀 ~ file: DressesDetail.js:37 ~ DressesDetail ~ item:',
+  //   item?.varation,
+  // );
   const cartData = useSelector(state => state.commonReducer.item);
-  console.log(
-    '🚀 ~ file: DressesDetail.js:32 ~ DressesDetail ~ cartData:',
-    cartData,
-  );
+  // console.log(
+  //   '🚀 ~ file: DressesDetail.js:32 ~ DressesDetail ~ cartData:',
+  //   cartData,
+  // );
 
   const dispatch = useDispatch();
   const [selectedSize, setSelectedSize] = useState('');
-  console.log(
-    '🚀 ~ file: DressesDetail.js:56 ~ DressesDetail ~ selectedSize:',
-    selectedSize,
-  );
+
   const [selectedItem, setSelectedItem] = useState({});
+  // console.log("🚀 ~ file: DressesDetail.js:51 ~ DressesDetail ~ selectedItem:", selectedItem)
   const cardData = useSelector(state => state.commonReducer.item);
   const [sizeArray, setSizeArray] = useState(
     item?.varation?.map(item => item?.size),
@@ -288,7 +294,11 @@ const DressesDetail = props => {
               }}>
               $
               {selectedItem && Object.keys(selectedItem).length > 0
-                ? selectedItem?.price
+                ? selectedItem?.discount_price
+                  ? selectedItem?.discount_price
+                  : selectedItem?.price
+                : item?.discount_price
+                ? item?.discount_price
                 : item?.wholsale_price}
             </CustomText>
 
@@ -382,34 +392,37 @@ const DressesDetail = props => {
               );
             })}
           </View> */}
+          {item?.size != null && (
+            <>
+              <CustomText
+                isBold
+                style={{
+                  color: '#201E1D',
+                  fontSize: moderateScale(14, 0.6),
+                  width: windowWidth * 0.17,
+                  // backgroundColor:'red',
+                  width: windowWidth * 0.95,
+                  textAlign: 'left',
+                  paddingHorizontal: moderateScale(10, 0.6),
+                  paddingTop: moderateScale(10, 0.6),
+                }}>
+                Size
+              </CustomText>
 
-          <CustomText
-            isBold
-            style={{
-              color: '#201E1D',
-              fontSize: moderateScale(14, 0.6),
-              width: windowWidth * 0.17,
-              // backgroundColor:'red',
-              width: windowWidth * 0.95,
-              textAlign: 'left',
-              paddingHorizontal: moderateScale(10, 0.6),
-              paddingTop: moderateScale(10, 0.6),
-            }}>
-            Size
-          </CustomText>
-
-          <DropDownSingleSelect
-            placeholder={selectedSize ? selectedSize : 'Please select size'}
-            array={sizeArray}
-            item={selectedSize}
-            setItem={setSelectedSize}
-            width={windowWidth * 0.9}
-            dropDownHeight={windowHeight * 0.06}
-            dropdownStyle={{
-              width: windowWidth * 0.9,
-              borderBottomWidth: 0,
-            }}
-          />
+              <DropDownSingleSelect
+                placeholder={selectedSize ? selectedSize : 'Please select size'}
+                array={sizeArray}
+                item={selectedSize}
+                setItem={setSelectedSize}
+                width={windowWidth * 0.9}
+                dropDownHeight={windowHeight * 0.06}
+                dropdownStyle={{
+                  width: windowWidth * 0.9,
+                  borderBottomWidth: 0,
+                }}
+              />
+            </>
+          )}
           <CustomText
             isBold
             style={{

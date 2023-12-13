@@ -19,7 +19,11 @@ import {
 import DropDownSingleSelect from './DropDownSingleSelect';
 
 const CartItem = ({item, fromCheckout}) => {
-console.log("🚀 ~ file: CartItem.js:22 ~ CartItem ~ item:", item , item?.size_id?.size)
+  console.log(
+    '🚀 ~ file: CartItem.js:22 ~ CartItem ~ item:',
+    item,
+    item?.size_id?.size,
+  );
   const dispatch = useDispatch();
   const [selectedSize, setSelectedSize] = useState(Object.keys(item?.size_id).length > 0 ? item?.size_id?.size : '');
   const [sizeArray, setSizeArray] = useState(
@@ -92,10 +96,13 @@ console.log("🚀 ~ file: CartItem.js:22 ~ CartItem ~ item:", item , item?.size_
               flexWrap: 'wrap',
               width: windowWidth * 0.45,
             }}>
-           
+            {/* {item?.size_id ? (
+              <CustomText style={{textAlign:'left', color:'black', fontSize:moderateScale(12,.6)}}>{item?.size_id?.size}</CustomText>
+            ) : ( */}
+            {item?.size != null ? (
               <DropDownSingleSelect
-              placeholder={selectedSize ? selectedSize : 'Select Any Size'}
-                array={ sizeArray}
+                placeholder={selectedSize ? selectedSize : 'Select Any Size'}
+                array={sizeArray}
                 item={selectedSize}
                 setItem={setSelectedSize}
                 width={windowWidth * 0.5}
@@ -107,7 +114,13 @@ console.log("🚀 ~ file: CartItem.js:22 ~ CartItem ~ item:", item , item?.size_
                 }}
                 fontSize={moderateScale(10, 0.6)}
               />
-           
+            ) : (
+              <View
+                style={{
+                  height: 30,
+                }}></View>
+            )}
+            {/* )} */}
           </View>
 
           <View
@@ -120,7 +133,17 @@ console.log("🚀 ~ file: CartItem.js:22 ~ CartItem ~ item:", item , item?.size_
               },
             ]}>
             <CustomText style={styles.amount}>
-              {numeral(item?.size_id?.price * item?.quantity).format('$0,0.00')}
+              {numeral(
+                (item?.size == null
+                  ? item?.discount_price
+                    ? item?.discount_price
+                    : item?.wholsale_price
+                  : item?.size_id?.discount_price
+                  ? item?.size_id?.discount_price
+                  : item?.size_id?.price) * item?.quantity,
+              ).format('$0,0.00')}
+
+              {/* {numeral(item?.size_id?.price * item?.quantity).format('$0,0.00')} */}
             </CustomText>
 
             <View

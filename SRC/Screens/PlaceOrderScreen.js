@@ -49,11 +49,14 @@ const PlaceOrderScreen = () => {
   const [phone, setPhone] = useState(userdata?.contact);
   const [country, setCountry] = useState(userdata?.country);
   const [address, setAddress] = useState(userdata?.address);
-  const [postcode, setPostCode] = useState(userdata?.postCode);
+  const [postcode, setPostCode] = useState(userdata?.postal_code);
   const [stripeToken, setStripeToken] = useState('');
   const [isChecked, setIsChecked] = useState('');
   const [isModal, setIsModal] = useState(false);
+  const [newData, setnewData] = useState([]);
+  // console.log('🚀 ~ file: FormScreen.js:56 ~ FormScreen ~ newData:', newData);
 
+  // console.log('🚀 ~ file: FormScreen.js:28 ~ FormScreen ~ isModal:', isModal);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
@@ -292,12 +295,14 @@ const PlaceOrderScreen = () => {
             </CustomText>
           </View>
           <View
+
             style={{
               flexDirection: 'row',
               alignItems: 'center',
             }}>
             <TouchableOpacity
               onPress={() => {
+                setIsModal(true);
                 setIsChecked('pay through stripe');
               }}
               style={{

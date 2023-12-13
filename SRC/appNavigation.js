@@ -25,6 +25,7 @@ import OrderScreen from './Screens/OrderScreen';
 import Profile from './Screens/Profile';
 import OrderDetails from './Screens/OrderDetails';
 import SeeAllScreen from './Screens/SeeAllScreen';
+import PaymentInvoice from './Screens/PaymentInvoice';
 
 
 const AppNavigator = () => {
@@ -68,6 +69,7 @@ const AppNavigator = () => {
           <RootNav.Screen name="EnterPhone" component={EnterPhone} />
           <RootNav.Screen name="VerifyNumber" component={VerifyNumber} />
           <RootNav.Screen name="ResetPassword" component={ResetPassword} />
+          <RootNav.Screen name="PaymentInvoice" component={PaymentInvoice} /> 
           <RootNav.Screen name="Signup" component={Signup} />
 
          {/* 

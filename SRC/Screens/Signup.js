@@ -67,7 +67,7 @@ const Signup = () => {
       country : country?.name,
       postal_code : postalCode
     };
- console.log("🚀 ~ file: Signup.js:70 ~ register ~ body:", body)
+//  console.log("🚀 ~ file: Signup.js:70 ~ register ~ body:", body)
     // for (let key in body) {
     //   if (body[key] == '') {
     //     return Platform.OS == 'android'
@@ -92,7 +92,7 @@ const Signup = () => {
     }
     setisLoading(true);
     const response = await Post(url, body, apiHeader());
-   console.log("🚀 ~ file: Signup.js:91 ~ register ~ response:", response)
+   console.log("🚀 ~ file: Signup.js:91 ~ register ~ response:", response?.data)
     setisLoading(false);
 
     if (response != undefined) {
