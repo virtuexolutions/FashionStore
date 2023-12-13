@@ -56,14 +56,14 @@ const FormScreen = () => {
   const [phone, setPhone] = useState(userdata?.contact);
   const [country, setCountry] = useState(userdata?.country);
   const [address, setAddress] = useState(userdata?.address);
-  const [postcode, setPostCode] = useState(userdata?.postCode);
+  const [postcode, setPostCode] = useState(userdata?.postal_code);
   const [stripeToken, setStripeToken] = useState('');
   const [isChecked, setIsChecked] = useState('');
   const [isModal, setIsModal] = useState(false);
   const [newData, setnewData] = useState([]);
-  console.log('🚀 ~ file: FormScreen.js:56 ~ FormScreen ~ newData:', newData);
+  // console.log('🚀 ~ file: FormScreen.js:56 ~ FormScreen ~ newData:', newData);
 
-  console.log('🚀 ~ file: FormScreen.js:28 ~ FormScreen ~ isModal:', isModal);
+  // console.log('🚀 ~ file: FormScreen.js:28 ~ FormScreen ~ isModal:', isModal);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
@@ -121,13 +121,13 @@ const FormScreen = () => {
     if (response != undefined) {
      console.log('dadafasrfafara' ,response?.data)
      setnewData([])
-      // return console.log(
-      //   '🚀 ~ file: FormScreen.js:53 ~ PlaceOrder ~ response:',
-      //   response?.data,
-      // );
+     console.log(
+        '🚀 ~ file: FormScreen.js:53 ~ PlaceOrder ~ response:',
+        response?.data,
+      );
 
       dispatch(EmptyCart());
-      // navigationService.navigate('HomeScreen')
+      navigationService.navigate('PaymentInvoice' ,{body:body})
     }
   };
 
@@ -304,12 +304,14 @@ const FormScreen = () => {
             </CustomText>
           </View>
           <View
+
             style={{
               flexDirection: 'row',
               alignItems: 'center',
             }}>
             <TouchableOpacity
               onPress={() => {
+                setIsModal(true);
                 setIsChecked('pay through stripe');
               }}
               style={{
@@ -367,11 +369,7 @@ const FormScreen = () => {
           bgColor={Color.themeBgColor}
           borderRadius={moderateScale(30, 0.3)}
         onPress={() => {
-         
-       
             PlaceOrder()
-
-      
         }}
           isGradient
         />

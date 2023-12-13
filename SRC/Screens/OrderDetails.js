@@ -115,7 +115,8 @@ const OrderDetails = (props) => {
                   width: '100%',
                   height: '100%',
                 }}
-                source={item?.image}
+                // source={require('../Assets/Images/image3.png')}
+                source={{uri :item?.image }}
               />
             </View>
             <View
@@ -216,14 +217,14 @@ const OrderDetails = (props) => {
             <CustomText style={styles.text2}>subTotal</CustomText>
             <CustomText style={styles.text2}>{data?.sub_total}</CustomText>
           </View>
-          <View style={styles.row}>
+          {/* <View style={styles.row}>
             <CustomText style={styles.text2}>discount</CustomText>
             <CustomText style={styles.text2}>10%</CustomText>
           </View>
           <View style={styles.row}>
             <CustomText style={styles.text2}>Total</CustomText>
             <CustomText style={styles.text2}>{data?.total_amount}</CustomText>
-          </View>
+          </View> */}
         </View>
         {/* <Text>Thello</Text> */}
       </ScrollView>

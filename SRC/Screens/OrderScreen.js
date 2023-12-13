@@ -280,8 +280,8 @@ export default OrderScreen;
 const styles = ScaledSheet.create({
   rowview: {
     flexDirection: 'row',
-    // backgroundColor:'red',
-    width: windowWidth * 0.5,
+    backgroundColor:Color.white,
+    width: windowWidth * 0.99,
     paddingHorizontal: moderateScale(25, 0.6),
     paddingVertical: moderateScale(15, 0.6),
   },

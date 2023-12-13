@@ -55,7 +55,7 @@ const OrderCard = ({data}) => {
                     style={{backgroundColor: Color.lightGray, color: 'black' ,
                     fontSize:moderateScale(15,.3)
                     }}>
-                    {data?.item?.length - 4}+
+                    {data?.item_info?.length - 4}+
                   </Text>
                 </View>
               )}
@@ -65,8 +65,8 @@ const OrderCard = ({data}) => {
                     height: '100%',
                     width: '100%',
                   }}
-                  source={require('../Assets/Images/image3.png')}
-                  // source={{uri : item?.item_info?.image}}
+                  // source={require('../Assets/Images/image3.png')}
+                  source={{uri : item?.item_info?.image}}
                 />
               </View>
             </>
