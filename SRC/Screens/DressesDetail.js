@@ -24,17 +24,29 @@ import {useIsFocused} from '@react-navigation/native';
 import Color from '../Assets/Utilities/Color';
 import {useDispatch, useSelector} from 'react-redux';
 import DropDownSingleSelect from '../Components/DropDownSingleSelect';
-import {AddToCart, decrementQuantity, increamentQuantity} from '../Store/slices/common';
+import {
+  AddToCart,
+  decrementQuantity,
+  increamentQuantity,
+  selectedProductSize,
+} from '../Store/slices/common';
 
 const DressesDetail = props => {
+  const focused = useIsFocused();
   const item = props.route.params.item;
   const cartData = useSelector(state => state.commonReducer.item);
-  console.log("🚀 ~ file: DressesDetail.js:32 ~ DressesDetail ~ cartData:", cartData)
-  const inCart = cartData?.find(data=> data?.id == item?.id)
+  console.log(
+    '🚀 ~ file: DressesDetail.js:32 ~ DressesDetail ~ cartData:',
+    cartData,
+  );
+
   const dispatch = useDispatch();
-  const [Selectedcolor, SetSelectedColor] = useState('');
-  const [selectedSize, setSelectedSize] = useState(inCart?.size_id ? inCart?.size_id?.size: '');
-  const [selectedItem, setSelectedItem] = useState(inCart?.size_id ? inCart?.size_id : {});
+  const [selectedSize, setSelectedSize] = useState('');
+  console.log(
+    '🚀 ~ file: DressesDetail.js:56 ~ DressesDetail ~ selectedSize:',
+    selectedSize,
+  );
+  const [selectedItem, setSelectedItem] = useState({});
   const cardData = useSelector(state => state.commonReducer.item);
   const [sizeArray, setSizeArray] = useState(
     item?.varation?.map(item => item?.size),
@@ -52,26 +64,36 @@ const DressesDetail = props => {
   ];
 
   const [finalItem, setFinalItem] = useState(item);
-  const body = {
-    Title: item?.Title,
-    colors: item?.colors,
-    cotton: cotton,
-    id: item?.id,
-    img: item?.img,
-    like: like,
-    price: item?.price,
-    qty: quantity,
-    sale: item?.sale,
-    size: item?.size,
-    subTitle: item?.subTitle,
-    selectedSize: selectedSize,
-    selectedColor: Selectedcolor,
-    totalQty: item?.totalQty,
-  };
 
   useEffect(() => {
     setSelectedItem(item?.varation?.find(item => item?.size == selectedSize));
+    if (selectedSize != '') {
+      dispatch(
+        selectedProductSize({
+          id: item?.id,
+          item: item?.varation?.find(data => data?.size == selectedSize),
+        }),
+      );
+    }
   }, [selectedSize]);
+
+  useEffect(() => {
+    if (cartData?.some(data => data?.id == item?.id)) {
+      setSelectedSize(
+        Object.keys(cartData?.find(data => data?.id == item?.id)?.size_id)
+          .length > 0
+          ? cartData?.find(data => data?.id == item?.id)?.size_id?.size
+          : '',
+      );
+
+      setSelectedItem(
+        Object.keys(cartData?.find(data => data?.id == item?.id)?.size_id)
+          .length > 0
+          ? cartData?.find(data => data?.id == item?.id)?.size_id
+          : {},
+      );
+    }
+  }, [focused]);
 
   return (
     <>
@@ -274,7 +296,7 @@ const DressesDetail = props => {
               <TouchableOpacity
                 onPress={() => {
                   if (quantity < item?.stock) {
-                    dispatch(increamentQuantity(item?.id))
+                    dispatch(increamentQuantity(item?.id));
                     setQuantity(quantity + 1);
                   } else {
                     Platform.OS == 'android'
@@ -309,7 +331,7 @@ const DressesDetail = props => {
                 onPress={() => {
                   if (quantity > 1) {
                     setQuantity(quantity - 1);
-                    dispatch(decrementQuantity(item?.id))
+                    dispatch(decrementQuantity(item?.id));
                   }
                 }}
                 style={styles.icon}>
@@ -377,6 +399,7 @@ const DressesDetail = props => {
           </CustomText>
 
           <DropDownSingleSelect
+            placeholder={selectedSize ? selectedSize : 'Please select size'}
             array={sizeArray}
             item={selectedSize}
             setItem={setSelectedSize}
@@ -412,118 +435,6 @@ const DressesDetail = props => {
             }}>
             {item?.description}
           </CustomText>
-
-          {/* 
-          <View style={styles.ColorLine1}>
-            {item?.varation?.map(size => {
-              return (
-                <TouchableOpacity
-                  onPress={() => {
-                    setSelectedSize(size);
-                  }}
-                  style={[
-                    styles.size,
-                    {
-                      backgroundColor:
-                        selectedSize == size ? Color.themeColor : '#F4F5F6',
-                    },
-                  ]}>
-                  <CustomText
-                    style={{
-                      color: selectedSize == size ? 'white' : '#8e9194',
-                      fontSize: moderateScale(14, 0.6),
-                      textTransform: 'uppercase',
-                    }}>
-                    {size}
-                  </CustomText>
-                </TouchableOpacity>
-              );
-            })}
-          </View> */}
-
-          {/* <CustomText
-            style={{
-              fontSize: moderateScale(12, 0.6),
-              color: '#8e9194',
-              width: windowWidth * 0.28,
-            }}>
-            Composition
-          </CustomText> */}
-          {/* 
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              padding: moderateScale(5, 0.6),
-              alignItems: 'center',
-            }}>
-            <CustomText
-              isBold
-              style={{
-                color: '#2F2B29',
-                fontSize: 16,
-                width: windowWidth * 0.36,
-              }}>
-              Organic Cotton
-            </CustomText>
-
-            <View style={styles.conterContainer}>
-              <TouchableOpacity
-                style={{
-                  width: windowWidth * 0.06,
-                  height: windowHeight * 0.03,
-                  borderRadius: (windowWidth * 0.06) / 3,
-                  backgroundColor: '#f2f2f2',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-                onPress={() => {
-                  setcotton(cotton + 1);
-                }}>
-                <CustomText
-                  isBold
-                  style={{
-                    color: '#000',
-                    fontSize: 13,
-                  }}>
-                  +
-                </CustomText>
-              </TouchableOpacity>
-
-              <CustomText
-                isBold
-                style={{
-                  color: '#2F2B29',
-                  fontSize: 18,
-                }}>
-                {cotton}
-              </CustomText>
-
-              <TouchableOpacity
-                onPress={() => {
-                  if (cotton > 1) {
-                    setcotton(cotton - 1);
-                  }
-                }}
-                style={{
-                  width: windowWidth * 0.06,
-                  height: windowHeight * 0.03,
-                  borderRadius: (windowWidth * 0.06) / 3,
-                  backgroundColor: '#f2f2f2',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                <CustomText
-                  isBold
-                  style={{
-                    color: '#000',
-                    fontSize: 13,
-                  }}>
-                  -
-                </CustomText>
-              </TouchableOpacity>
-            </View>
-          </View> */}
         </View>
       </ScrollView>
 
@@ -534,9 +445,15 @@ const DressesDetail = props => {
           }
           isBold
           onPress={() => {
-            dispatch(AddToCart({...item,quantity:quantity , size_id:selectedItem}));
+            dispatch(
+              AddToCart({...item, quantity: quantity, size_id: selectedItem}),
+            );
           }}
-          text={'ADD TO CART'}
+          text={
+            cardData.find((data, index) => data?.id == item?.id)
+              ? 'Added'
+              : 'ADD TO CART'
+          }
           textColor={Color.white}
           width={windowWidth * 0.8}
           height={windowHeight * 0.07}
@@ -562,7 +479,7 @@ const styles = StyleSheet.create({
   bottomContainer: {
     position: 'absolute',
     width: windowWidth,
-    height: windowHeight * 0.08,
+    height: windowHeight * 0.1,
     backgroundColor: '#FFFFFF',
     //  alignItems:'center',
     bottom: 0,
