@@ -6,7 +6,7 @@ import {
   ActivityIndicator,
   View,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import React, {useState} from 'react';
 import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
@@ -23,31 +23,29 @@ import {useDispatch, useSelector} from 'react-redux';
 import {validateEmail} from '../Config';
 import {setUserData} from '../Store/slices/common';
 import {setUserToken} from '../Store/slices/auth';
-import { Icon} from 'native-base'
+import {Icon} from 'native-base';
 import CountryPicker, {DARK_THEME} from 'react-native-country-picker-modal';
-import Entypo from 'react-native-vector-icons/Entypo'
-import Feather from 'react-native-vector-icons/Feather'
+import Entypo from 'react-native-vector-icons/Entypo';
+import Feather from 'react-native-vector-icons/Feather';
 
 const Signup = () => {
   const token = useSelector(state => state.authReducer.token);
   const dispatch = useDispatch();
 
-
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setpassword] = useState('');
   const [c_password, setc_password] = useState('');
-  const [country ,setCountry] =useState('')
-  const [address ,setAddress] =useState('')
-  const [contact,setContact] =useState('')
-  const [postCode,setPostCode]= useState('')
+  const [country, setCountry] = useState('');
+  const [address, setAddress] = useState('');
+  const [contact, setContact] = useState('');
+  const [postCode, setPostCode] = useState('');
   const [isLoading, setisLoading] = useState(false);
-  const [showNumberModal ,setShowNumberModal] = useState(false)
+  const [showNumberModal, setShowNumberModal] = useState(false);
   const [countryCode, setCountryCode] = useState('');
   const [withCallingCode, setWithCallingCode] = useState(true);
-  const [withFilter ,setWithFilter] =useState(true)
-  const [postalCode, setpostalCode] = useState('')
-
+  const [withFilter, setWithFilter] = useState(true);
+  const [postalCode, setpostalCode] = useState('');
 
   const onSelect = country => {
     console.log('dasdasdasdads =>', country);
@@ -55,21 +53,20 @@ const Signup = () => {
     setCountry(country);
   };
 
-
   const register = async () => {
-    const formData = new FormData()
+    const formData = new FormData();
     const url = 'register';
     const body = {
       name: name,
       email: email,
       password: password,
       c_password: c_password,
-      address : address ,
-      contact : contact,
-      country : country?.name,
-      postal_code : postalCode
+      address: address,
+      contact: contact,
+      country: country?.name,
+      postal_code: postalCode,
     };
-//  console.log("🚀 ~ file: Signup.js:70 ~ register ~ body:", body)
+    //  console.log("🚀 ~ file: Signup.js:70 ~ register ~ body:", body)
     // for (let key in body) {
     //   if (body[key] == '') {
     //     return Platform.OS == 'android'
@@ -94,14 +91,8 @@ const Signup = () => {
     }
     setisLoading(true);
     const response = await Post(url, body, apiHeader());
-   console.log("🚀 ~ file: Signup.js:91 ~ register ~ response:", response?.data)
     setisLoading(false);
-
     if (response != undefined) {
-      console.log(
-        '🚀 ~ file: Signup.js:66 ~ register ~ response:',
-        response?.data,
-      );
       dispatch(setUserData(response?.data?.data?.use_info));
       dispatch(setUserToken({token: response?.data?.data?.token}));
     }
@@ -109,7 +100,7 @@ const Signup = () => {
 
   return (
     <ScrollView
-     contentContainerStyle={{
+      contentContainerStyle={{
         minHeight: windowHeight,
         width: windowWidth,
         alignItems: 'center',
@@ -213,7 +204,7 @@ const Signup = () => {
         placeholderColor={'#ABB1C0'}
         borderRadius={moderateScale(20, 0.6)}
       />
-         <TextInputWithTitle
+      <TextInputWithTitle
         iconName="phone"
         iconType={Entypo}
         rightIcon
@@ -232,7 +223,7 @@ const Signup = () => {
         placeholderColor={'#ABB1C0'}
         borderRadius={moderateScale(20, 0.6)}
       />
-           <TextInputWithTitle
+      <TextInputWithTitle
         iconName="map-pin"
         iconType={Feather}
         rightIcon
@@ -251,7 +242,7 @@ const Signup = () => {
         placeholderColor={'#ABB1C0'}
         borderRadius={moderateScale(20, 0.6)}
       />
-       <TextInputWithTitle
+      <TextInputWithTitle
         iconName="map-pin"
         iconType={Feather}
         rightIcon
@@ -270,51 +261,50 @@ const Signup = () => {
         placeholderColor={'#ABB1C0'}
         borderRadius={moderateScale(20, 0.6)}
       />
-         <TouchableOpacity
-                activeOpacity={0.9}
-                onPress={() => {
-                    setShowNumberModal(true);
-                }}
-                style={[styles.countryview, {justifyContent: 'flex-start'}]}>
-                <CountryPicker
-                  {...{
-                    countryCode,
-                    withCallingCode,
-                    onSelect,
-                    withFilter
-                 
-                  }}
-                  visible={showNumberModal}
-                  onClose={() => {
-                    setShowNumberModal(false);
-                  }}
-                />
+      <TouchableOpacity
+        activeOpacity={0.9}
+        onPress={() => {
+          setShowNumberModal(true);
+        }}
+        style={[styles.countryview, {justifyContent: 'flex-start'}]}>
+        <CountryPicker
+          {...{
+            countryCode,
+            withCallingCode,
+            onSelect,
+            withFilter,
+          }}
+          visible={showNumberModal}
+          onClose={() => {
+            setShowNumberModal(false);
+          }}
+        />
 
-                {Object.keys(country).length > 0 && (
-                  <CustomText
-                    style={{
-                      fontSize: moderateScale(15, 0.6),
-                      color: '#5E5E5E',
-                    }}>
-                      {country?.name}
-                    </CustomText>
-                )}
+        {Object.keys(country).length > 0 && (
+          <CustomText
+            style={{
+              fontSize: moderateScale(15, 0.6),
+              color: '#5E5E5E',
+            }}>
+            {country?.name}
+          </CustomText>
+        )}
 
-                <Icon
-                  name={'angle-down'}
-                  as={FontAwesome}
-                  size={moderateScale(20, 0.6)}
-                  // color={Color.themeColor}
-                  onPress={() => {
-                    setShowNumberModal(true);
-                  }}
-                  style={{
-                    position: 'absolute',
-                    right: moderateScale(5, 0.3),
-                  }}
-                />
-              </TouchableOpacity>
-   
+        <Icon
+          name={'angle-down'}
+          as={FontAwesome}
+          size={moderateScale(20, 0.6)}
+          // color={Color.themeColor}
+          onPress={() => {
+            setShowNumberModal(true);
+          }}
+          style={{
+            position: 'absolute',
+            right: moderateScale(5, 0.3),
+          }}
+        />
+      </TouchableOpacity>
+
       <CustomButton
         text={
           isLoading ? (
@@ -345,7 +335,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-    countryview: {
+  countryview: {
     width: windowWidth * 0.8,
     height: windowHeight * 0.06,
     borderRadius: moderateScale(20, 0.6),
@@ -355,7 +345,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: moderateScale(10, 0.6),
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom:moderateScale(20 ,0.3),
+    marginBottom: moderateScale(20, 0.3),
     // color:'red'
   },
 });

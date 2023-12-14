@@ -59,13 +59,14 @@ const LoginScreen = () => {
 
     setIsLoading(true);
     const response = await Post(url, body, apiHeader());
+   console.log("🚀 ~ file: LoginScreen.js:62 ~ Login ~ response:", response?.data)
     setIsLoading(false);
 
     if (response != undefined) {
-      console.log(
-        '🚀 ~ file: Signup.js:66 ~ register ~ response:',
-        response?.data,
-      );
+      // console.log(
+      //   '🚀 ~ file: Signup.js:66 ~ register ~ response:',
+      //   response?.data,
+      // );
       dispatch(setUserData(response?.data?.data?.use_info));
       dispatch(setUserToken({token: response?.data?.data?.token}));
     }
