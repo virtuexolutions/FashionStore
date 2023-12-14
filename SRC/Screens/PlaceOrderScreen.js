@@ -161,7 +161,8 @@ const PlaceOrderScreen = () => {
     setIsLoading(false);
     if (response != undefined) {
       console.log('dadafasrfafara', response?.data);
-      dispatch(EmptyCart());
+      navigationService.navigate('PaymentInvoice',{body:response?.data?.order_info})
+      // dispatch(EmptyCart());
     }
   };
 

@@ -14,15 +14,16 @@ import {
   import Color from '../Assets/Utilities/Color';
   import CustomImage from '../Components/CustomImage';
   import navigationService from '../navigationService';
-  import { useSelector } from 'react-redux';
+  import { useDispatch, useSelector } from 'react-redux';
   import moment from 'moment';
+  import numeral from 'numeral'
+import { EmptyCart } from '../Store/slices/common';
   
   const PaymentInvoice = props => {
     const Invoice = props.route.params.body;
     console.log("🚀 ~ file: PaymentInvoice.js:22 ~ PaymentInvoice ~ Invoice:", Invoice)
     const user = useSelector(state=> state.commonReducer.userData)
-  
-    // console.log('PAYMENT INVOICE ========>>>>>>', Invoice);
+    const dispatch = useDispatch()
   
   
     return (
@@ -70,7 +71,7 @@ import {
                 marginTop: moderateScale(20, 0.3),
               }}>
               <CustomText>Order Id</CustomText>
-              <CustomText>123424928346</CustomText>
+              <CustomText>{Invoice?.order_number}</CustomText>
             </View>
             <View
               style={{
@@ -80,7 +81,7 @@ import {
                 marginTop: moderateScale(20, 0.3),
               }}>
               <CustomText>Bill To</CustomText>
-              <CustomText>{user?.name}</CustomText>
+              <CustomText>{Invoice?.first_name}</CustomText>
             </View>
             <View
               style={{
@@ -90,7 +91,7 @@ import {
                 marginTop: moderateScale(20, 0.3),
               }}>
               <CustomText>Amount Due To</CustomText>
-              <CustomText>PKR {Invoice.total}</CustomText>
+              <CustomText>{numeral(Invoice.discount_amount).format('$0,0.00')}</CustomText>
             </View>
             <View
               style={{
@@ -102,14 +103,14 @@ import {
               <CustomText>Date</CustomText>
               <CustomText>{ moment().format('DD MMM YYYY')}</CustomText>
             </View>
-            <View
+            {/* <View
               style={{
                 width: windowWidth * 0.9,
                 flexDirection: 'row',
                 marginTop: moderateScale(20, 0.3),
               }}>
               <CustomText  numberOfLines={2} style={{width:windowWidth*0.9,color:"#e4b22d",fontSize:moderateScale(11,0.6)}}>Note: kindly contact seller for further details with in two days</CustomText>
-            </View>
+            </View> */}
           </View>
   
   
@@ -143,7 +144,7 @@ import {
               style={{
               maxHeight: windowHeight * 0.2,
               }}>
-              {Invoice?.order.map(item => {
+              {Invoice?.item_info?.map(item => {
                 return (
                   <View
                     style={{
@@ -155,7 +156,7 @@ import {
                     <CustomText>
                       {item?.title} x {item?.quantity}
                     </CustomText>
-                    <CustomText>PKR{item?.price}</CustomText>
+                    <CustomText>{numeral(item?.price).format('$0,0.00')}</CustomText>
                   </View>
                 );
               })}
@@ -176,17 +177,39 @@ import {
               width: windowWidth * 0.9,
               marginTop: moderateScale(20, 0.3),
             }}>
-            <CustomText isBold>Total (Rupees) </CustomText>
-            <CustomText isBold>PKR {Invoice?.total_amount}</CustomText>
+            <CustomText isBold>Total </CustomText>
+            <CustomText isBold> {numeral(Invoice?.total_amount).format('$0,0.00')}</CustomText>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              width: windowWidth * 0.9,
+              marginTop: moderateScale(10, 0.3),
+            }}>
+            <CustomText isBold>Discount </CustomText>
+            <CustomText isBold> {numeral(Invoice?.total_amount - Invoice?.discount_amount).format('$0,0.00')}</CustomText>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              width: windowWidth * 0.9,
+              marginTop: moderateScale(10, 0.3),
+            }}>
+            <CustomText isBold>Sub Total </CustomText>
+            <CustomText isBold> {numeral(Invoice?.discount_amount).format('$0,0.00')}</CustomText>
           </View>
   
           <TouchableOpacity
-            onPress={() => navigationService.navigate('CustomerDashboard')}
+            onPress={() => {
+              dispatch(EmptyCart())
+              navigationService.navigate('HomeScreen')}}
             activeOpacity={0.8}
             style={{
               width: windowWidth * 0.4,
               paddingVertical: moderateScale(15, 0.6),
-              backgroundColor: Color.themeBlue,
+              backgroundColor: Color.red,
               borderRadius: moderateScale(10, 0.3),
               marginTop: moderateScale(20, 0.3),
               alignItems: 'center',
