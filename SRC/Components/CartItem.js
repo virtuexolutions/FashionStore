@@ -25,7 +25,9 @@ const CartItem = ({item, fromCheckout}) => {
     item?.size_id?.size,
   );
   const dispatch = useDispatch();
-  const [selectedSize, setSelectedSize] = useState(Object.keys(item?.size_id).length > 0 ? item?.size_id?.size : '');
+  const [selectedSize, setSelectedSize] = useState(
+    Object.keys(item?.size_id).length > 0 ? item?.size_id?.size : '',
+  );
   const [sizeArray, setSizeArray] = useState(
     item?.varation?.map(item => item?.size),
   );
@@ -99,7 +101,7 @@ const CartItem = ({item, fromCheckout}) => {
             {/* {item?.size_id ? (
               <CustomText style={{textAlign:'left', color:'black', fontSize:moderateScale(12,.6)}}>{item?.size_id?.size}</CustomText>
             ) : ( */}
-            {item?.size != null ? (
+            {!['', null, undefined].includes(item?.size) ? (
               <DropDownSingleSelect
                 placeholder={selectedSize ? selectedSize : 'Select Any Size'}
                 array={sizeArray}
@@ -134,13 +136,19 @@ const CartItem = ({item, fromCheckout}) => {
             ]}>
             <CustomText style={styles.amount}>
               {numeral(
-                (item?.size == null
-                  ? item?.discount_price
-                    ? item?.discount_price
-                    : item?.wholsale_price
-                  : item?.size_id?.discount_price
+                (!['', null, undefined, 'null'].includes(item?.size)
                   ? item?.size_id?.discount_price
-                  : item?.size_id?.price) * item?.quantity,
+                    ? item?.size_id?.discount_price
+                    : item?.size_id?.price
+                  : item?.discount_price
+                  ? item?.discount_price
+                  : item?.wholsale_price) * item?.quantity,
+                // (item?.discount_price
+                //     ? item?.discount_price
+                //     : item?.wholsale_price
+                //   : item?.size_id?.discount_price
+                //   ? item?.size_id?.discount_price
+                //   : item?.size_id?.price) * item?.quantity
               ).format('$0,0.00')}
 
               {/* {numeral(item?.size_id?.price * item?.quantity).format('$0,0.00')} */}

@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {windowHeight, windowWidth} from '../Utillity/utils';
 import {moderateScale, ScaledSheet} from 'react-native-size-matters';
 import CustomImage from '../Components/CustomImage';
@@ -27,25 +27,56 @@ import NoData from '../Components/NoData';
 const HomeScreen = () => {
   const dispatch = useDispatch();
 
+  const token = useSelector(state => state.authReducer.token);
+  const cardData = useSelector(state => state.commonReducer.item);
+
   const [searchData, setSearchData] = useState('');
   const [isLoading, setisLoading] = useState(false);
   const [products, setProducts] = useState([]);
+  console.log(
+    '🚀 ~ file: HomeScreen.js:36 ~ HomeScreen ~ products:',
+    products.length,
+  );
+  const scrollViewRef = useRef();
   const [categoryModalVisible, setCategoryModalVisible] = useState(false);
   const [categoriesData, setCategoriesData] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(categoriesData);
   const [categoryId, setCategoryId] = useState(null);
+  console.log(
+    '🚀 ~ file: HomeScreen.js:45 ~ HomeScreen ~ categoryId:',
+    categoryId,
+  );
+  const [loadMore, setLoadMore] = useState(false);
+  const [categoryType, setCategoryType] = useState('');
+  console.log(
+    '🚀 ~ file: HomeScreen.js:48 ~ HomeScreen ~ categoryType:',
+    categoryType,
+  );
+  const [pageNum, setPageNum] = useState(1);
+  console.log('🚀 ~ file: HomeScreen.js:45 ~ HomeScreen ~ pageNum:', pageNum);
+  const [getMore, setGetMore] = useState(false);
 
-  const token = useSelector(state => state.authReducer.token);
-  const cardData = useSelector(state => state.commonReducer.item);
-
-  const searchProduct = async () => {
-    const url = `auth/product_category/${categoryId}`;
-    setisLoading(true);
+  const searchProduct = async value => {
+    const url =
+      categoryType == 'category'
+        ? `auth/product_category/${categoryId}?page=${pageNum}`
+        : categoryType == 'sub'
+        ? `auth/product_sub_category/${categoryId}?page=${pageNum}`
+        : categoryType == 'child' &&
+          `auth/product_child_category/${categoryId}?page=${pageNum}`;
+    console.log('Url is heree =========', url);
+    value == 'loadMore' ? setLoadMore(true) : setisLoading(true);
     const response = await Get(url, token);
-    setisLoading(false);
+    value == 'loadMore' ? setLoadMore(false) : setisLoading(false);
+
+    if (response != undefined) {
+      value == 'loadMore'
+        ? setProducts(prev => [...prev, response?.data?.data?.data])
+        : setProducts(response?.data?.data?.data);
+    }
     console.log(
       '🚀 ~ file: HomeScreen.js:44 ~ searchProduct ~ response:',
-      response,
+      response?.data,
     );
   };
 
@@ -59,25 +90,70 @@ const HomeScreen = () => {
     }
   };
 
-  const getData = async () => {
-    const url = 'auth/products';
-    setisLoading(true);
+  const getData = async type => {
+    console.log('🚀 ~ file: HomeScreen.js:79 ~ getData ~ type:', type);
+    const url = `auth/products?page=${pageNum}`;
+    type == 'LoadMore' ? setLoadMore(true) : setisLoading(true);
     const response = await Get(url, token);
+    type == 'LoadMore' ? setLoadMore(false) : setisLoading(false);
 
-    setisLoading(false);
     if (response != undefined) {
-      setProducts(response?.data?.data?.data);
+      // console.log(
+      //   '🚀 ~ file: HomeScreen.js:82 ~ getData ~ response:',
+      //   response?.data,
+      // );
+      if (type == 'LoadMore') {
+        setProducts(prev => [...prev, ...response?.data?.data?.data]);
+      } else {
+        setProducts(response?.data?.data?.data);
+      }
+    }
+  };
+
+  const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+    const paddingToBottom = 10;
+    return (
+      layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - paddingToBottom
+    );
+  };
+
+  const handleScroll = event => {
+    const currentOffset = event.nativeEvent.contentOffset.y;
+    const maxOffset =
+      event.nativeEvent.contentSize.height -
+      event.nativeEvent.layoutMeasurement.height;
+    console.log(
+      '🚀 ~ file: HomeScreen.js:88 ~ handleScroll ~ currentOffset:',
+      currentOffset,
+      maxOffset,
+    );
+
+    if (currentOffset >= maxOffset) {
+      setPageNum(prev => prev + 1);
     }
   };
 
   useEffect(() => {
+    setPageNum(1);
+  }, [categoryId]);
+
+  useEffect(() => {
+    if (pageNum > 1) {
+      getData('LoadMore');
+    }
+  }, [pageNum]);
+
+  useEffect(() => {
+    getData('initial');
     getCategories();
-    getData();
   }, []);
 
   useEffect(() => {
-    categoryId != null  && searchProduct();
-  }, [categoryId]);
+    if (categoryId != null && categoryType != '') {
+      pageNum == 1 ? searchProduct() : searchProduct('loadMore');
+    }
+  }, [pageNum, categoryType]);
 
   const categories = [
     {
@@ -329,10 +405,19 @@ const HomeScreen = () => {
       />
       <ScrollView
         showsVerticalScrollIndicator={false}
+        ref={scrollViewRef}
+        onScroll={({nativeEvent}) => {
+          if (isCloseToBottom(nativeEvent)) {
+            setPageNum(prev => prev + 1);
+            setGetMore(true);
+          }
+        }}
+        scrollEventThrottle={400}
         style={{
           height: windowHeight,
           width: windowWidth,
           alignSelf: 'center',
+          // paddingBottom:moderateScale(10,.6),
           backgroundColor: '#FDFDFD',
         }}
         contentContainerStyle={{
@@ -402,6 +487,7 @@ const HomeScreen = () => {
         </View>
         <FlatList
           data={categoriesData}
+          onEndReached={() => {}}
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{paddingVertical: moderateScale(10, 0.6)}}
@@ -416,6 +502,7 @@ const HomeScreen = () => {
                   }}
                   onPress={() => {
                     setSelectedCategory(item?.title);
+                    setCategoryType('category');
                     setCategoryId(item?.id);
                     categories[index]?.onPress;
                     item?.sub_categories.length > 0 &&
@@ -443,6 +530,7 @@ const HomeScreen = () => {
                       style={{width: '100%', height: '100%'}}
                       onPress={() => {
                         setSelectedCategory(item?.title);
+                        setCategoryType('category');
                         setCategoryId(item?.id);
                         categories[index]?.onPress;
                         item?.sub_categories.length > 0 &&
@@ -570,6 +658,17 @@ const HomeScreen = () => {
           </View>
         ) : (
           <FlatList
+            contentContainerStyle={{
+              alignSelf: 'center',
+              paddingBottom: moderateScale(50, 0.6),
+              marginTop: moderateScale(5, 0.3),
+            }}
+            showsVerticalScrollIndicator={false}
+            numColumns={2}
+            data={products}
+            renderItem={({item, index}) => {
+              return <ProductCard item={item} key={index} />;
+            }}
             ListEmptyComponent={() => {
               return (
                 <NoData
@@ -582,20 +681,27 @@ const HomeScreen = () => {
                 />
               );
             }}
-            showsVerticalScrollIndicator={false}
-            numColumns={2}
-            data={products}
-            contentContainerStyle={{
-              alignSelf: 'center',
-              marginTop: moderateScale(5, 0.3),
-            }}
-            renderItem={({item, index}) => {
-              return <ProductCard item={item} />;
+            ListFooterComponent={() => {
+              return (
+                loadMore && (
+                  <View
+                    style={{
+                      alignSelf: 'center',
+                      marginTop: moderateScale(10, 0.3),
+                    }}>
+                    <ActivityIndicator
+                      size={moderateScale(25, 0.6)}
+                      color={Color.themeColor}
+                    />
+                  </View>
+                )
+              );
             }}
           />
         )}
         <CategoriesModal
           setCategoryId={setCategoryId}
+          setCategoryType={setCategoryType}
           isVisible={categoryModalVisible}
           setIsVisible={setCategoryModalVisible}
           categoryData={categoriesData?.find(

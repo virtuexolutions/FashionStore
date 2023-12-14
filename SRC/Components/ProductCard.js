@@ -19,8 +19,13 @@ import CustomButton from './CustomButton';
 import Color from '../Assets/Utilities/Color';
 import numeral from 'numeral';
 import {AddToCart, RemoveFromCart} from '../Store/slices/common';
+import {baseUrl, imageUrl} from '../Config';
 
 const ProductCard = ({item}) => {
+  // console.log(
+  //   '🚀 ~ file: ProductCard.js:24 ~ ProductCard ~ item:',
+  //   `${imageUrl}${item?.size ? item?.varation[0]?.image + '/' : item?.large_image}`,
+  // );
   const cardData = useSelector(state => state.commonReducer.item);
   const dispatch = useDispatch();
   const [like, setLike] = useState(item?.like);
@@ -38,7 +43,7 @@ const ProductCard = ({item}) => {
               ? ToastAndroid.show('item already added', ToastAndroid.SHORT)
               : Alert.alert('item already added');
           } else {
-            dispatch(AddToCart({...item, quantity:1, size_id:{}}));
+            dispatch(AddToCart({...item, quantity: 1, size_id: {}}));
           }
         }}
         style={{
@@ -87,11 +92,11 @@ const ProductCard = ({item}) => {
               setLike(!like);
             }}
             onPress={() => {
-              dispatch(AddToCart(item));
+              dispatch(AddToCart({...item, quantity: 1, size_id: {}}));
             }}
             source={
-              item?.image
-                ? {uri: item?.large_image}
+              item?.large_image
+                ? {uri: `${imageUrl}${item?.large_image}`}
                 : require('../Assets/Images/Mask2.png')
             }
             resizeMode={'cover'}
@@ -171,7 +176,8 @@ const ProductCard = ({item}) => {
                 textDecorationLine: 'line-through',
                 textDecorationStyle: 'solid',
                 // textDecorationColor:'black'
-              }} isBold>
+              }}
+              isBold>
               {numeral(item?.wholsale_price).format('$0,0a')}
             </CustomText>
           )}

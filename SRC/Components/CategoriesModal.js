@@ -10,7 +10,7 @@ import Color from '../Assets/Utilities/Color';
 import SubCategories from './SubCategories';
 import CustomText from './CustomText';
 
-const CategoriesModal = ({isVisible, setIsVisible, categoryData,  setCategoryId}) => {
+const CategoriesModal = ({isVisible, setIsVisible, categoryData,  setCategoryId, setCategoryType}) => {
   const token = useSelector(state => state.authReducer.token);
   const [selectedCategory, setSelectedCategory] = useState(
     categoryData?.sub_categories,
@@ -85,6 +85,7 @@ const CategoriesModal = ({isVisible, setIsVisible, categoryData,  setCategoryId}
             renderItem={({item, index}) => {
               return (
                 <SubCategories
+                setCategoryType={setCategoryType}
                 setCategoryId={setCategoryId}
                   item={item}
                   setIsVisible={setIsVisible}
@@ -112,6 +113,7 @@ const CategoriesModal = ({isVisible, setIsVisible, categoryData,  setCategoryId}
                     style={styles.container}
                     onPress={() => {
                       setCategoryId(item?.id)
+                      setCategoryType('child')
                       setSelectedSubCat(item?.title);
                       setIsVisible(false);
                     }}>

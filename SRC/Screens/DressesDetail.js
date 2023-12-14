@@ -30,30 +30,33 @@ import {
   increamentQuantity,
   selectedProductSize,
 } from '../Store/slices/common';
+import {imageUrl} from '../Config';
 
 const DressesDetail = props => {
   const focused = useIsFocused();
   const item = props.route.params.item;
+  console.log("🚀 ~ file: DressesDetail.js:38 ~ DressesDetail ~ item:", item)
 
   const cartData = useSelector(state => state.commonReducer.item);
-  console.log(
-    '🚀 ~ file: DressesDetail.js:39 ~ DressesDetail ~ cartData:',
-    cartData[0],
-  );
 
   const dispatch = useDispatch();
   const [selectedSize, setSelectedSize] = useState('');
-
   const [selectedItem, setSelectedItem] = useState({});
-  // console.log("🚀 ~ file: DressesDetail.js:48 ~ DressesDetail ~ selectedItem:", selectedItem)
+  console.log(
+    '🚀 ~ file: DressesDetail.js:48 ~ DressesDetail ~ selectedItem:',selectedItem,
+    selectedItem ? `${imageUrl}/${selectedItem?.image}`:`${imageUrl}${item?.large_image}`,
+  );
   const cardData = useSelector(state => state.commonReducer.item);
   const [sizeArray, setSizeArray] = useState(
     item?.varation?.map(item => item?.size),
-    );
-    const [like, setLike] = useState(item?.like);
-    const [index, setIndex] = useState(1);
-    const [quantity, setQuantity] = useState(cardData?.find(data=> data?.id == item?.id) ?cardData?.find(data=> data?.id == item?.id)?.quantity: 1);
-    console.log("🚀 ~ file: DressesDetail.js:50 ~ DressesDetail ~ cardData:", cardData, quantity)
+  );
+  const [like, setLike] = useState(item?.like);
+  const [index, setIndex] = useState(1);
+  const [quantity, setQuantity] = useState(
+    cardData?.find(data => data?.id == item?.id)
+      ? cardData?.find(data => data?.id == item?.id)?.quantity
+      : 1,
+  );
   const [cotton, setcotton] = useState(1);
   const images = [
     require('../Assets/Images/image3.png'),
@@ -114,7 +117,7 @@ const DressesDetail = props => {
           paddingBottom: moderateScale(60, 0.6),
         }}>
         <View style={styles.banner}>
-          <View style={styles.container}>
+          {/* <View style={styles.container}>
             {index > 0 && images.length > 1 && (
               <>
                 <View
@@ -212,6 +215,21 @@ const DressesDetail = props => {
                 </View>
               </>
             )}
+          </View> */}
+          <View style={[styles.container]}>
+            <CustomImage
+              source={
+                  item?.large_image
+                  ? {uri: `${imageUrl}${item?.large_image}`}
+                  : require('../Assets/Images/Mask2.png')
+              }
+              resizeMode={'contain'}
+              style={{
+                height: '100%',
+                height: '100%',
+              }}
+            />
+            {/* <CustomImage  source={selectedItem ? {uri:`${imageUrl}``/${selectedItem?.image}`}: {uri :`${imageUrl}``/${item?.large_image}`}}/> */}
           </View>
 
           <View
@@ -270,7 +288,7 @@ const DressesDetail = props => {
               style={{
                 justifyContent: 'space-between',
                 flexDirection: 'row',
-                alignItems:'center',
+                alignItems: 'center',
                 // backgroundColor: 'red',
               }}>
               <CustomText
@@ -291,22 +309,25 @@ const DressesDetail = props => {
                   ? item?.discount_price
                   : item?.wholsale_price}
               </CustomText>
-              {item?.discount_price && <CustomText
-                isBold
-                style={{
-                  textAlign: 'left',
-                  color: Color.veryLightGray,
-                  fontSize: moderateScale(15,.6),
-                  textDecorationLine: 'line-through', textDecorationStyle: 'solid'
-                  // width: windowWidth * 0.24,
-                }}>
-                $
-                {selectedItem && Object.keys(selectedItem).length > 0
-                  ? selectedItem?.discount_price
-                    ? selectedItem?.price
-                    : item?.discount_price
-                  : item?.wholsale_price}
-              </CustomText>}
+              {item?.discount_price && (
+                <CustomText
+                  isBold
+                  style={{
+                    textAlign: 'left',
+                    color: Color.veryLightGray,
+                    fontSize: moderateScale(15, 0.6),
+                    textDecorationLine: 'line-through',
+                    textDecorationStyle: 'solid',
+                    // width: windowWidth * 0.24,
+                  }}>
+                  $
+                  {selectedItem && Object.keys(selectedItem).length > 0
+                    ? selectedItem?.discount_price
+                      ? selectedItem?.price
+                      : item?.discount_price
+                    : item?.wholsale_price}
+                </CustomText>
+              )}
             </View>
             <View style={styles.conterContainer}>
               <TouchableOpacity
@@ -398,7 +419,7 @@ const DressesDetail = props => {
               );
             })}
           </View> */}
-          {item?.size != null && (
+          {!['', null, undefined].includes(item?.size) && (
             <>
               <CustomText
                 isBold
@@ -505,11 +526,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   container: {
-    flexDirection: 'row',
+    // flexDirection: 'row',
     height: windowHeight * 0.3,
-    width: windowWidth,
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: windowWidth * 0.8,
+    // justifyContent: 'center',
+    // alignItems: 'center',
     alignSelf: 'center',
   },
   colorContainer: {

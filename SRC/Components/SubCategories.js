@@ -11,16 +11,18 @@ const SubCategories = ({
   setSelectedCategory,
   item,
   setIsVisible,
-  setCategoryId
+  setCategoryId,
+  setCategoryType
 }) => {
-  console.log(
-    '🚀 ~ file: SubCategories.js:10 ~ SubCategories ~ selectedCategory:',
-    item,
-  );
+  // console.log(
+  //   '🚀 ~ file: SubCategories.js:10 ~ SubCategories ~ selectedCategory:',
+  //   item,
+  // );
   return (
     <TouchableOpacity
       onPress={() => {
         setCategoryId(item?.id)
+        setCategoryType('sub')
         setSelectedCategory(item?.title);
         item?.child_categories?.length == 0 && setIsVisible(false);
       }}
@@ -45,6 +47,7 @@ const SubCategories = ({
           onPress={() => {
             setCategoryId(item?.id)
             setSelectedCategory(item?.title);
+            setCategoryType('sub')
             item?.child_categories?.length == 0 && setIsVisible(false)
           }}
           source={require('../Assets/Images/dress.png')}
