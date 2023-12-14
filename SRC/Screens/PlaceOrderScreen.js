@@ -68,6 +68,7 @@ const PlaceOrderScreen = () => {
   const [lastName, setLastName] = useState(userdata?.name);
   const [email, setEmail] = useState(userdata?.email);
   const [phone, setPhone] = useState(userdata?.contact);
+  console.log("🚀 ~ file: FormScreen.js:57 ~ FormScreen ~ phone:", phone)
   const [country, setCountry] = useState(userdata?.country);
   const [address, setAddress] = useState(userdata?.address);
   const [postcode, setPostCode] = useState(userdata?.postal_code);
