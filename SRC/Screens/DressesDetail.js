@@ -33,33 +33,27 @@ import {
 
 const DressesDetail = props => {
   const focused = useIsFocused();
-  const item = props.route.params.item;    
-  // console.log(
-  //   '🚀 ~ file: DressesDetail.js:37 ~ DressesDetail ~ item:',
-  //   item,
-  // );
-  // console.log(
-  //   '🚀 ~ file: DressesDetail.js:37 ~ DressesDetail ~ item:',
-  //   item?.varation,
-  // );
+  const item = props.route.params.item;
+
   const cartData = useSelector(state => state.commonReducer.item);
-  // console.log(
-  //   '🚀 ~ file: DressesDetail.js:32 ~ DressesDetail ~ cartData:',
-  //   cartData,
-  // );
+  console.log(
+    '🚀 ~ file: DressesDetail.js:39 ~ DressesDetail ~ cartData:',
+    cartData[0],
+  );
 
   const dispatch = useDispatch();
   const [selectedSize, setSelectedSize] = useState('');
 
   const [selectedItem, setSelectedItem] = useState({});
-  // console.log("🚀 ~ file: DressesDetail.js:51 ~ DressesDetail ~ selectedItem:", selectedItem)
+  // console.log("🚀 ~ file: DressesDetail.js:48 ~ DressesDetail ~ selectedItem:", selectedItem)
   const cardData = useSelector(state => state.commonReducer.item);
   const [sizeArray, setSizeArray] = useState(
     item?.varation?.map(item => item?.size),
-  );
-  const [like, setLike] = useState(item?.like);
-  const [index, setIndex] = useState(1);
-  const [quantity, setQuantity] = useState(1);
+    );
+    const [like, setLike] = useState(item?.like);
+    const [index, setIndex] = useState(1);
+    const [quantity, setQuantity] = useState(cardData?.find(data=> data?.id == item?.id) ?cardData?.find(data=> data?.id == item?.id)?.quantity: 1);
+    console.log("🚀 ~ file: DressesDetail.js:50 ~ DressesDetail ~ cardData:", cardData, quantity)
   const [cotton, setcotton] = useState(1);
   const images = [
     require('../Assets/Images/image3.png'),
@@ -241,18 +235,6 @@ const DressesDetail = props => {
               {finalItem?.title}
             </CustomText>
 
-            {/* <CustomText
-              style={{
-                color: '#818181',
-                width: windowWidth * 0.38,
-                fontSize: moderateScale(14, 0.6),
-                textAlign: 'left',
-                // backgroundColor:'red',
-              }}
-              numberOfLines={1}>
-              {finalItem?.category}
-            </CustomText> */}
-
             <TouchableOpacity
               activeOpacity={0.6}
               onPress={() => {
@@ -284,24 +266,48 @@ const DressesDetail = props => {
               alignItems: 'center',
               width: windowWidth * 0.95,
             }}>
-            <CustomText
-              isBold
+            <View
               style={{
-                textAlign: 'left',
-                color: Color.themeColor,
-                fontSize: 24,
-                width: windowWidth * 0.24,
+                justifyContent: 'space-between',
+                flexDirection: 'row',
+                alignItems:'center',
+                // backgroundColor: 'red',
               }}>
-              $
-              {selectedItem && Object.keys(selectedItem).length > 0
-                ? selectedItem?.discount_price
+              <CustomText
+                isBold
+                style={{
+                  textAlign: 'left',
+                  color: Color.themeColor,
+                  fontSize: 24,
+                  marginRight: moderateScale(10, 0.3),
+                  // width: windowWidth * 0.24,
+                }}>
+                $
+                {selectedItem && Object.keys(selectedItem).length > 0
                   ? selectedItem?.discount_price
-                  : selectedItem?.price
-                : item?.discount_price
-                ? item?.discount_price
-                : item?.wholsale_price}
-            </CustomText>
-
+                    ? selectedItem?.discount_price
+                    : selectedItem?.price
+                  : item?.discount_price
+                  ? item?.discount_price
+                  : item?.wholsale_price}
+              </CustomText>
+              {item?.discount_price && <CustomText
+                isBold
+                style={{
+                  textAlign: 'left',
+                  color: Color.veryLightGray,
+                  fontSize: moderateScale(15,.6),
+                  textDecorationLine: 'line-through', textDecorationStyle: 'solid'
+                  // width: windowWidth * 0.24,
+                }}>
+                $
+                {selectedItem && Object.keys(selectedItem).length > 0
+                  ? selectedItem?.discount_price
+                    ? selectedItem?.price
+                    : item?.discount_price
+                  : item?.wholsale_price}
+              </CustomText>}
+            </View>
             <View style={styles.conterContainer}>
               <TouchableOpacity
                 onPress={() => {

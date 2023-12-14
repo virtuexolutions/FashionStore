@@ -42,7 +42,7 @@ const OrderScreen = ({route}) => {
     const response = await Get(url, token);
     setIsLoading(false);
     if (response != undefined) {
-       console.log(
+      console.log(
         '🚀 ~ file: OrderScreen.js:36 ~ getOrder ~ response:',
         response?.data,
       );
@@ -54,144 +54,6 @@ const OrderScreen = ({route}) => {
     getOrder();
   }, []);
 
-  // const dummyarray = [
-  //   {
-  //     orderId: 454643,
-  //     date: '12-nov-23',
-  //     time: '12:55pm',
-  //     status: 'completed',
-  //     item: [
-  //       {
-  //         image: require('../Assets/Images/image3.png'),
-  //         qty: 2,
-  //         price: 40,
-  //         title: 'ABC',
-  //       },
-  //       {
-  //         image: require('../Assets/Images/image3.png'),
-  //         qty: 5,
-  //         price: 20,
-  //         title: 'ABC',
-  //       },
-  //       {
-  //         image: require('../Assets/Images/Image2.png'),
-  //         qty: 2,
-  //         price: 50,
-  //         title: 'ABC',
-  //       },
-  //       {
-  //         image: require('../Assets/Images/image3.png'),
-  //         qty: 1,
-  //         price: 40,
-  //         title: 'ABC',
-  //       },
-  //       {
-  //         image: require('../Assets/Images/Image2.png'),
-  //         qty: 2,
-  //         price: 50,
-  //         title: 'ABC',
-  //       },
-  //       {
-  //         image: require('../Assets/Images/image3.png'),
-  //         qty: 1,
-  //         price: 40,
-  //         title: 'ABC',
-  //       },
-  //     ],
-  //     price: 360,
-  //   },
-  //   {
-  //     orderId: 454643,
-  //     date: '12-nov-23',
-  //     time: '12:55pm',
-  //     status: 'cancelled',
-  //     price: 360,
-  //     item: [
-  //       {
-  //         image: require('../Assets/Images/image3.png'),
-  //         qty: 2,
-  //         price: 40,
-  //         title: 'ABC',
-  //       },
-  //       {
-  //         image: require('../Assets/Images/image3.png'),
-  //         qty: 5,
-  //         price: 20,
-  //         title: 'ABC',
-  //       },
-  //       {
-  //         image: require('../Assets/Images/Image2.png'),
-  //         qty: 2,
-  //         price: 50,
-  //         title: 'ABC',
-  //       },
-  //       {
-  //         image: require('../Assets/Images/image3.png'),
-  //         qty: 1,
-  //         price: 40,
-  //         title: 'ABC',
-  //       },
-  //       {
-  //         image: require('../Assets/Images/Image2.png'),
-  //         qty: 2,
-  //         price: 50,
-  //         title: 'ABC',
-  //       },
-  //       {
-  //         image: require('../Assets/Images/image3.png'),
-  //         qty: 1,
-  //         price: 40,
-  //         title: 'ABC',
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     orderId: 454643,
-  //     date: '12-nov-23',
-  //     time: '12:55pm',
-  //     status: 'completed',
-  //     item: [
-  //       {
-  //         image: require('../Assets/Images/image3.png'),
-  //         qty: 2,
-  //         price: 40,
-  //         title: 'ABC',
-  //       },
-  //       {
-  //         image: require('../Assets/Images/image3.png'),
-  //         qty: 5,
-  //         price: 20,
-  //         title: 'ABC',
-  //       },
-  //       {
-  //         image: require('../Assets/Images/Image2.png'),
-  //         qty: 2,
-  //         price: 50,
-  //         title: 'ABC',
-  //       },
-  //       {
-  //         image: require('../Assets/Images/Image2.png'),
-  //         qty: 2,
-  //         price: 50,
-  //         title: 'ABC',
-  //       },
-  //       {
-  //         image: require('../Assets/Images/image3.png'),
-  //         qty: 1,
-  //         price: 40,
-  //         title: 'ABC',
-  //       },
-  //       {
-  //         image: require('../Assets/Images/image3.png'),
-  //         qty: 1,
-  //         price: 40,
-  //         title: 'ABC',
-  //       },
-  //     ],
-  //     price: 360,
-  //   },
-  // ];
-
   return (
     <>
       <CustomStatusBar backgroundColor={'#FDFDFD'} barStyle={'dark-content'} />
@@ -200,9 +62,6 @@ const OrderScreen = ({route}) => {
         leftName={'arrow-left'}
         leftType={Feather}
         title={'Orders'}
-        //   showRight={true}
-        //   rightName={'shopping-bag'}
-        //   rightType={Feather}
       />
 
       <View style={styles.rowview}>
@@ -234,15 +93,12 @@ const OrderScreen = ({route}) => {
         </TouchableOpacity>
       </View>
 
-      {/* <OrderCard /> */}
-
       <FlatList
         ListEmptyComponent={() => {
           return (
             <View
               style={{
                 justifyContent: 'center',
-                // backgroundColor:'red',
                 height: windowHeight * 0.7,
               }}>
               <NoData
@@ -280,7 +136,7 @@ export default OrderScreen;
 const styles = ScaledSheet.create({
   rowview: {
     flexDirection: 'row',
-    backgroundColor:Color.white,
+    backgroundColor: Color.white,
     width: windowWidth * 0.99,
     paddingHorizontal: moderateScale(25, 0.6),
     paddingVertical: moderateScale(15, 0.6),

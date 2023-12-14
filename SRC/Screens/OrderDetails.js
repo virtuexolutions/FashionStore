@@ -23,55 +23,17 @@ import CustomText from '../Components/CustomText';
 import OrderCard from '../Components/OrderCard';
 import {Text} from 'react-native';
 import moment from 'moment';
+import numeral from 'numeral';
 
-const OrderDetails = (props) => {
-  const data = props?.route?.params?.data
-    console.log("🚀 ~ file: OrderDetails.js:28 ~ OrderDetails ~ data:", data?.item_info)
-    const cartData =useSelector(state => state.commonReducer.item)
-  // const dummyarray = [
-  //   {
-  //     id: 1,
-  //     name: 'thing',
-  //     image: require('../Assets/Images/image3.png'),
-  //     price: 16,
-  //   },
-  //   {
-  //     id: 2,
-  //     name: 'lays',
-  //     image: require('../Assets/Images/image3.png'),
-  //     price: 56,
-  //   },
-  //   {
-  //     id: 3,
-  //     name: 'chips',
-  //     image: require('../Assets/Images/image3.png'),
-  //     price: 300,
-  //   },
-  //   {
-  //     id: 4,
-  //     name: 'chocalate',
-  //     image: require('../Assets/Images/image3.png'),
-  //     price: 160,
-  //   },
-  //   {
-  //     id: 5,
-  //     name: 'milk',
-  //     image: require('../Assets/Images/image3.png'),
-  //     price: 150,
-  //   },
-  //   {
-  //     id: 6,
-  //     name: 'clips',
-  //     image: require('../Assets/Images/image3.png'),
-  //     price: 126,
-  //   },
-  //   {
-  //     id: 7,
-  //     name: 'banana',
-  //     image: require('../Assets/Images/image3.png'),
-  //     price: 126,
-  //   },
-  // ];
+
+const OrderDetails = props => {
+  const data = props?.route?.params?.data;
+  console.log(
+    '🚀 ~ file: OrderDetails.js:28 ~ OrderDetails ~ data:',
+    data?.item_info?.product_info,
+  );
+  const cartData = useSelector(state => state.commonReducer.item);
+
   return (
     <>
       <Header
@@ -79,9 +41,6 @@ const OrderDetails = (props) => {
         leftName={'arrow-left'}
         leftType={Feather}
         title={'Orders Details'}
-        //   showRight={true}
-        //   rightName={'shopping-bag'}
-        //   rightType={Feather}
       />
 
       <ScrollView
@@ -94,8 +53,6 @@ const OrderDetails = (props) => {
             fontSize: moderateScale(18, 0.6),
             color: Color.black,
             textAlign: 'left',
-            // width: windowWidth,
-            // height: windowHeight * 0.04,
             paddingHorizontal: moderateScale(15, 0.3),
             paddingVertical: moderateScale(10, 0.3),
           }}
@@ -103,8 +60,7 @@ const OrderDetails = (props) => {
           item
         </CustomText>
         {data?.item_info?.map((item, index) => (
-          <View
-            style={styles.view}>
+          <View style={styles.view}>
             <View
               style={{
                 height: windowHeight * 0.06,
@@ -115,29 +71,24 @@ const OrderDetails = (props) => {
                   width: '100%',
                   height: '100%',
                 }}
-                // source={require('../Assets/Images/image3.png')}
-                source={{uri :item?.image }}
+                source={require('../Assets/Images/image3.png')}
+                // source={{uri: item?.image}}
               />
             </View>
-            <View
-              style={{
-                // backgroundColor:'green',
-                flexDirection: 'row',
-                width: windowWidth * 0.8,
-                justifyContent: 'space-between',
-              }}>
+           
               <CustomText
                 style={{
                   fontSize: moderateScale(14, 0.6),
                   color: Color.mediumGray,
+                  width:windowWidth*0.65,
                   textAlign: 'left',
                   // width: windowWidth,
                   // height: windowHeight * 0.04,
-                  paddingHorizontal: moderateScale(15, 0.3),
+                  paddingHorizontal: moderateScale(10, 0.3),
                   paddingVertical: moderateScale(10, 0.3),
                 }}
                 isBold>
-                {item?.name}
+                {item?.product_info?.title}
               </CustomText>
               <View style={styles.row}>
                 <CustomText
@@ -147,45 +98,32 @@ const OrderDetails = (props) => {
                     textAlign: 'left',
                     // width: windowWidth,
                     // height: windowHeight * 0.04,
-                    paddingHorizontal: moderateScale(5, 0.3),
+                    // paddingHorizontal: moderateScale(5, 0.3),
                     paddingVertical: moderateScale(10, 0.3),
                   }}
                   isBold>
-                  {item?.price}
+                  {item?.price} x{item?.quantity}
                 </CustomText>
-                <CustomText
-                  style={{
-                    fontSize: moderateScale(12, 0.6),
-                    color: Color.mediumGray,
-                    textAlign: 'left',
-                    // width: windowWidth,
-                    // height: windowHeight * 0.04,
-                    //   paddingHorizontal: moderateScale(15, 0.3),
-                    paddingVertical: moderateScale(10, 0.3),
-                  }}>
-                x{item?.quantity}
-                </CustomText>
+            
               </View>
-            </View>
           </View>
         ))}
-        <CustomText
-          style={styles.heading}
-          isBold>
+        <CustomText style={styles.heading} isBold>
           order details
         </CustomText>
-        <View
-          style={styles.firstRow}>
+        <View style={styles.firstRow}>
           <View style={styles.row}>
             <CustomText style={styles.text2}>OrderId</CustomText>
             <CustomText style={styles.text2}>{data?.order_number}</CustomText>
           </View>
           <View style={styles.row}>
             <CustomText style={styles.text2}>order time</CustomText>
-            <CustomText style={styles.text2}>{moment(data?.updated_at).format('LT') }</CustomText>
+            <CustomText style={styles.text2}>
+              {moment(data?.updated_at).format('LT')}
+            </CustomText>
           </View>
           <View style={styles.row}>
-            <CustomText style={styles.text2}>payment methode</CustomText>
+            <CustomText style={styles.text2}>payment method</CustomText>
             <CustomText style={styles.text2}>{data?.payment_method}</CustomText>
           </View>
           <View
@@ -202,7 +140,9 @@ const OrderDetails = (props) => {
               style={[
                 styles.text2,
                 {
+                  textAlign:'right',
                   width: windowWidth * 0.35,
+                  // backgroundColor:'red',
                 },
               ]}>
               {data?.address1}
@@ -211,11 +151,15 @@ const OrderDetails = (props) => {
 
           <View style={styles.row}>
             <CustomText style={styles.text2}>Total</CustomText>
-            <CustomText style={styles.text2}>{data?.total_amount}</CustomText>
+            <CustomText style={styles.text2}>{numeral(data?.total_amount).format('$0,0.00')}</CustomText>
+          </View>
+          <View style={styles.row}>
+            <CustomText style={styles.text2}>Discount</CustomText>
+            <CustomText style={styles.text2}>{numeral(data?.total_amount- data?.discount_amount).format('$0,0.00')}</CustomText>
           </View>
           <View style={styles.row}>
             <CustomText style={styles.text2}>subTotal</CustomText>
-            <CustomText style={styles.text2}>{data?.sub_total}</CustomText>
+            <CustomText style={styles.text2}>{numeral(data?.discount_amount).format('$0,0.00')}</CustomText>
           </View>
           {/* <View style={styles.row}>
             <CustomText style={styles.text2}>discount</CustomText>
@@ -235,7 +179,7 @@ const OrderDetails = (props) => {
 export default OrderDetails;
 
 const styles = ScaledSheet.create({
-  view:{
+  view: {
     flexDirection: 'row',
     backgroundColor: Color.lightGrey,
     marginHorizontal: moderateScale(10, 0.3),
@@ -243,11 +187,13 @@ const styles = ScaledSheet.create({
     paddingHorizontal: moderateScale(10, 0.6),
     borderRadius: moderateScale(10, 0.3),
     marginBottom: moderateScale(10, 0.3),
+    justifyContent:'space-between',
+    alignItems:'center'
   },
   row: {
     justifyContent: 'space-between',
     flexDirection: 'row',
-    paddingHorizontal: moderateScale(15, 0.6),
+    // paddingHorizontal: moderateScale(15, 0.6),
     paddingVertical: moderateScale(3, 0.6),
   },
   textRow: {
@@ -257,20 +203,19 @@ const styles = ScaledSheet.create({
     justifyContent: 'space-between',
     backgroundColor: 'red',
   },
-  firstRow:
-    {
-      backgroundColor: Color.lightGrey,
-      marginHorizontal: moderateScale(10, 0.3),
-      paddingVertical: moderateScale(15, 0.3),
-      borderRadius: moderateScale(10, 0.6),
-      marginBottom: moderateScale(20, 0.3),
-    },
-    heading:{
-      fontSize: moderateScale(18, 0.6),
-      color: Color.black,
-      textAlign: 'left',
-      paddingHorizontal: moderateScale(15, 0.3),
-      paddingVertical: moderateScale(10, 0.3),
-    },
-  
+  firstRow: {
+    backgroundColor: Color.lightGrey,
+    marginHorizontal: moderateScale(10, 0.3),
+    paddingHorizontal: moderateScale(10, 0.3),
+    paddingVertical: moderateScale(15, 0.3),
+    borderRadius: moderateScale(10, 0.6),
+    marginBottom: moderateScale(20, 0.3),
+  },
+  heading: {
+    fontSize: moderateScale(18, 0.6),
+    color: Color.black,
+    textAlign: 'left',
+    paddingHorizontal: moderateScale(15, 0.3),
+    paddingVertical: moderateScale(10, 0.3),
+  },
 });

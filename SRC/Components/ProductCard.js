@@ -1,5 +1,11 @@
-import {StyleSheet, Text, View, TouchableOpacity,Platform,
-  ToastAndroid,} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Platform,
+  ToastAndroid,
+} from 'react-native';
 import React, {useState} from 'react';
 import {moderateScale} from 'react-native-size-matters';
 import {windowHeight, windowWidth} from '../Utillity/utils';
@@ -28,12 +34,11 @@ const ProductCard = ({item}) => {
         activeOpacity={0.8}
         onPress={() => {
           if (cardData.find((data, index) => data?.id == item?.id)) {
-           Platform.OS == 'android' 
-           ? ToastAndroid.show('item already added', ToastAndroid.SHORT)
-        : Alert.alert('item already added');
-          }
-          else{
-            dispatch(AddToCart(item));
+            Platform.OS == 'android'
+              ? ToastAndroid.show('item already added', ToastAndroid.SHORT)
+              : Alert.alert('item already added');
+          } else {
+            dispatch(AddToCart({...item, quantity:1, size_id:{}}));
           }
         }}
         style={{
@@ -82,7 +87,7 @@ const ProductCard = ({item}) => {
               setLike(!like);
             }}
             onPress={() => {
-              dispatch(AddToCart(item))
+              dispatch(AddToCart(item));
             }}
             source={
               item?.image
@@ -103,9 +108,12 @@ const ProductCard = ({item}) => {
                 style={{
                   color: 'black',
                   fontSize: 12,
-                  backgroundColor:'red'
+                  backgroundColor: 'red',
                 }}>
-                {numeral(item?.discount_price/100).format('%')} OFF
+                {numeral(
+                  1 - parseFloat(item?.discount_price / item?.wholsale_price),
+                ).format('0.%')}{' '}
+                OFF
               </CustomText>
             </View>
           )}
@@ -126,20 +134,48 @@ const ProductCard = ({item}) => {
           style={{
             textAlign: 'left',
             width: windowWidth * 0.35,
-            height: windowHeight * 0.03,
+            // height: windowHeight * 0.03,
             color: '#a2a2a2',
           }}>
           {item?.recommended_use}
         </CustomText>
-
-        <CustomText
+        <View
           style={{
-            textAlign: 'left',
-            width: windowWidth * 0.35,
-            color: Color.themeColor,
+            flexDirection: 'row',
+            alignSelf: 'flex-start',
+            marginLeft: moderateScale(20, 0.3),
           }}>
-          {numeral(item?.wholsale_price).format('$0,0a')}
-        </CustomText>
+          <CustomText
+            style={{
+              textAlign: 'left',
+              // width: windowWidth * 0.35,
+              fontSize: moderateScale(16, 0.6),
+              color: Color.themeColor,
+              marginRight: moderateScale(5, 0.3),
+            }}>
+            {numeral(
+              item?.discount_price
+                ? item?.discount_price
+                : item?.wholsale_price,
+            ).format('$0,0a')}
+          </CustomText>
+          <Text style={{}}></Text>
+
+          {item?.discount_price && (
+            <CustomText
+              style={{
+                textAlign: 'left',
+                // width: windowWidth * 0.35,
+                fontSize: moderateScale(14, 0.6),
+                color: Color.veryLightGray,
+                textDecorationLine: 'line-through',
+                textDecorationStyle: 'solid',
+                // textDecorationColor:'black'
+              }} isBold>
+              {numeral(item?.wholsale_price).format('$0,0a')}
+            </CustomText>
+          )}
+        </View>
 
         <CustomText
           onPress={() => {
@@ -198,8 +234,8 @@ const styles = StyleSheet.create({
     bottom: moderateScale(10, 0.3),
     right: moderateScale(5, 0.3),
     zIndex: 1,
-    padding:moderateScale(7,.6),
-    backgroundColor:'red',
-    borderRadius:moderateScale(10,.6)
+    padding: moderateScale(7, 0.6),
+    backgroundColor: 'red',
+    borderRadius: moderateScale(10, 0.6),
   },
 });

@@ -48,7 +48,9 @@ const Profile = () => {
   );
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState(userData?.email ? userData?.email : '');
-  const [phone, setPhone] = useState(userData?.phone ? userData?.phone : '');
+  const [phone, setPhone] = useState(
+    userData?.contact ? userData?.contact : '',
+  );
   const [postCode, setPostCode] = useState(
     userData?.postal_code ? userData?.postal_code : '',
   );
@@ -67,27 +69,16 @@ const Profile = () => {
     const body = {
       name: username,
       postal_code: postCode,
-      country:country,
+      country: country,
       address: address,
     };
     // console.log("🚀 ~ file: Profile.js:74 ~ updateProfile ~ body:", body)
     const formData = new FormData();
-    if (Object.keys(image).length > 0) {
-      formData.append('photo', image);
-    } else {
-      return Platform.OS == 'android'
-        ? ToastAndroid.show(`image is required`, ToastAndroid.SHORT)
-        : Alert.alert(`image is required`);
-    }
     for (let key in body) {
-      if (body[key] == '') {
-        return Platform.OS == 'android'
-          ? ToastAndroid.show(`${key} is required`, ToastAndroid.SHORT)
-          : Alert.alert(`${key} is required`);
-      } else {
-        formData.append(key, body[key]);
-      }
+      formData?.append(key, body[key]);
     }
+    if(Object.keys(image).length>0) formData.append('photo', image) 
+
     console.log(
       '🚀 ~ file: Profile.js:109 ~ updateProfile ~ formData:',
       formData,
@@ -95,7 +86,6 @@ const Profile = () => {
 
     setIsLoading(true);
     const response = await Post(url, formData, apiHeader(token));
-   console.log("🚀 ~ file: Profile.js:98 ~ updateProfile ~ response:", response)
     setIsLoading(false);
     if (response != undefined) {
       console.log(
@@ -148,8 +138,8 @@ const Profile = () => {
               <CustomImage
                 resizeMode={'cover'}
                 source={
-                  userData?.photo
-                    ? {uri: userData?.photo}
+                  Object.keys(image).length > 0
+                    ? {uri: image?.uri}
                     : userData?.photo
                     ? {uri: userData?.photo}
                     : require('../Assets/Images/logo.png')

@@ -22,6 +22,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AddToCart, EmptyCart} from '../Store/slices/common';
 import {useNavigation} from '@react-navigation/native';
 import navigationService from '../navigationService';
+import CustomButton from '../Components/CustomButton';
 
 const PlaceOrderScreen = () => {
   const navigation = useNavigation();
@@ -32,15 +33,35 @@ const PlaceOrderScreen = () => {
 
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
-  const calcTotal = () => {
-    let total_quantity = 0;
-    let total_price = 0;
+  const [afterDiscount, setAfterDiscount] = useState(0);
+
+  const calcTotal = (totalQ, total, discount) => {
     cartData?.map(item => {
-      total_quantity += item?.quantity;
-      total_price += item?.size_id?.price * item?.quantity;
+      totalQ += item?.quantity;
+
+      total +=
+        (item?.size ? item?.size_id?.price : item?.wholsale_price) *
+        item?.quantity;
+
+      discount +=
+        (item?.size
+          ? item?.size_id?.discount_price
+            ? item?.size_id?.discount_price
+            : item?.size_id?.price
+          : item?.discount_price
+          ? item?.discount_price
+          : item?.wholsale_price) * item?.quantity;
     });
-    setTotalQuantity(total_quantity);
-    setTotalPrice(total_price);
+    // setTotalQuantity(total_quantity);
+    // setTotalPrice(total_price);
+    // setAfterDiscount(afterDiscount);
+    console.log(
+      'final calculations======',
+      totalQ,
+      total,
+      discount,
+    );
+    return {totalQ, total, discount}
   };
 
   const [name, setName] = useState(userdata?.name);
@@ -54,15 +75,16 @@ const PlaceOrderScreen = () => {
   const [isChecked, setIsChecked] = useState('');
   const [isModal, setIsModal] = useState(false);
   const [newData, setnewData] = useState([]);
-  // console.log('🚀 ~ file: FormScreen.js:56 ~ FormScreen ~ newData:', newData);
+  const array = [1, 2, 3, 4];
 
-  // console.log('🚀 ~ file: FormScreen.js:28 ~ FormScreen ~ isModal:', isModal);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
   const PlaceOrder = async () => {
-    calcTotal();
-
+    let totalQ = 0;
+    let total = 0;
+    let discount = 0;
+    const result = calcTotal(totalQ, total, discount);
     const url = 'auth/order';
     const body = {
       first_name: name,
@@ -79,18 +101,29 @@ const PlaceOrderScreen = () => {
           : isChecked == 'pay through stripe'
           ? 'stripe'
           : '',
-      total_quantity: totalQuantity,
-      total_amount: totalPrice,
+      total_quantity: result?.totalQ,
+      total_amount: result?.total,
+      discount_amount: result?.discount, 
       products: cartData?.map(item => {
         return {
           id: item?.id,
-          price: item?.size_id?.price,
+          price: item?.size
+            ? item?.size_id?.discount_price
+              ? item?.size_id?.discount_price
+              : item?.size_id?.price
+            : item?.discount_price
+            ? item?.discount_price
+            : item?.wholsale_price,
           quantity: item?.quantity,
-          size_id: item?.size_id?.id,
+          size_id: item?.size ? item?.size_id?.id : item?.id,
         };
       }),
     };
-    
+     console.log(
+      '🚀 ~ file: PlaceOrderScreen.js:100 ~ PlaceOrder ~ body:',
+      body,
+    );
+
     for (let key in body) {
       if (body[key] == '') {
         return Platform.OS == 'android'
@@ -101,14 +134,20 @@ const PlaceOrderScreen = () => {
 
     if (isNaN(postcode)) {
       return Platform.OS == 'android'
-      ? ToastAndroid.show(`Please insert a correct post code`, ToastAndroid.SHORT)
-      : alert(`Please insert a correct post code`);
+        ? ToastAndroid.show(
+            `Please insert a correct post code`,
+            ToastAndroid.SHORT,
+          )
+        : alert(`Please insert a correct post code`);
     }
 
     if (isNaN(phone)) {
       return Platform.OS == 'android'
-      ? ToastAndroid.show(`Please insert a correct phone number`, ToastAndroid.SHORT)
-      : alert(`Please insert a correct phone number`);
+        ? ToastAndroid.show(
+            `Please insert a correct phone number`,
+            ToastAndroid.SHORT,
+          )
+        : alert(`Please insert a correct phone number`);
     }
 
     if (isChecked == '') {
@@ -295,7 +334,6 @@ const PlaceOrderScreen = () => {
             </CustomText>
           </View>
           <View
-
             style={{
               flexDirection: 'row',
               alignItems: 'center',

@@ -7,6 +7,8 @@ import {moderateScale} from 'react-native-size-matters';
 import {windowHeight, windowWidth} from '../Utillity/utils';
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
+import numeral from 'numeral';
+
 
 const OrderCard = ({data}) => {
   console.log("🚀 ~ file: OrderCard.js:12 ~ OrderCard ~ data:", data)
@@ -25,7 +27,6 @@ const OrderCard = ({data}) => {
         </View>
         <View style={{justifyContent: 'center', flexDirection: 'row'}}>
           <CustomText style={styles.text2}>{moment(data?.created_at).format('lll')} </CustomText>
-          {/* <CustomText style={styles.text2}>12:55 pm</CustomText> */}
         </View>
         <CustomText
           style={[
@@ -39,7 +40,6 @@ const OrderCard = ({data}) => {
         data={data?.item_info?.slice(0, 5)}
         horizontal
         renderItem={({item, index}) => {
-          // console.log('🚀 ~ file: OrderCard.js:38 ~ OrderCard ~ index:', index);
           return (
             <>
               {index == 4 && (
@@ -65,8 +65,8 @@ const OrderCard = ({data}) => {
                     height: '100%',
                     width: '100%',
                   }}
-                  // source={require('../Assets/Images/image3.png')}
-                  source={{uri : item?.item_info?.image}}
+                  source={require('../Assets/Images/image3.png')}
+                  // source={{uri : item?.item_info?.image}}
                 />
               </View>
             </>
@@ -75,7 +75,7 @@ const OrderCard = ({data}) => {
       />
 
       <View style={styles.buttonRow}>
-        <CustomText style={styles.text1}>{data?.total_amount}</CustomText>
+        <CustomText style={styles.text1}>{numeral(data?.total_amount).format('0.$')}</CustomText>
         <CustomButton
           // disabled={ cardData.find((data ,index) => data?.id == item?.id) && true}
           isBold
