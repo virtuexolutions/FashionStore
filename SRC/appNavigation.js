@@ -50,6 +50,10 @@ const AppNavigator = () => {
         'WelcomeScreen';
 
     return (
+
+
+
+
       <NavigationContainer ref={navigationService.navigationRef}>
         <RootNav.Navigator
           initialRouteName={firstScreen}

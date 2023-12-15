@@ -134,7 +134,7 @@ const PlaceOrderScreen = () => {
     
     console.log(
       '🚀 ~ file: PlaceOrderScreen.js:100 ~ PlaceOrder ~ body:',
-      body,
+      body?.stripeToken,
     );
 
     for (let key in body) {
