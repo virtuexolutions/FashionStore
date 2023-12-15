@@ -82,17 +82,21 @@ const PaymentModal = ({isModal, setIsModal, setToken}) => {
               number: '4242 4242 4242 4242',
             }}
             cardStyle={{
-              // backgroundColor:'red',
+              backgroundColor:Color.lightGrey,
+              borderRadius:moderateScale(15,.6),
               width: windowWidth * 0.8,
               // backgroundColor: '#FFFFFF',
-              textColor: '#000000',
+              // textColor: '#000000',
+              // color:Color.red,
             }}
+            
             style={{
-              backgroundColor: 'red',
-              width: '70%',
-              height: 50,
-              marginVertical: 10,
-              paddingHorizontal: moderateScale(20, 0.3),
+              // backgroundColor: 'red',
+              width: '85%',
+              height: windowHeight *0.07,
+              // paddingVertical:moderateScale(10,.3),
+              marginVertical:moderateScale(10 ,0.3) ,
+              // paddingHorizontal: moderateScale(20, 0.3),
             }}
             onCardChange={cardDetails => {
               console.log('cardDetails', cardDetails);
@@ -127,7 +131,7 @@ const PaymentModal = ({isModal, setIsModal, setToken}) => {
               setIsModal(false)
 
             }}
-            bgColor={Color.mediumGray}
+            bgColor={Color.lightGrey424242}
             // isGradient
             borderRadius={moderateScale(25, 0.3)}
           />

@@ -21,7 +21,7 @@ import { EmptyCart } from '../Store/slices/common';
   
   const PaymentInvoice = props => {
     const Invoice = props.route.params.body;
-    console.log("🚀 ~ file: PaymentInvoice.js:22 ~ PaymentInvoice ~ Invoice:", Invoice)
+  //  return  console.log("🚀 ~ file: PaymentInvoice.js:22 ~ PaymentInvoice ~ Invoice:", Invoice?.item_info?.product_info)
     const user = useSelector(state=> state.commonReducer.userData)
     const dispatch = useDispatch()
   
@@ -154,7 +154,7 @@ import { EmptyCart } from '../Store/slices/common';
                       marginTop: moderateScale(20, 0.3),
                     }}>
                     <CustomText>
-                      {item?.title} x {item?.quantity}
+                      {item?.product_info?.title} x {item?.quantity}
                     </CustomText>
                     <CustomText>{numeral(item?.price).format('$0,0.00')}</CustomText>
                   </View>
@@ -209,7 +209,7 @@ import { EmptyCart } from '../Store/slices/common';
             style={{
               width: windowWidth * 0.4,
               paddingVertical: moderateScale(15, 0.6),
-              backgroundColor: Color.red,
+              backgroundColor: Color.themeColor,
               borderRadius: moderateScale(10, 0.3),
               marginTop: moderateScale(20, 0.3),
               alignItems: 'center',

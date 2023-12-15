@@ -30,12 +30,12 @@ import {
   increamentQuantity,
   selectedProductSize,
 } from '../Store/slices/common';
-import {imageUrl} from '../Config';
+import {imageSizeUrl, imageUrl} from '../Config';
 
 const DressesDetail = props => {
   const focused = useIsFocused();
   const item = props.route.params.item;
-  console.log("🚀 ~ file: DressesDetail.js:38 ~ DressesDetail ~ item:", item)
+   console.log("🚀 ~ file: DressesDetail.js:38 ~ DressesDetail ~ item:", item)
 
   const cartData = useSelector(state => state.commonReducer.item);
 
@@ -218,11 +218,17 @@ const DressesDetail = props => {
           </View> */}
           <View style={[styles.container]}>
             <CustomImage
-              source={
-                  item?.large_image
-                  ? {uri: `${imageUrl}${item?.large_image}`}
-                  : require('../Assets/Images/Mask2.png')
-              }
+             source={
+             Object.keys(selectedItem).length >0 ? {uri :`${imageSizeUrl}/${selectedItem?.image}`} :
+              item?.small_image
+                ? {uri: `${imageUrl}${item?.small_image}`}
+                : require('../Assets/Images/Mask2.png')
+            }
+              // source={
+              //     item?.large_image
+              //     ? {uri: `${imageUrl}${item?.large_image}`}
+              //     : require('../Assets/Images/Mask2.png')
+              // }
               resizeMode={'contain'}
               style={{
                 height: '100%',

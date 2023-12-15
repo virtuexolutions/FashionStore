@@ -17,13 +17,14 @@ import {
   selectedProductSize,
 } from '../Store/slices/common';
 import DropDownSingleSelect from './DropDownSingleSelect';
+import {imageSizeUrl, imageUrl} from '../Config';
 
 const CartItem = ({item, fromCheckout}) => {
-  console.log(
-    '🚀 ~ file: CartItem.js:22 ~ CartItem ~ item:',
-    item,
-    item?.size_id?.size,
-  );
+  // console.log(
+  //   '🚀 ~ file: CartItem.js:22 ~ CartItem ~ item:',
+  //   item,
+  //   imagesizeUrl,item?.size_id?.image,
+  // );
   const dispatch = useDispatch();
   const [selectedSize, setSelectedSize] = useState(
     Object.keys(item?.size_id).length > 0 ? item?.size_id?.size : '',
@@ -60,7 +61,13 @@ const CartItem = ({item, fromCheckout}) => {
             }}
           />
           <CustomImage
-            source={require('../Assets/Images/Mask2.png')}
+            source={
+              item?.size_id?.image ? {uri :`${imageSizeUrl}/${item?.size_id?.image}`} :
+              item?.small_image
+                ? {uri: `${imageUrl}${item?.small_image}`}
+                : require('../Assets/Images/Mask2.png')
+            }
+            // source={require('../Assets/Images/Mask2.png')}
             style={{
               width: windowWidth * 0.3,
               height: windowHeight * 0.15,

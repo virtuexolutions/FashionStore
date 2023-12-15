@@ -5,6 +5,7 @@ import {
   Platform,
   ToastAndroid,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useEffect} from 'react';
 import {moderateScale, ScaledSheet} from 'react-native-size-matters';
@@ -92,41 +93,55 @@ const OrderScreen = ({route}) => {
           </CustomText>
         </TouchableOpacity>
       </View>
+{
+  isLoading  ?  ( 
+  <View style={{
+    height:windowHeight*0.8,
+    // backgroundColor:'red',
+    alignItems:'center',
+    justifyContent:'center'
+  }}>
+<ActivityIndicator size={'large'} color={Color.themeColor}/>
+  </View>
+     )  : (
 
-      <FlatList
-        ListEmptyComponent={() => {
-          return (
-            <View
+   <FlatList
+      ListEmptyComponent={() => {
+        return (
+          <View
+            style={{
+              justifyContent: 'center',
+              height: windowHeight * 0.7,
+            }}>
+            <NoData
               style={{
+                width: windowWidth * 0.95,
+                height: windowHeight * 0.28,
+                alignItems: 'center',
                 justifyContent: 'center',
-                height: windowHeight * 0.7,
-              }}>
-              <NoData
-                style={{
-                  width: windowWidth * 0.95,
-                  height: windowHeight * 0.28,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              />
-            </View>
-          );
-        }}
-        showsVerticalScrollIndicator={false}
-        data={orders}
-        style={{
-          height: '90%',
-          backgroundColor: 'white',
-          width: windowWidth,
-        }}
-        contentContainerStyle={{
-          alignItems: 'center',
-          paddingBottom: moderateScale(20, 0.3),
-        }}
-        renderItem={({item, index}) => {
-          return <OrderCard data={item} />;
-        }}
-      />
+              }}
+            />
+          </View>
+        );
+      }}
+      showsVerticalScrollIndicator={false}
+      data={orders}
+      style={{
+        height: '90%',
+        backgroundColor: 'white',
+        width: windowWidth,
+      }}
+      contentContainerStyle={{
+        alignItems: 'center',
+        paddingBottom: moderateScale(20, 0.3),
+      }}
+      renderItem={({item, index}) => {
+        return <OrderCard data={item} />;
+      }}
+    />
+  )
+
+}
     </>
   );
 };

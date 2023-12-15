@@ -96,6 +96,8 @@ const PlaceOrderScreen = () => {
       address1: address,
       address2: address,
       post_code: postcode,
+      // stripeToken : isChecked == 'pay through stripe'
+      // && stripeToken ,
       payment_method:
         isChecked == 'Cash on delivery'
           ? 'cod'
@@ -120,7 +122,17 @@ const PlaceOrderScreen = () => {
         };
       }),
     };
-     console.log(
+    if(isChecked == 'pay through stripe'  ){
+      if(stripeToken == '') {
+        alert('Please enter your card details');
+      }
+      else{
+
+        body.stripeToken = stripeToken
+      }
+    }
+    
+    console.log(
       '🚀 ~ file: PlaceOrderScreen.js:100 ~ PlaceOrder ~ body:',
       body,
     );
@@ -128,7 +140,7 @@ const PlaceOrderScreen = () => {
     for (let key in body) {
       if (body[key] == '') {
         return Platform.OS == 'android'
-          ? ToastAndroid.show(`requried field is empty`, ToastAndroid.SHORT)
+          ? ToastAndroid.show(`${key} is empty`, ToastAndroid.SHORT)
           : alert(`requried field is empty`);
       }
     }

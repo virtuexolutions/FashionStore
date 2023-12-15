@@ -8,17 +8,26 @@ import {windowHeight, windowWidth} from '../Utillity/utils';
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import numeral from 'numeral';
+import { imageSizeUrl, imageUrl } from '../Config';
 
 
 const OrderCard = ({data}) => {
-  console.log("🚀 ~ file: OrderCard.js:12 ~ OrderCard ~ data:", data)
+  // console.log("🚀 ~ file: OrderCard.js:12 ~ OrderCard ~ data:", data?.item_info[0]?.product_info)
   const  navigation =useNavigation()
   return (
+
+
+
+
     <View style={styles.container}>
+
+
       <View style={styles.textRow}>
         <View
           style={{
             // backgroundColor: 'red',
+
+
             flexDirection: 'row',
             justifyContent: 'center',
           }}>
@@ -65,8 +74,13 @@ const OrderCard = ({data}) => {
                     height: '100%',
                     width: '100%',
                   }}
-                  source={require('../Assets/Images/image3.png')}
-                  // source={{uri : item?.item_info?.image}}
+                  source={
+                    item?.product_info ? {uri :`${imageUrl}/${item?.product_info?.large_image}`} :
+                     item?.small_image
+                       ? {uri: `${imageSizeUrl}${item?.small_image}`}
+                       : require('../Assets/Images/Mask2.png')
+                   }
+               
                 />
               </View>
             </>

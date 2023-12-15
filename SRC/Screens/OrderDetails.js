@@ -24,6 +24,7 @@ import OrderCard from '../Components/OrderCard';
 import {Text} from 'react-native';
 import moment from 'moment';
 import numeral from 'numeral';
+import { imageUrl } from '../Config';
 
 
 const OrderDetails = props => {
@@ -71,8 +72,12 @@ const OrderDetails = props => {
                   width: '100%',
                   height: '100%',
                 }}
-                source={require('../Assets/Images/image3.png')}
-                // source={{uri: item?.image}}
+                source={
+                  item?.product_info ? {uri :`${imageUrl}/${item?.product_info?.large_image}`} :
+                   item?.small_image
+                     ? {uri: `${imageSizeUrl}${item?.small_image}`}
+                     : require('../Assets/Images/Mask2.png')
+                 }
               />
             </View>
            
@@ -82,8 +87,6 @@ const OrderDetails = props => {
                   color: Color.mediumGray,
                   width:windowWidth*0.65,
                   textAlign: 'left',
-                  // width: windowWidth,
-                  // height: windowHeight * 0.04,
                   paddingHorizontal: moderateScale(10, 0.3),
                   paddingVertical: moderateScale(10, 0.3),
                 }}
@@ -96,9 +99,6 @@ const OrderDetails = props => {
                     fontSize: moderateScale(14, 0.6),
                     color: Color.mediumGray,
                     textAlign: 'left',
-                    // width: windowWidth,
-                    // height: windowHeight * 0.04,
-                    // paddingHorizontal: moderateScale(5, 0.3),
                     paddingVertical: moderateScale(10, 0.3),
                   }}
                   isBold>
@@ -142,7 +142,6 @@ const OrderDetails = props => {
                 {
                   textAlign:'right',
                   width: windowWidth * 0.35,
-                  // backgroundColor:'red',
                 },
               ]}>
               {data?.address1}
@@ -170,7 +169,6 @@ const OrderDetails = props => {
             <CustomText style={styles.text2}>{data?.total_amount}</CustomText>
           </View> */}
         </View>
-        {/* <Text>Thello</Text> */}
       </ScrollView>
     </>
   );
