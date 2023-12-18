@@ -7,6 +7,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import CustomImage from './CustomImage';
 
 const SubCategories = ({
+  image,
   selectedCategory,
   setSelectedCategory,
   item,
@@ -36,11 +37,12 @@ const SubCategories = ({
       ]}>
       <View
         style={{
-          width: windowWidth * 0.12,
-          height: windowWidth * 0.12,
+          width: windowWidth * 0.13,
+          height: windowWidth * 0.13,
           backgroundColor: Color.lightGrey,
           overflow: 'hidden',
-          borderRadius: (windowWidth * 0.12) / 2,
+          padding:moderateScale(5,.6),
+          borderRadius: (windowWidth * 0.13) / 2,
         }}>
         <CustomImage
           resizeMode="contain"
@@ -50,7 +52,7 @@ const SubCategories = ({
             setCategoryType('sub')
             item?.child_categories?.length == 0 && setIsVisible(false)
           }}
-          source={require('../Assets/Images/dress.png')}
+          source={image}
           style={{width: '100%', height: '100%'}}
         />
       </View>

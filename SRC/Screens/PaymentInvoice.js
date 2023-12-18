@@ -91,7 +91,7 @@ import { EmptyCart } from '../Store/slices/common';
                 marginTop: moderateScale(20, 0.3),
               }}>
               <CustomText>Amount Due To</CustomText>
-              <CustomText>{numeral(Invoice.discount_amount).format('$0,0.00')}</CustomText>
+              <CustomText>{numeral(Invoice?.discount_amount).format('$0,0.00')}</CustomText>
             </View>
             <View
               style={{

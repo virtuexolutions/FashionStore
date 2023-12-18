@@ -35,18 +35,29 @@ import {imageSizeUrl, imageUrl} from '../Config';
 const DressesDetail = props => {
   const focused = useIsFocused();
   const item = props.route.params.item;
-   console.log("🚀 ~ file: DressesDetail.js:38 ~ DressesDetail ~ item:", item)
+  console.log('🚀 ~ file: DressesDetail.js:38 ~ DressesDetail ~ item:', item);
 
   const cartData = useSelector(state => state.commonReducer.item);
 
   const dispatch = useDispatch();
   const [selectedSize, setSelectedSize] = useState('');
-  const [selectedItem, setSelectedItem] = useState({});
   console.log(
-    '🚀 ~ file: DressesDetail.js:48 ~ DressesDetail ~ selectedItem:',selectedItem,
-    selectedItem ? `${imageUrl}/${selectedItem?.image}`:`${imageUrl}${item?.large_image}`,
+    '🚀 ~ file: DressesDetail.js:48 ~ DressesDetail ~ selectedItem:',
+    selectedItem,
+    selectedItem
+      ? `${imageUrl}/${selectedItem?.image}`
+      : `${imageUrl}${item?.large_image}`,
   );
   const cardData = useSelector(state => state.commonReducer.item);
+  const [selectedItem, setSelectedItem] = useState(
+    cardData?.find(data => data?.id == item?.id)?.size_id
+      ? cardData?.find(data => data?.id == item?.id)?.size_id
+      : {},
+  );
+  console.log(
+    '🚀 ~ file: DressesDetail.js:50 ~ DressesDetail ~ selectedItem:',
+    cardData,
+  );
   const [sizeArray, setSizeArray] = useState(
     item?.varation?.map(item => item?.size),
   );
@@ -218,12 +229,15 @@ const DressesDetail = props => {
           </View> */}
           <View style={[styles.container]}>
             <CustomImage
-             source={
-             Object.keys(selectedItem).length >0 ? {uri :`${imageSizeUrl}/${selectedItem?.image}`} :
-              item?.small_image
-                ? {uri: `${imageUrl}${item?.small_image}`}
-                : require('../Assets/Images/Mask2.png')
-            }
+              source={
+                selectedItem
+                  ? Object.keys(selectedItem)?.length > 0 && {
+                      uri: `${imageSizeUrl}/${selectedItem?.image}`,
+                    }
+                  : item?.small_image
+                  ? {uri: `${imageUrl}${item?.small_image}`}
+                  : require('../Assets/Images/Mask2.png')
+              }
               // source={
               //     item?.large_image
               //     ? {uri: `${imageUrl}${item?.large_image}`}

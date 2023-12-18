@@ -23,52 +23,13 @@ const CategoriesModal = ({isVisible, setIsVisible, categoryData,  setCategoryId,
   }, [categoryData]);
 
 
-
+const images =[
+  require('../Assets/Images/woman.png'), 
+  require('../Assets/Images/man.png') ,
+  require('../Assets/Images/shop.png') ,
+  require('../Assets/Images/list.png') 
+]
  
-
-  const data = [
-    {
-      name: 'Electronics',
-      image: require('../Assets/Images/dress.png'),
-      sub: [
-        {name: 'laptop', image: require('../Assets/Images/shoes.png')},
-        {name: 'television', image: require('../Assets/Images/jeans.png')},
-        {name: 'Headphones', image: require('../Assets/Images/tshirt.png')},
-        {name: 'tablets', image: require('../Assets/Images/shoes.png')},
-      ],
-    },
-    {
-      name: 'Fashion',
-      image: require('../Assets/Images/dress.png'),
-      sub: [
-        {name: 'Dress', image: require('../Assets/Images/shoes.png')},
-        {name: 'Shoes', image: require('../Assets/Images/jeans.png')},
-        {name: 'Headphones', image: require('../Assets/Images/tshirt.png')},
-        {name: 'tablets', image: require('../Assets/Images/shoes.png')},
-      ],
-    },
-    {
-      name: 'Beauty',
-      image: require('../Assets/Images/dress.png'),
-      sub: [
-        {name: 'laptop', image: require('../Assets/Images/shoes.png')},
-        {name: 'television', image: require('../Assets/Images/jeans.png')},
-        {name: 'Headphones', image: require('../Assets/Images/tshirt.png')},
-        {name: 'tablets', image: require('../Assets/Images/shoes.png')},
-      ],
-    },
-    {
-      name: 'Jewellery',
-      image: require('../Assets/Images/dress.png'),
-      sub: [
-        {name: 'laptop', image: require('../Assets/Images/shoes.png')},
-        {name: 'television', image: require('../Assets/Images/jeans.png')},
-        {name: 'Headphones', image: require('../Assets/Images/tshirt.png')},
-        {name: 'tablets', image: require('../Assets/Images/shoes.png')},
-      ],
-    },
-  ];
-
   return (
     <Modal
       isVisible={isVisible}
@@ -88,6 +49,7 @@ const CategoriesModal = ({isVisible, setIsVisible, categoryData,  setCategoryId,
                 setCategoryType={setCategoryType}
                 setCategoryId={setCategoryId}
                   item={item}
+                  image={images[index]}
                   setIsVisible={setIsVisible}
                   setSelectedCategory={setSelectedCategory}
                   selectedCategory={selectedCategory}
