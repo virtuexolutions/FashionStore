@@ -96,8 +96,6 @@ const PlaceOrderScreen = () => {
       address1: address,
       address2: address,
       post_code: postcode,
-      // stripeToken : isChecked == 'pay through stripe'
-      // && stripeToken ,
       payment_method:
         isChecked == 'Cash on delivery'
           ? 'cod'
@@ -105,8 +103,8 @@ const PlaceOrderScreen = () => {
           ? 'stripe'
           : '',
       total_quantity: result?.totalQ,
-      total_amount: result?.total,
-      discount_amount: result?.discount, 
+      amount: result?.discount,
+      // discount_amount: result?.discount, 
       products: cartData?.map(item => {
         return {
           id: item?.id,
@@ -132,7 +130,7 @@ const PlaceOrderScreen = () => {
       }
     }
     
-   return  console.log(
+     console.log(
       '🚀 ~ file: PlaceOrderScreen.js:100 ~ PlaceOrder ~ body:',
       body,
     );

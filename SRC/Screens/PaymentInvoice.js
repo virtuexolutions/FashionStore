@@ -91,7 +91,7 @@ import { EmptyCart } from '../Store/slices/common';
                 marginTop: moderateScale(20, 0.3),
               }}>
               <CustomText>Amount Due To</CustomText>
-              <CustomText>{numeral(Invoice?.discount_amount).format('$0,0.00')}</CustomText>
+              <CustomText>{numeral(Invoice?.total_amount).format('$0,0.00')}</CustomText>
             </View>
             <View
               style={{
@@ -178,18 +178,9 @@ import { EmptyCart } from '../Store/slices/common';
               marginTop: moderateScale(20, 0.3),
             }}>
             <CustomText isBold>Total </CustomText>
-            <CustomText isBold> {numeral(Invoice?.total_amount).format('$0,0.00')}</CustomText>
+            <CustomText isBold> {numeral(Invoice?.total_amount).format('$0,0.0')}</CustomText>
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              width: windowWidth * 0.9,
-              marginTop: moderateScale(10, 0.3),
-            }}>
-            <CustomText isBold>Discount </CustomText>
-            <CustomText isBold> {numeral(Invoice?.total_amount - Invoice?.discount_amount).format('$0,0.00')}</CustomText>
-          </View>
+        
           <View
             style={{
               flexDirection: 'row',
@@ -198,7 +189,7 @@ import { EmptyCart } from '../Store/slices/common';
               marginTop: moderateScale(10, 0.3),
             }}>
             <CustomText isBold>Sub Total </CustomText>
-            <CustomText isBold> {numeral(Invoice?.discount_amount).format('$0,0.00')}</CustomText>
+            <CustomText isBold> {numeral(Invoice?.total_amount).format('$0,0.0')}</CustomText>
           </View>
   
           <TouchableOpacity

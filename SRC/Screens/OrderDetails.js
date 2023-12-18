@@ -152,13 +152,13 @@ const OrderDetails = props => {
             <CustomText style={styles.text2}>Total</CustomText>
             <CustomText style={styles.text2}>{numeral(data?.total_amount).format('$0,0.00')}</CustomText>
           </View>
-          <View style={styles.row}>
+          {/* <View style={styles.row}>
             <CustomText style={styles.text2}>Discount</CustomText>
             <CustomText style={styles.text2}>{numeral(data?.total_amount- data?.discount_amount).format('$0,0.00')}</CustomText>
-          </View>
+          </View> */}
           <View style={styles.row}>
             <CustomText style={styles.text2}>subTotal</CustomText>
-            <CustomText style={styles.text2}>{numeral(data?.discount_amount).format('$0,0.00')}</CustomText>
+            <CustomText style={styles.text2}>{numeral(data?.total_amount).format('$0,0.00')}</CustomText>
           </View>
           {/* <View style={styles.row}>
             <CustomText style={styles.text2}>discount</CustomText>
