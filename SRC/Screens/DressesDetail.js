@@ -36,27 +36,24 @@ const DressesDetail = props => {
   const focused = useIsFocused();
   const item = props.route.params.item;
   console.log('🚀 ~ file: DressesDetail.js:38 ~ DressesDetail ~ item:', item);
+  const dispatch = useDispatch();
 
   const cartData = useSelector(state => state.commonReducer.item);
-
-  const dispatch = useDispatch();
-  const [selectedSize, setSelectedSize] = useState('');
-  console.log(
-    '🚀 ~ file: DressesDetail.js:48 ~ DressesDetail ~ selectedItem:',
-    selectedItem,
-    selectedItem
-      ? `${imageUrl}/${selectedItem?.image}`
-      : `${imageUrl}${item?.large_image}`,
-  );
   const cardData = useSelector(state => state.commonReducer.item);
+  console.log(
+    '🚀 ~ file: DressesDetail.js:42 ~ DressesDetail ~ cardData:',
+    cardData?.find(data => data?.id == item?.id)?.size_id,
+  );
+
+  const [selectedSize, setSelectedSize] = useState('');
   const [selectedItem, setSelectedItem] = useState(
     cardData?.find(data => data?.id == item?.id)?.size_id
       ? cardData?.find(data => data?.id == item?.id)?.size_id
       : {},
   );
   console.log(
-    '🚀 ~ file: DressesDetail.js:50 ~ DressesDetail ~ selectedItem:',
-    cardData,
+    '🚀 ~ file: DressesDetail.js:49 ~ DressesDetail ~ selectedItem:',
+    selectedItem,
   );
   const [sizeArray, setSizeArray] = useState(
     item?.varation?.map(item => item?.size),
@@ -68,16 +65,13 @@ const DressesDetail = props => {
       ? cardData?.find(data => data?.id == item?.id)?.quantity
       : 1,
   );
-  const [cotton, setcotton] = useState(1);
-  const images = [
-    require('../Assets/Images/image3.png'),
-    require('../Assets/Images/Mask2.png'),
-    require('../Assets/Images/image3.png'),
-    require('../Assets/Images/Mask2.png'),
-    require('../Assets/Images/Mask.png'),
-  ];
 
   const [finalItem, setFinalItem] = useState(item);
+
+  console.log(
+    'Url=================>>>>>>>>>>',
+    `${imageUrl}/${item?.small_image}`,
+  );
 
   useEffect(() => {
     setSelectedItem(item?.varation?.find(item => item?.size == selectedSize));
@@ -230,37 +224,23 @@ const DressesDetail = props => {
           <View style={[styles.container]}>
             <CustomImage
               source={
-                selectedItem
-                  ? Object.keys(selectedItem)?.length > 0 && {
+                selectedItem && Object.keys(selectedItem)?.length > 0
+                  ? {
                       uri: `${imageSizeUrl}/${selectedItem?.image}`,
                     }
                   : item?.small_image
-                  ? {uri: `${imageUrl}${item?.small_image}`}
+                  ? {uri: `${imageUrl}/${item?.small_image}`}
                   : require('../Assets/Images/Mask2.png')
               }
-              // source={
-              //     item?.large_image
-              //     ? {uri: `${imageUrl}${item?.large_image}`}
-              //     : require('../Assets/Images/Mask2.png')
-              // }
               resizeMode={'contain'}
               style={{
                 height: '100%',
                 height: '100%',
               }}
             />
-            {/* <CustomImage  source={selectedItem ? {uri:`${imageUrl}``/${selectedItem?.image}`}: {uri :`${imageUrl}``/${item?.large_image}`}}/> */}
           </View>
 
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              width: windowWidth * 0.95,
-              alignItems: 'center',
-              paddingHorizontal: moderateScale(10, 0.6),
-              paddingVertical: moderateScale(10, 0.6),
-            }}>
+          <View style={styles.title}>
             <CustomText
               isBold
               style={{
@@ -268,7 +248,6 @@ const DressesDetail = props => {
                 fontSize: moderateScale(18, 0.6),
                 width: windowWidth * 0.6,
                 textAlign: 'left',
-                // backgroundColor:'orange',
               }}>
               {finalItem?.title}
             </CustomText>
@@ -309,7 +288,6 @@ const DressesDetail = props => {
                 justifyContent: 'space-between',
                 flexDirection: 'row',
                 alignItems: 'center',
-                // backgroundColor: 'red',
               }}>
               <CustomText
                 isBold
@@ -318,7 +296,6 @@ const DressesDetail = props => {
                   color: Color.themeColor,
                   fontSize: 24,
                   marginRight: moderateScale(10, 0.3),
-                  // width: windowWidth * 0.24,
                 }}>
                 $
                 {selectedItem && Object.keys(selectedItem).length > 0
@@ -404,55 +381,9 @@ const DressesDetail = props => {
             </View>
           </View>
 
-          {/* <CustomText
-            isBold
-            style={{
-              color: '#201E1D',
-              fontSize: moderateScale(14, 0.6),
-              width: windowWidth * 0.17,
-              backgroundColor:'red',
-              width:windowWidth*0.95,
-              textAlign:'left',
-              paddingHorizontal:moderateScale(10,.6),
-              paddingVertical:moderateScale(5,.6),
-            }}>
-            Color
-          </CustomText> */}
-
-          {/* <View style={styles.ColorLine}>
-            {item?.colors?.map(color => {
-              return (
-                <TouchableOpacity
-                  onPress={() => {
-                    SetSelectedColor(color);
-                  }}
-                  style={[styles.colorContainer, {backgroundColor: color}]}>
-                  {Selectedcolor == color && (
-                    <Icon
-                      name={'check'}
-                      as={Entypo}
-                      size={moderateScale(17, 0.3)}
-                      color={'#fff'}
-                    />
-                  )}
-                </TouchableOpacity>
-              );
-            })}
-          </View> */}
           {!['', null, undefined].includes(item?.size) && (
             <>
-              <CustomText
-                isBold
-                style={{
-                  color: '#201E1D',
-                  fontSize: moderateScale(14, 0.6),
-                  width: windowWidth * 0.17,
-                  // backgroundColor:'red',
-                  width: windowWidth * 0.95,
-                  textAlign: 'left',
-                  paddingHorizontal: moderateScale(10, 0.6),
-                  paddingTop: moderateScale(10, 0.6),
-                }}>
+              <CustomText isBold style={styles.heading}>
                 Size
               </CustomText>
 
@@ -470,29 +401,10 @@ const DressesDetail = props => {
               />
             </>
           )}
-          <CustomText
-            isBold
-            style={{
-              color: '#201E1D',
-              fontSize: moderateScale(14, 0.6),
-              width: windowWidth * 0.17,
-              // backgroundColor:'red',
-              width: windowWidth * 0.95,
-              textAlign: 'left',
-              paddingHorizontal: moderateScale(10, 0.6),
-              paddingTop: moderateScale(10, 0.6),
-            }}>
+          <CustomText isBold style={styles.heading}>
             Description
           </CustomText>
-          <CustomText
-            style={{
-              color: '#201E1D',
-              fontSize: moderateScale(13, 0.6),
-              width: windowWidth * 0.95,
-              textAlign: 'left',
-              paddingHorizontal: moderateScale(10, 0.6),
-              paddingVertical: moderateScale(10, 0.6),
-            }}>
+          <CustomText style={styles.description}>
             {item?.description}
           </CustomText>
         </View>
@@ -541,9 +453,34 @@ const styles = StyleSheet.create({
     width: windowWidth,
     height: windowHeight * 0.1,
     backgroundColor: '#FFFFFF',
-    //  alignItems:'center',
     bottom: 0,
     justifyContent: 'center',
+  },
+  description: {
+    color: '#201E1D',
+    fontSize: moderateScale(13, 0.6),
+    width: windowWidth * 0.95,
+    textAlign: 'left',
+    paddingHorizontal: moderateScale(10, 0.6),
+    paddingVertical: moderateScale(10, 0.6),
+  },
+  title: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: windowWidth * 0.95,
+    alignItems: 'center',
+    paddingHorizontal: moderateScale(10, 0.6),
+    paddingVertical: moderateScale(10, 0.6),
+  },
+  heading: {
+    color: '#201E1D',
+    fontSize: moderateScale(14, 0.6),
+    width: windowWidth * 0.17,
+    // backgroundColor:'red',
+    width: windowWidth * 0.95,
+    textAlign: 'left',
+    paddingHorizontal: moderateScale(10, 0.6),
+    paddingTop: moderateScale(10, 0.6),
   },
   container: {
     // flexDirection: 'row',

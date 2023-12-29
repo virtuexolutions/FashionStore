@@ -10,23 +10,22 @@ import CustomButton from './CustomButton';
 import CustomImage from './CustomImage';
 
 const PaymentModal = ({isModal, setIsModal, setToken}) => {
-  const stripePaymentFunction = ()=> {
+  const stripePaymentFunction = () => {
     createToken({
       type: 'Card',
     })
       .then(token => {
         console.log('token= ', token);
-        setToken(token?.token?.id)
-        setIsModal(false)
+        setToken(token?.token?.id);
+        setIsModal(false);
       })
       .catch(error => {
         console.log('error= ', error);
       });
-  }
+  };
   return (
     <Modal
       isVisible={isModal}
-      // isModal={isModal}
       hasBackdrop={true}
       onBackdropPress={() => {
         setIsModal(false);
@@ -40,16 +39,13 @@ const PaymentModal = ({isModal, setIsModal, setToken}) => {
         style={{
           backgroundColor: Color.white,
           paddingVertical: moderateScale(15, 0.3),
-          // height:windowHeight*0.4,
           width: windowWidth * 0.95,
           borderRadius: moderateScale(30, 0.3),
-          //   paddingHorizontal:moderateScale(20,.3)
         }}>
         <CustomText
           isBold
           style={{
             textAlign: 'center',
-            // paddingLeft: moderateScale(20, 0.3),
             color: Color.themeColor,
             fontSize: moderateScale(25, 0.6),
           }}>
@@ -74,7 +70,6 @@ const PaymentModal = ({isModal, setIsModal, setToken}) => {
           style={{
             alignItems: 'center',
             justifyContent: 'center',
-            // paddingVertical:moderateScale(10,.3)
           }}>
           <CardField
             postalCodeEnabled={false}
@@ -82,21 +77,14 @@ const PaymentModal = ({isModal, setIsModal, setToken}) => {
               number: '4242 4242 4242 4242',
             }}
             cardStyle={{
-              backgroundColor:Color.lightGrey,
-              borderRadius:moderateScale(15,.6),
+              backgroundColor: Color.lightGrey,
+              borderRadius: moderateScale(15, 0.6),
               width: windowWidth * 0.8,
-              // backgroundColor: '#FFFFFF',
-              // textColor: '#000000',
-              // color:Color.red,
             }}
-            
             style={{
-              // backgroundColor: 'red',
               width: '85%',
-              height: windowHeight *0.07,
-              // paddingVertical:moderateScale(10,.3),
-              marginVertical:moderateScale(10 ,0.3) ,
-              // paddingHorizontal: moderateScale(20, 0.3),
+              height: windowHeight * 0.07,
+              marginVertical: moderateScale(10, 0.3),
             }}
             onCardChange={cardDetails => {
               console.log('cardDetails', cardDetails);
@@ -108,17 +96,12 @@ const PaymentModal = ({isModal, setIsModal, setToken}) => {
         </View>
         <View
           style={{
-            flexDirection: 'row', 
-            alignSelf:'flex-end',
-            // position:'absolute',
-            // right:10,
-            // bottom:0,   
+            flexDirection: 'row',
+            alignSelf: 'flex-end',
             justifyContent: 'space-between',
             width: windowWidth * 0.5,
-            // marginVertical:moderateScale(20,.3),
             marginHorizontal: moderateScale(20, 0.3),
             paddingVertical: moderateScale(10, 0.3),
-            // backgroundColor: 'red',
           }}>
           <CustomButton
             isBold
@@ -126,13 +109,10 @@ const PaymentModal = ({isModal, setIsModal, setToken}) => {
             textColor={Color.themeDarkGray}
             width={windowWidth * 0.22}
             height={windowHeight * 0.05}
-            // marginTop={moderateScale(10, 0.3)}
             onPress={() => {
-              setIsModal(false)
-
+              setIsModal(false);
             }}
             bgColor={Color.lightGrey424242}
-            // isGradient
             borderRadius={moderateScale(25, 0.3)}
           />
           <CustomButton
@@ -142,11 +122,9 @@ const PaymentModal = ({isModal, setIsModal, setToken}) => {
             width={windowWidth * 0.22}
             height={windowHeight * 0.05}
             onPress={() => {
-              stripePaymentFunction()
-              // setIsModal(false)
+              stripePaymentFunction();
             }}
             bgColor={Color.themeColor}
-            // isGradient
             borderRadius={moderateScale(30, 0.3)}
           />
         </View>

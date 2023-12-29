@@ -15,10 +15,6 @@ const SubCategories = ({
   setCategoryId,
   setCategoryType
 }) => {
-  // console.log(
-  //   '🚀 ~ file: SubCategories.js:10 ~ SubCategories ~ selectedCategory:',
-  //   item,
-  // );
   return (
     <TouchableOpacity
       onPress={() => {
@@ -80,14 +76,12 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: moderateScale(12, 0.6),
     fontWeight: 'bold',
-    // backgroundColor:'red',
     textAlign: 'center',
   },
   container: {
     paddingVertical: moderateScale(10, 0.6),
     paddingHorizontal: moderateScale(10, 0.6),
     width: windowWidth * 0.3,
-    // backgroundColor: 'purple',
     justifyContent: 'center',
     alignItems: 'center',
   },

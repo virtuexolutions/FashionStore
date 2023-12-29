@@ -1,6 +1,5 @@
 import {
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
   ToastAndroid,
@@ -17,8 +16,6 @@ import Color from '../Assets/Utilities/Color';
 import navigationService from '../navigationService';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import TextInputWithTitle from '../Components/TextInputWithTitle';
 import {Icon} from 'native-base';
 import {validateEmail} from '../Config';
@@ -59,14 +56,9 @@ const LoginScreen = () => {
 
     setIsLoading(true);
     const response = await Post(url, body, apiHeader());
-   console.log("🚀 ~ file: LoginScreen.js:62 ~ Login ~ response:", response?.data)
     setIsLoading(false);
 
     if (response != undefined) {
-      // console.log(
-      //   '🚀 ~ file: Signup.js:66 ~ register ~ response:',
-      //   response?.data,
-      // );
       dispatch(setUserData(response?.data?.data?.use_info));
       dispatch(setUserToken({token: response?.data?.data?.token}));
     }
@@ -81,13 +73,11 @@ const LoginScreen = () => {
         paddingTop: windowHeight * 0.1,
         backgroundColor: '#FEFDFC',
 
-        // marginTop: moderateScale(30, 0.3),
       }}>
       <View
         style={{
           width: windowWidth * 0.7,
           height: windowHeight * 0.2,
-          // backgroundColor:'purple',
           alignItems: 'center',
         }}>
         <CustomImage
@@ -95,7 +85,6 @@ const LoginScreen = () => {
           resizeMode={'contain'}
           style={{
             height: '100%',
-            // width:'100%',
           }}
         />
       </View>

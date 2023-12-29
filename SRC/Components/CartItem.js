@@ -20,11 +20,6 @@ import DropDownSingleSelect from './DropDownSingleSelect';
 import {imageSizeUrl, imageUrl} from '../Config';
 
 const CartItem = ({item, fromCheckout}) => {
-  // console.log(
-  //   '🚀 ~ file: CartItem.js:22 ~ CartItem ~ item:',
-  //   item,
-  //   imagesizeUrl,item?.size_id?.image,
-  // );
   const dispatch = useDispatch();
   const [selectedSize, setSelectedSize] = useState(
     Object.keys(item?.size_id).length > 0 ? item?.size_id?.size : '',
@@ -67,7 +62,6 @@ const CartItem = ({item, fromCheckout}) => {
                 ? {uri: `${imageUrl}${item?.small_image}`}
                 : require('../Assets/Images/Mask2.png')
             }
-            // source={require('../Assets/Images/Mask2.png')}
             style={{
               width: windowWidth * 0.3,
               height: windowHeight * 0.15,
@@ -105,9 +99,6 @@ const CartItem = ({item, fromCheckout}) => {
               flexWrap: 'wrap',
               width: windowWidth * 0.45,
             }}>
-            {/* {item?.size_id ? (
-              <CustomText style={{textAlign:'left', color:'black', fontSize:moderateScale(12,.6)}}>{item?.size_id?.size}</CustomText>
-            ) : ( */}
             {!['', null, undefined].includes(item?.size) ? (
               <DropDownSingleSelect
                 placeholder={selectedSize ? selectedSize : 'Select Any Size'}
@@ -150,15 +141,8 @@ const CartItem = ({item, fromCheckout}) => {
                   : item?.discount_price
                   ? item?.discount_price
                   : item?.wholsale_price) * item?.quantity,
-                // (item?.discount_price
-                //     ? item?.discount_price
-                //     : item?.wholsale_price
-                //   : item?.size_id?.discount_price
-                //   ? item?.size_id?.discount_price
-                //   : item?.size_id?.price) * item?.quantity
               ).format('$0,0.00')}
 
-              {/* {numeral(item?.size_id?.price * item?.quantity).format('$0,0.00')} */}
             </CustomText>
 
             <View

@@ -17,11 +17,9 @@ const CommonSlice = createSlice({
   reducers: {
     setCategoryProperties(state, action) {
       state.categoryProperties = action?.payload;
-      // console.log("reduxxxx", state.categoryProperties);
     },
     setUserData(state, action) {
       state.userData = action?.payload;
-      // state.userData = action?.payload?.userData;
     },
     setUserLogOut(state, action) {
       state.userData = {};

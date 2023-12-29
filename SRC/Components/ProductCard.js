@@ -22,10 +22,6 @@ import {AddToCart, RemoveFromCart} from '../Store/slices/common';
 import {baseUrl, imageUrl} from '../Config';
 
 const ProductCard = ({item}) => {
-  // console.log(
-  //   '🚀 ~ file: ProductCard.js:24 ~ ProductCard ~ item:',
-  //   `${imageUrl}${item?.size ? item?.varation[0]?.image + '/' : item?.large_image}`,
-  // );
   const cardData = useSelector(state => state.commonReducer.item);
   const dispatch = useDispatch();
   const [like, setLike] = useState(item?.like);
@@ -139,7 +135,6 @@ const ProductCard = ({item}) => {
           style={{
             textAlign: 'left',
             width: windowWidth * 0.35,
-            // height: windowHeight * 0.03,
             color: '#a2a2a2',
           }}>
           {item?.recommended_use}
@@ -153,7 +148,6 @@ const ProductCard = ({item}) => {
           <CustomText
             style={{
               textAlign: 'left',
-              // width: windowWidth * 0.35,
               fontSize: moderateScale(16, 0.6),
               color: Color.themeColor,
               marginRight: moderateScale(5, 0.3),
@@ -170,12 +164,10 @@ const ProductCard = ({item}) => {
             <CustomText
               style={{
                 textAlign: 'left',
-                // width: windowWidth * 0.35,
                 fontSize: moderateScale(14, 0.6),
                 color: Color.veryLightGray,
                 textDecorationLine: 'line-through',
                 textDecorationStyle: 'solid',
-                // textDecorationColor:'black'
               }}
               isBold>
               {numeral(item?.wholsale_price).format('$0,0a')}

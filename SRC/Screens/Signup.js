@@ -47,7 +47,6 @@ const Signup = () => {
   const [postalCode, setpostalCode] = useState('');
 
   const onSelect = country => {
-    console.log('dasdasdasdads =>', country);
     setCountryCode(country.cca2);
     setCountry(country);
   };
@@ -64,16 +63,6 @@ const Signup = () => {
       country : country?.name,
       postal_code : postalCode
     };
-    //  console.log("🚀 ~ file: Signup.js:70 ~ register ~ body:", body)
-    // for (let key in body) {
-    //   if (body[key] == '') {
-    //     return Platform.OS == 'android'
-    //       ? ToastAndroid.show('All Fields are required', ToastAndroid.SHORT)
-    //       : Alert.alert('All Fields are required');
-    //   }else{
-    //     formData.append(key, body[key])
-    //   }
-    // }
     if (!validateEmail(email)) {
       return Platform.OS == 'android'
         ? ToastAndroid.show(

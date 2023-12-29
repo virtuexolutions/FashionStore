@@ -26,7 +26,6 @@ import NoData from '../Components/NoData';
 
 const OrderScreen = ({route}) => {
   const token = useSelector(state => state.authReducer.token);
-  console.log('🚀 ~ file: OrderScreen.js:27 ~ OrderScreen ~ token  :', token);
   const cardData = useSelector(state => state.commonReducer.item);
   const [finalAmount, setFinalAmount] = useState(0);
   const [productsForCard, setProdctsForCart] = useState([]);
@@ -35,18 +34,12 @@ const OrderScreen = ({route}) => {
   const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  // console.log('alert ============>')
-
   const getOrder = async () => {
     const url = 'auth/order/list';
     setIsLoading(true);
     const response = await Get(url, token);
     setIsLoading(false);
     if (response != undefined) {
-      console.log(
-        '🚀 ~ file: OrderScreen.js:36 ~ getOrder ~ response:',
-        response?.data,
-      );
       setOrders(response?.data?.order_info);
     }
   };
@@ -93,55 +86,51 @@ const OrderScreen = ({route}) => {
           </CustomText>
         </TouchableOpacity>
       </View>
-{
-  isLoading  ?  ( 
-  <View style={{
-    height:windowHeight*0.8,
-    // backgroundColor:'red',
-    alignItems:'center',
-    justifyContent:'center'
-  }}>
-<ActivityIndicator size={'large'} color={Color.themeColor}/>
-  </View>
-     )  : (
-
-   <FlatList
-      ListEmptyComponent={() => {
-        return (
-          <View
-            style={{
-              justifyContent: 'center',
-              height: windowHeight * 0.7,
-            }}>
-            <NoData
-              style={{
-                width: windowWidth * 0.95,
-                height: windowHeight * 0.28,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            />
-          </View>
-        );
-      }}
-      showsVerticalScrollIndicator={false}
-      data={orders}
-      style={{
-        height: '90%',
-        backgroundColor: 'white',
-        width: windowWidth,
-      }}
-      contentContainerStyle={{
-        alignItems: 'center',
-        paddingBottom: moderateScale(20, 0.3),
-      }}
-      renderItem={({item, index}) => {
-        return <OrderCard data={item} />;
-      }}
-    />
-  )
-
-}
+      {isLoading ? (
+        <View
+          style={{
+            height: windowHeight * 0.8,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <ActivityIndicator size={'large'} color={Color.themeColor} />
+        </View>
+      ) : (
+        <FlatList
+          ListEmptyComponent={() => {
+            return (
+              <View
+                style={{
+                  justifyContent: 'center',
+                  height: windowHeight * 0.7,
+                }}>
+                <NoData
+                  style={{
+                    width: windowWidth * 0.95,
+                    height: windowHeight * 0.28,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                />
+              </View>
+            );
+          }}
+          showsVerticalScrollIndicator={false}
+          data={orders}
+          style={{
+            height: '90%',
+            backgroundColor: 'white',
+            width: windowWidth,
+          }}
+          contentContainerStyle={{
+            alignItems: 'center',
+            paddingBottom: moderateScale(20, 0.3),
+          }}
+          renderItem={({item, index}) => {
+            return <OrderCard data={item} />;
+          }}
+        />
+      )}
     </>
   );
 };
@@ -159,14 +148,12 @@ const styles = ScaledSheet.create({
   text1: {
     fontSize: moderateScale(14, 0.3),
     color: Color.black,
-    // width: windowWidth * 0.2
     padding: moderateScale(10, 0.6),
     textAlign: 'left',
   },
   text2: {
     fontSize: moderateScale(14, 0.3),
     color: Color.black,
-    // width: windowWidth * 0.2
     padding: moderateScale(9, 0.6),
     textAlign: 'left',
     fontSize: moderateScale(12, 0.3),
@@ -175,7 +162,6 @@ const styles = ScaledSheet.create({
     fontSize: moderateScale(20, 0.3),
     textAlign: 'left',
     width: windowWidth * 0.9,
-    // backgroundColor : 'red'
   },
   row: {
     flexDirection: 'row',
@@ -190,17 +176,10 @@ const styles = ScaledSheet.create({
     fontSize: moderateScale(16, 0.3),
   },
   userTypeContainer: {
-    // width: windowWidth * 0.7,
-    // backgroundColor : Color.red,
     padding: moderateScale(10, 0.3),
     marginTop: moderateScale(10, 0.3),
-    // flexDirection: 'row',
-    // justifyContent: 'space-between',
   },
   innerContainer: {
-    // width: '48%',
-    // backgroundColor : 'green',
-    // paddingVertical : moderateScale(5,0.3),
     flexDirection: 'row',
     alignItems: 'center',
     marginLeft: moderateScale(5, 0.3),

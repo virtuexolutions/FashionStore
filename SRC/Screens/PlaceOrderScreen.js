@@ -29,7 +29,6 @@ const PlaceOrderScreen = () => {
   const token = useSelector(state => state.authReducer.token);
   const cartData = useSelector(state => state.commonReducer.item);
   const userdata = useSelector(state => state.commonReducer.userData);
-  console.log('🚀 ~ file: FormScreen.js:35 ~ FormScreen ~ userdata:', userdata);
 
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -52,15 +51,6 @@ const PlaceOrderScreen = () => {
           ? item?.discount_price
           : item?.wholsale_price) * item?.quantity;
     });
-    // setTotalQuantity(total_quantity);
-    // setTotalPrice(total_price);
-    // setAfterDiscount(afterDiscount);
-    console.log(
-      'final calculations======',
-      totalQ,
-      total,
-      discount,
-    );
     return {totalQ, total, discount}
   };
 
@@ -68,7 +58,6 @@ const PlaceOrderScreen = () => {
   const [lastName, setLastName] = useState(userdata?.name);
   const [email, setEmail] = useState(userdata?.email);
   const [phone, setPhone] = useState(userdata?.contact);
-  console.log("🚀 ~ file: FormScreen.js:57 ~ FormScreen ~ phone:", phone)
   const [country, setCountry] = useState(userdata?.country);
   const [address, setAddress] = useState(userdata?.address);
   const [postcode, setPostCode] = useState(userdata?.postal_code);
@@ -104,7 +93,6 @@ const PlaceOrderScreen = () => {
           : '',
       total_quantity: result?.totalQ,
       amount: result?.discount,
-      // discount_amount: result?.discount, 
       products: cartData?.map(item => {
         return {
           id: item?.id,
@@ -129,12 +117,6 @@ const PlaceOrderScreen = () => {
         body.stripeToken = stripeToken
       }
     }
-    
-     console.log(
-      '🚀 ~ file: PlaceOrderScreen.js:100 ~ PlaceOrder ~ body:',
-      body,
-    );
-
     for (let key in body) {
       if (body[key] == '') {
         return Platform.OS == 'android'
@@ -170,7 +152,6 @@ const PlaceOrderScreen = () => {
     const response = await Post(url, body, apiHeader(token));
     setIsLoading(false);
     if (response != undefined) {
-      console.log('dadafasrfafara', response?.data);
       navigationService.navigate('PaymentInvoice',{body:response?.data?.order_info})
       // dispatch(EmptyCart());
     }

@@ -7,16 +7,15 @@ import CustomButton from '../Components/CustomButton';
 import CustomText from '../Components/CustomText';
 import Color from '../Assets/Utilities/Color';
 import CustomStatusBar from '../Components/CustomStatusBar';
-import { setWalkThrough } from '../Store/slices/auth';
-import { useDispatch } from 'react-redux';
+import {setWalkThrough} from '../Store/slices/auth';
+import {useDispatch} from 'react-redux';
 
 const WelcomeScreen = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [checked, setChecked] = useState(false);
   const [step, setstep] = useState(0);
-  console.log('🚀 ~ file: StartingScreen.js:22 ~ StartingScreen ~ step:', step);
 
   const [starterData, setStarterData] = useState([
     {
@@ -47,14 +46,8 @@ const WelcomeScreen = () => {
           alignItems: 'center',
           paddingTop: windowHeight * 0.1,
           backgroundColor: '#FEFDFC',
-
-          // marginTop: moderateScale(30, 0.3),
         }}>
         {starterData.map((data, index) => {
-          console.log(
-            '🚀 ~ file: StartingScreen.js:54 ~ {starterData.map ~ index:',
-            index,
-          );
           return (
             step == index && (
               <>
@@ -64,9 +57,8 @@ const WelcomeScreen = () => {
                     flexDirection: 'row',
                     justifyContent: 'space-around',
                     alignItems: 'center',
-                    overflow:'auto',
-                    width: windowWidth* 0.15,
-
+                    overflow: 'auto',
+                    width: windowWidth * 0.15,
                   }}>
                   <View
                     style={{
@@ -74,39 +66,37 @@ const WelcomeScreen = () => {
                       width: windowWidth * 0.65,
                       overflow: 'hidden',
                       borderRadius: moderateScale(20, 0.6),
-                      zIndex:1,
+                      zIndex: 1,
                     }}>
                     <CustomImage
-                      source={starterData[step%3]?.image}
+                      source={starterData[step % 3]?.image}
                       style={{width: '100%', height: '100%'}}
                     />
                   </View>
-                   <View
+                  <View
                     style={{
                       height: windowHeight * 0.43,
                       width: windowWidth * 0.65,
                       overflow: 'hidden',
                       borderRadius: moderateScale(20, 0.6),
-                      zIndex:0,
-
+                      zIndex: 0,
                     }}>
                     <CustomImage
-                      source={starterData[(step+1)%3]?.image}
+                      source={starterData[(step + 1) % 3]?.image}
                       style={{width: '100%', height: '100%'}}
                     />
                   </View>
-                 <View
+                  <View
                     style={{
                       // backgroundColor:'black',
                       height: windowHeight * 0.41,
                       width: windowWidth * 0.65,
                       overflow: 'hidden',
                       borderRadius: moderateScale(20, 0.6),
-                      zIndex:-1,
-
+                      zIndex: -1,
                     }}>
                     <CustomImage
-                      source={starterData[(step+2)%3]?.image}
+                      source={starterData[(step + 2) % 3]?.image}
                       style={{width: '100%', height: '100%'}}
                     />
                   </View>
@@ -130,7 +120,6 @@ const WelcomeScreen = () => {
                     textAlign: 'center',
                     marginTop: moderateScale(10, 0.3),
                     width: windowWidth * 0.85,
-                    // backgroundColor:'green',
                     lineHeight: moderateScale(20, 0.6),
                   }}>
                   {data?.description}
@@ -147,11 +136,10 @@ const WelcomeScreen = () => {
                   borderRadius={moderateScale(30, 0.3)}
                   fontSize={moderateScale(16, 0.6)}
                   onPress={() => {
-                   
                     if (step < 2) {
                       setstep(step + 1);
                     } else {
-                     dispatch(setWalkThrough(true))
+                      dispatch(setWalkThrough(true));
                     }
                   }}
                   isGradient
@@ -163,15 +151,11 @@ const WelcomeScreen = () => {
                     justifyContent: 'space-between',
                     bottom: 25,
                     position: 'absolute',
-
-                    // marginTop: moderateScale(100, 0.3),
                     width: windowWidth * 0.2,
-                    //   backgroundColor:'black'
                   }}>
                   <TouchableOpacity
                     onPress={() => {
                       setstep(0);
-                  
                     }}
                     style={{
                       width: moderateScale(15, 0.6),
@@ -183,26 +167,22 @@ const WelcomeScreen = () => {
                   <TouchableOpacity
                     onPress={() => {
                       setstep(1);
-                      
-                    
                     }}
                     style={{
                       width: moderateScale(15, 0.6),
                       height: moderateScale(7, 0.6),
-                      backgroundColor: step == 1 ? Color.themeColor  : '#FBCEB1',
+                      backgroundColor: step == 1 ? Color.themeColor : '#FBCEB1',
                       borderRadius: moderateScale(10, 0.6),
                     }}
                   />
                   <TouchableOpacity
                     onPress={() => {
                       setstep(2);
-                      
-                      
                     }}
                     style={{
                       width: moderateScale(15, 0.6),
                       height: moderateScale(7, 0.6),
-                      backgroundColor: step == 2 ? Color.themeColor  : '#FBCEB1',
+                      backgroundColor: step == 2 ? Color.themeColor : '#FBCEB1',
                       borderRadius: moderateScale(10, 0.6),
                     }}
                   />

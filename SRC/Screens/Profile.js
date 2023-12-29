@@ -39,7 +39,6 @@ const Profile = () => {
   const dispatch = useDispatch();
   const token = useSelector(state => state.authReducer.token);
   const userData = useSelector(state => state.commonReducer.userData);
-  console.log('🚀 ~ file: Profile.js:50 ~ Profile ~ userData:', userData);
   const [username, setUserName] = useState(
     userData?.name ? userData?.name : '',
   );
@@ -60,7 +59,6 @@ const Profile = () => {
 
   const [imagePicker, setImagePicker] = useState(false);
   const [image, setImage] = useState({});
-  console.log('🚀 ~ file: Profile.js:60 ~ Profile ~ image:', image);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -72,27 +70,15 @@ const Profile = () => {
       country: country,
       address: address,
     };
-    // console.log("🚀 ~ file: Profile.js:74 ~ updateProfile ~ body:", body)
     const formData = new FormData();
     for (let key in body) {
       formData?.append(key, body[key]);
     }
     if(Object.keys(image).length>0) formData.append('photo', image) 
-
-    console.log(
-      '🚀 ~ file: Profile.js:109 ~ updateProfile ~ formData:',
-      formData,
-    );
-
     setIsLoading(true);
     const response = await Post(url, formData, apiHeader(token));
     setIsLoading(false);
     if (response != undefined) {
-      console.log(
-        '🚀 ~ file: Profile.js:113 ~ updateProfile ~ response:',
-        response?.data,
-      );
-
       dispatch(setUserData(response?.data?.user_info));
     }
   };
@@ -102,22 +88,9 @@ const Profile = () => {
       <CustomStatusBar backgroundColor={'#D2E4E4'} barStyle={'dark-content'} />
 
       <View
-        style={{
-          width: windowWidth,
-          height: windowHeight,
-          backgroundColor: 'white',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
+        style={styles.container}>
         <LinearGradient
-          style={{
-            width: windowWidth * 1,
-            height: windowHeight * 0.35,
-            // height: windowHeight * 0.9,
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: Color.themeColor,
-          }}
+          style={styles.linear}
           colors={Color.themeBgColor}>
           <Icon
             style={{position: 'absolute', left: 20, top: 20}}
@@ -171,18 +144,9 @@ const Profile = () => {
           </View>
         </LinearGradient>
         <ScrollView
-          style={{
-            backgroundColor: Color.white,
-            width: windowWidth,
-            // backgroundColor: 'red',
-            // minHeight: windowHeight,
-            marginTop: moderateScale(-30, 0.3),
-            borderTopLeftRadius: moderateScale(30, 0.3),
-            borderTopRightRadius: moderateScale(30, 0.3),
-          }}>
+          style={styles.scrollView}>
           <View
             style={{
-              // backgroundColor: 'green',
               alignSelf: 'center',
               paddingVertical: moderateScale(20, 0.6),
             }}>
@@ -201,8 +165,6 @@ const Profile = () => {
               border={1}
               backgroundColor={Color.white}
               borderColor={Color.black}
-              //   marginTop={moderateScale(5, 0.3)}
-              // marginBottom={moderateScale(10, 0.3)}
               color={Color.black}
               placeholderColor={Color.veryLightGray}
               elevation
@@ -222,8 +184,6 @@ const Profile = () => {
               border={1}
               backgroundColor={Color.white}
               borderColor={Color.black}
-              //   marginTop={moderateScale(5, 0.3)}
-              // marginBottom={moderateScale(10, 0.3)}
               color={Color.black}
               placeholderColor={Color.veryLightGray}
               elevation
@@ -266,7 +226,6 @@ const Profile = () => {
               borderColor={Color.black}
               marginBottom={moderateScale(10, 0.3)}
               backgroundColor={Color.white}
-              //   marginTop={moderateScale(10, 0.3)}
               color={Color.black}
               placeholderColor={Color.veryLightGray}
               elevation
@@ -288,11 +247,9 @@ const Profile = () => {
               borderColor={Color.black}
               marginBottom={moderateScale(10, 0.3)}
               backgroundColor={Color.white}
-              //   marginTop={moderateScale(10, 0.3)}
               color={Color.black}
               placeholderColor={Color.veryLightGray}
               elevation
-              // disable={true}
             />
             <TextInputWithTitle
               title={'Country'}
@@ -310,18 +267,15 @@ const Profile = () => {
               borderColor={Color.black}
               marginBottom={moderateScale(10, 0.3)}
               backgroundColor={Color.white}
-              //   marginTop={moderateScale(10, 0.3)}
               color={Color.black}
               placeholderColor={Color.veryLightGray}
               elevation
-              // disable={true}
             />
 
             <CustomButton
               isBold
               onPress={() => {
                 updateProfile();
-                // dispatch(RemoveFromCart(item));
               }}
               text={
                 isLoading ? (
@@ -340,7 +294,6 @@ const Profile = () => {
               borderRadius={moderateScale(5, 0.3)}
             />
           </View>
-          {/* </CardContainer> */}
         </ScrollView>
       </View>
       <ImagePickerModal
@@ -362,6 +315,28 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Color.white,
     overflow: 'hidden',
+  },
+  scrollView:{
+    backgroundColor: Color.white,
+    width: windowWidth,
+    marginTop: moderateScale(-30, 0.3),
+    borderTopLeftRadius: moderateScale(30, 0.3),
+    borderTopRightRadius: moderateScale(30, 0.3),
+  },
+  linear:{
+    width: windowWidth * 1,
+    height: windowHeight * 0.35,
+    // height: windowHeight * 0.9,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Color.themeColor,
+  },
+  container:{
+    width: windowWidth,
+    height: windowHeight,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   Profile1: {
     width: windowWidth * 0.3,

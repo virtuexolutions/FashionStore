@@ -5,29 +5,18 @@ import CustomText from './CustomText';
 import {Image} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
 import {windowHeight, windowWidth} from '../Utillity/utils';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
 import numeral from 'numeral';
-import { imageSizeUrl, imageUrl } from '../Config';
-
+import {imageSizeUrl, imageUrl} from '../Config';
 
 const OrderCard = ({data}) => {
-  // console.log("🚀 ~ file: OrderCard.js:12 ~ OrderCard ~ data:", data?.item_info[0]?.product_info)
-  const  navigation =useNavigation()
+  const navigation = useNavigation();
   return (
-
-
-
-
     <View style={styles.container}>
-
-
       <View style={styles.textRow}>
         <View
           style={{
-            // backgroundColor: 'red',
-
-
             flexDirection: 'row',
             justifyContent: 'center',
           }}>
@@ -35,7 +24,9 @@ const OrderCard = ({data}) => {
           <CustomText style={styles.text2}>{data?.order_number}</CustomText>
         </View>
         <View style={{justifyContent: 'center', flexDirection: 'row'}}>
-          <CustomText style={styles.text2}>{moment(data?.created_at).format('lll')} </CustomText>
+          <CustomText style={styles.text2}>
+            {moment(data?.created_at).format('lll')}{' '}
+          </CustomText>
         </View>
         <CustomText
           style={[
@@ -61,8 +52,10 @@ const OrderCard = ({data}) => {
                     },
                   ]}>
                   <Text
-                    style={{backgroundColor: Color.lightGray, color: 'black' ,
-                    fontSize:moderateScale(15,.3)
+                    style={{
+                      backgroundColor: Color.lightGray,
+                      color: 'black',
+                      fontSize: moderateScale(15, 0.3),
                     }}>
                     {data?.item_info?.length - 4}+
                   </Text>
@@ -75,12 +68,12 @@ const OrderCard = ({data}) => {
                     width: '100%',
                   }}
                   source={
-                    item?.product_info ? {uri :`${imageUrl}/${item?.product_info?.large_image}`} :
-                     item?.small_image
-                       ? {uri: `${imageSizeUrl}${item?.small_image}`}
-                       : require('../Assets/Images/Mask2.png')
-                   }
-               
+                    item?.product_info
+                      ? {uri: `${imageUrl}/${item?.product_info?.large_image}`}
+                      : item?.small_image
+                      ? {uri: `${imageSizeUrl}${item?.small_image}`}
+                      : require('../Assets/Images/Mask2.png')
+                  }
                 />
               </View>
             </>
@@ -89,12 +82,13 @@ const OrderCard = ({data}) => {
       />
 
       <View style={styles.buttonRow}>
-        <CustomText style={styles.text1}>{numeral(data?.total_amount).format('0.$')}</CustomText>
+        <CustomText style={styles.text1}>
+          {numeral(data?.total_amount).format('0.$')}
+        </CustomText>
         <CustomButton
-          // disabled={ cardData.find((data ,index) => data?.id == item?.id) && true}
           isBold
-          onPress={() => { 
-            navigation.navigate('OrderDetails' , {data :data})
+          onPress={() => {
+            navigation.navigate('OrderDetails', {data: data});
           }}
           text={'Order Details'}
           textColor={Color.white}

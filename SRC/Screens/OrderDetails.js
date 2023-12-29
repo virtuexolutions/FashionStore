@@ -1,38 +1,18 @@
-import {
-  FlatList,
-  View,
-  TouchableOpacity,
-  Platform,
-  ToastAndroid,
-  Image,
-  ScrollView,
-} from 'react-native';
+import {View, Image, ScrollView} from 'react-native';
 import React from 'react';
 import {moderateScale, ScaledSheet} from 'react-native-size-matters';
-import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
+import {windowHeight, windowWidth} from '../Utillity/utils';
 import Color from '../Assets/Utilities/Color';
-import CartItem from '../Components/CartItem';
-import {useState} from 'react';
-import CustomButton from '../Components/CustomButton';
-import navigationService from '../navigationService';
-import CustomStatusBar from '../Components/CustomStatusBar';
 import Header from '../Components/Header';
 import Feather from 'react-native-vector-icons/Feather';
 import {useSelector} from 'react-redux';
 import CustomText from '../Components/CustomText';
-import OrderCard from '../Components/OrderCard';
-import {Text} from 'react-native';
 import moment from 'moment';
 import numeral from 'numeral';
-import { imageUrl } from '../Config';
-
+import {imageUrl} from '../Config';
 
 const OrderDetails = props => {
   const data = props?.route?.params?.data;
-  console.log(
-    '🚀 ~ file: OrderDetails.js:28 ~ OrderDetails ~ data:',
-    data?.item_info?.product_info,
-  );
   const cartData = useSelector(state => state.commonReducer.item);
 
   return (
@@ -73,39 +53,39 @@ const OrderDetails = props => {
                   height: '100%',
                 }}
                 source={
-                  item?.product_info ? {uri :`${imageUrl}/${item?.product_info?.large_image}`} :
-                   item?.small_image
-                     ? {uri: `${imageSizeUrl}${item?.small_image}`}
-                     : require('../Assets/Images/Mask2.png')
-                 }
+                  item?.product_info
+                    ? {uri: `${imageUrl}/${item?.product_info?.large_image}`}
+                    : item?.small_image
+                    ? {uri: `${imageSizeUrl}${item?.small_image}`}
+                    : require('../Assets/Images/Mask2.png')
+                }
               />
             </View>
-           
+
+            <CustomText
+              style={{
+                fontSize: moderateScale(14, 0.6),
+                color: Color.mediumGray,
+                width: windowWidth * 0.65,
+                textAlign: 'left',
+                paddingHorizontal: moderateScale(10, 0.3),
+                paddingVertical: moderateScale(10, 0.3),
+              }}
+              isBold>
+              {item?.product_info?.title}
+            </CustomText>
+            <View style={styles.row}>
               <CustomText
                 style={{
                   fontSize: moderateScale(14, 0.6),
                   color: Color.mediumGray,
-                  width:windowWidth*0.65,
                   textAlign: 'left',
-                  paddingHorizontal: moderateScale(10, 0.3),
                   paddingVertical: moderateScale(10, 0.3),
                 }}
                 isBold>
-                {item?.product_info?.title}
+                {item?.price} x{item?.quantity}
               </CustomText>
-              <View style={styles.row}>
-                <CustomText
-                  style={{
-                    fontSize: moderateScale(14, 0.6),
-                    color: Color.mediumGray,
-                    textAlign: 'left',
-                    paddingVertical: moderateScale(10, 0.3),
-                  }}
-                  isBold>
-                  {item?.price} x{item?.quantity}
-                </CustomText>
-            
-              </View>
+            </View>
           </View>
         ))}
         <CustomText style={styles.heading} isBold>
@@ -140,7 +120,7 @@ const OrderDetails = props => {
               style={[
                 styles.text2,
                 {
-                  textAlign:'right',
+                  textAlign: 'right',
                   width: windowWidth * 0.35,
                 },
               ]}>
@@ -150,24 +130,17 @@ const OrderDetails = props => {
 
           <View style={styles.row}>
             <CustomText style={styles.text2}>Total</CustomText>
-            <CustomText style={styles.text2}>{numeral(data?.total_amount).format('$0,0.00')}</CustomText>
+            <CustomText style={styles.text2}>
+              {numeral(data?.total_amount).format('$0,0.00')}
+            </CustomText>
           </View>
-          {/* <View style={styles.row}>
-            <CustomText style={styles.text2}>Discount</CustomText>
-            <CustomText style={styles.text2}>{numeral(data?.total_amount- data?.discount_amount).format('$0,0.00')}</CustomText>
-          </View> */}
+
           <View style={styles.row}>
             <CustomText style={styles.text2}>subTotal</CustomText>
-            <CustomText style={styles.text2}>{numeral(data?.total_amount).format('$0,0.00')}</CustomText>
+            <CustomText style={styles.text2}>
+              {numeral(data?.total_amount).format('$0,0.00')}
+            </CustomText>
           </View>
-          {/* <View style={styles.row}>
-            <CustomText style={styles.text2}>discount</CustomText>
-            <CustomText style={styles.text2}>10%</CustomText>
-          </View>
-          <View style={styles.row}>
-            <CustomText style={styles.text2}>Total</CustomText>
-            <CustomText style={styles.text2}>{data?.total_amount}</CustomText>
-          </View> */}
         </View>
       </ScrollView>
     </>
@@ -185,13 +158,12 @@ const styles = ScaledSheet.create({
     paddingHorizontal: moderateScale(10, 0.6),
     borderRadius: moderateScale(10, 0.3),
     marginBottom: moderateScale(10, 0.3),
-    justifyContent:'space-between',
-    alignItems:'center'
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   row: {
     justifyContent: 'space-between',
     flexDirection: 'row',
-    // paddingHorizontal: moderateScale(15, 0.6),
     paddingVertical: moderateScale(3, 0.6),
   },
   textRow: {

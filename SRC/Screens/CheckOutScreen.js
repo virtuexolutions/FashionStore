@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import React, {useEffect} from 'react';
 import {moderateScale, ScaledSheet} from 'react-native-size-matters';
-import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
+import { windowHeight, windowWidth} from '../Utillity/utils';
 import Color from '../Assets/Utilities/Color';
 import CartItem from '../Components/CartItem';
 import {useState} from 'react';
@@ -17,14 +17,11 @@ import CustomStatusBar from '../Components/CustomStatusBar';
 import Header from '../Components/Header';
 import Feather from 'react-native-vector-icons/Feather';
 import {useSelector} from 'react-redux';
-import {Toast} from 'native-base';
-// import { selectedProductSize } from '../Store/slices/common';
 
 const CheckOutScreen = ({route}) => {
   const selectedProductSize = useSelector(state => state.commonReducer.item);
   const cardData = useSelector(state => state.commonReducer.item);
   const token = useSelector(state => state.authReducer.token);
-  console.log("🚀 ~ file: CheckOutScreen.js:27 ~ CheckOutScreen ~ token:", token)
   const [finalAmount, setFinalAmount] = useState(0);
   const [productsForCard, setProdctsForCart] = useState([]);
   const subTotal = route?.params?.subTotal;
@@ -72,10 +69,6 @@ const CheckOutScreen = ({route}) => {
                   const temp = cardData.some(
                     (item, index) => item?.size && Object.keys(item?.size_id).length == 0,
                   );
-                  console.log(
-                    '🚀 ~ file: CheckOutScreen.js:65 ~ CheckOutScreen ~ temp:',
-                    temp,
-                  );
                   if (temp) {
                     Platform.OS == 'android'
                       ? ToastAndroid.show(
@@ -92,8 +85,6 @@ const CheckOutScreen = ({route}) => {
                 width={windowWidth * 0.8}
                 height={windowHeight * 0.07}
                 fontSize={moderateScale(16, 0.6)}
-                // marginBottom={moderateScale(10,.3)}
-                // marginTop={moderateScale(20, 0.3)}
                 bgColor={Color.themeBgColor}
                 borderRadius={moderateScale(30, 0.3)}
                 isGradient
@@ -113,7 +104,6 @@ const styles = ScaledSheet.create({
     fontSize: moderateScale(20, 0.3),
     textAlign: 'left',
     width: windowWidth * 0.9,
-    // backgroundColor : 'red'
   },
   row: {
     flexDirection: 'row',
@@ -128,17 +118,10 @@ const styles = ScaledSheet.create({
     fontSize: moderateScale(16, 0.3),
   },
   userTypeContainer: {
-    // width: windowWidth * 0.7,
-    // backgroundColor : Color.red,
     padding: moderateScale(10, 0.3),
     marginTop: moderateScale(10, 0.3),
-    // flexDirection: 'row',
-    // justifyContent: 'space-between',
   },
   innerContainer: {
-    // width: '48%',
-    // backgroundColor : 'green',
-    // paddingVertical : moderateScale(5,0.3),
     flexDirection: 'row',
     alignItems: 'center',
     marginLeft: moderateScale(5, 0.3),

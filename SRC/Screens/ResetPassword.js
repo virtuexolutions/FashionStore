@@ -1,4 +1,12 @@
-import {StyleSheet, Text, View, ToastAndroid, Platform, Alert, ActivityIndicator} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ToastAndroid,
+  Platform,
+  Alert,
+  ActivityIndicator,
+} from 'react-native';
 import React, {useState} from 'react';
 import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import {moderateScale} from 'react-native-size-matters';
@@ -9,19 +17,18 @@ import Color from '../Assets/Utilities/Color';
 import navigationService from '../navigationService';
 import TextInputWithTitle from '../Components/TextInputWithTitle';
 import CustomStatusBar from '../Components/CustomStatusBar';
-import { Post } from '../Axios/AxiosInterceptorFunction';
+import {Post} from '../Axios/AxiosInterceptorFunction';
 
-const ResetPassword = (props) => {
-  const email = props?.route?.params?.email
+const ResetPassword = props => {
+  const email = props?.route?.params?.email;
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   const reset = async () => {
- 
     const url = 'password/reset';
     const body = {
-      email:email,
+      email: email,
       password: password,
       confirm_password: confirmPassword,
     };
@@ -32,7 +39,7 @@ const ResetPassword = (props) => {
           : Alert.alert('All Fields are required');
       }
     }
-   
+
     if (password !== confirmPassword) {
       return Platform.OS == 'android'
         ? ToastAndroid.show('Password donot match', ToastAndroid.SHORT)
@@ -43,13 +50,11 @@ const ResetPassword = (props) => {
     setIsLoading(false);
 
     if (response != undefined) {
-      console.log(
-        '🚀 ~ file: Signup.js:66 ~ register ~ response:',
-        response?.data,
-      );
-      Platform.OS == 'android' ? ToastAndroid.show('Password reset successfully', ToastAndroid.SHORT) : Alert.alert('Password reset successfully')
-      
-      navigationService.navigate('LoginScreen')
+      Platform.OS == 'android'
+        ? ToastAndroid.show('Password reset successfully', ToastAndroid.SHORT)
+        : Alert.alert('Password reset successfully');
+
+      navigationService.navigate('LoginScreen');
     }
   };
 
@@ -92,7 +97,6 @@ const ResetPassword = (props) => {
           titleText={'Your new Password'}
           placeholder={'Your new Password'}
           setText={setPassword}
-          // marginTop={moderateScale(10,0.3)}
           value={password}
           viewHeight={0.06}
           viewWidth={0.8}
@@ -110,7 +114,6 @@ const ResetPassword = (props) => {
           titleText={'Confirm Password'}
           placeholder={'Confirm Password'}
           setText={setConfirmPassword}
-          // marginTop={moderateScale(10,0.3)}
           value={confirmPassword}
           viewHeight={0.06}
           viewWidth={0.8}
@@ -125,7 +128,13 @@ const ResetPassword = (props) => {
         />
 
         <CustomButton
-          text={isLoading ?<ActivityIndicator color={Color.white} size={'small'} /> :'Reset Password'}
+          text={
+            isLoading ? (
+              <ActivityIndicator color={Color.white} size={'small'} />
+            ) : (
+              'Reset Password'
+            )
+          }
           textColor={Color.white}
           width={windowWidth * 0.8}
           height={windowHeight * 0.07}
@@ -134,8 +143,7 @@ const ResetPassword = (props) => {
           bgColor={Color.themeBgColor}
           borderRadius={moderateScale(30, 0.3)}
           onPress={() => {
-            reset()
-            // navigationService.navigate('ResetInstruction');
+            reset();
           }}
           isGradient
         />
